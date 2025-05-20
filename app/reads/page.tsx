@@ -9,13 +9,19 @@ type Book = {
 };
 
 async function getAllBooks() {
-  const baseUrl =
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/reading?all=true`, { cache: 'no-store' });
-  if (!res.ok) return { books: [] as Book[] };
-  return res.json() as Promise<{ books: Book[] }>;
+  try {
+    // Use absolute URL for server-side fetches
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const fetchUrl = `${baseUrl}/api/reading?all=true`;
+    console.log('FETCHING:', fetchUrl);
+    const res = await fetch(fetchUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch books');
+    const data = await res.json();
+    return data.books;
+  } catch (error) {
+    console.error('Error fetching all books:', error);
+    return [];
+  }
 }
 
 export default async function ReadsPage() {
