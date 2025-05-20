@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
@@ -7,7 +8,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="text-foreground hover:text-accent transition-colors">
-            <span className="text-xl font-medium">Brian Sproule</span>
+            <Image src="/elderscroll.png" alt="Brian Sproule" width={100} height={100} className="rounded-full object-cover" />
           </Link>
           <nav className="flex items-center gap-6">
             <Link href="/#about" className="text-foreground hover:text-accent transition-colors">

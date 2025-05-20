@@ -42,10 +42,11 @@ export default async function Home() {
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
       <SwimmingFish />
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
-        <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-4 object-cover" />
-        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Hello There</h1>
-        <p className="text-xl max-w-2xl mb-6 text-[var(--accent)]">My name is Brian, I'm a traditional and digitial publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a mug of tea, a snack, get comfy, and stay a while.</p>
+      <section className="flex-1 flex flex-col items-start px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
+        <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-2 object-cover" />
+        <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Hello there.</h1>
+        <p className="text-xl max-w-2xl mb-6 text-[var(--foreground)]">My name is Brian, I'm a digitial and traditional publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a cup of tea, a snack, get comfy, and stay a while. Please mind the fish.</p>
+
       </section>
 
       {/* About Section */}
@@ -79,11 +80,12 @@ export default async function Home() {
                   {[
                     'Exploring South Florida\'s waterways',
                     'Playing the latest Sci-Fi/Fantasy RPG',
-                    'Strugging through a run',
+                    'Struggling through a run',
                     'Trying new recipes in the kitchen',
                     'Caring for and talking to my houseplants',
                     'Sketching and drawing (not very well)',
-                    'Outdoors, in the sun, drink in hand',
+                    'Acting like an amateur naturalist',
+                    'Outdoors in the sun, drink in hand',
                   ].map((activity, index) => (
                     <li key={index} className="flex items-center gap-3 text-lg text-[var(--foreground)]">
                       <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>

@@ -11,30 +11,63 @@ type Book = {
 };
 
 function sortBooks(books: Book[], sortBy: string) {
-  switch (sortBy) {
-    case 'author':
-      return [...books].sort((a, b) => (a.author || '').localeCompare(b.author || ''));
-    case 'pages':
-      return [...books].sort((a, b) => (parseInt(b.pages || '0') - parseInt(a.pages || '0')));
-    case 'year':
-      return [...books].sort((a, b) => (parseInt(b.year || '0') - parseInt(a.year || '0')));
-    case 'rating':
-    default:
-      return [...books].sort((a, b) => {
-        const aRating = parseFloat((a.rating || '').split('/')[0]) || 0;
-        const bRating = parseFloat((b.rating || '').split('/')[0]) || 0;
-        return bRating - aRating;
-      });
+  if (!books || !Array.isArray(books)) {
+    console.error('Invalid books data:', books);
+    return [];
+  }
+
+  try {
+    switch (sortBy) {
+      case 'author':
+        return [...books].sort((a, b) => (a.author || '').localeCompare(b.author || ''));
+      case 'pages':
+        return [...books].sort((a, b) => (parseInt(b.pages || '0') - parseInt(a.pages || '0')));
+      case 'year':
+        return [...books].sort((a, b) => (parseInt(b.year || '0') - parseInt(a.year || '0')));
+      case 'rating':
+      default:
+        return [...books].sort((a, b) => {
+          const aRating = parseFloat((a.rating || '').split('/')[0]) || 0;
+          const bRating = parseFloat((b.rating || '').split('/')[0]) || 0;
+          return bRating - aRating;
+        });
+    }
+  } catch (error) {
+    console.error('Error sorting books:', error);
+    return books;
   }
 }
 
 export default function ReadsTable({ books }: { books: Book[] }) {
   const [sortBy, setSortBy] = useState('rating');
-  const sortedBooks = sortBooks(books, sortBy);
+  const [error, setError] = useState<string | null>(null);
+
+  if (!books || !Array.isArray(books)) {
+    return (
+      <div className="text-[var(--foreground)] text-center py-8">
+        <p>No books data available.</p>
+      </div>
+    );
+  }
+
+  let sortedBooks: Book[] = [];
+  try {
+    sortedBooks = sortBooks(books, sortBy);
+  } catch (err) {
+    console.error('Error in ReadsTable:', err);
+    setError('Error sorting books data');
+  }
+
+  if (error) {
+    return (
+      <div className="text-[var(--foreground)] text-center py-8">
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <section className="bg-[var(--card)] py-12 px-4 mt-16">
-      <h2 className="text-3xl font-bold mb-2 text-[var(--foreground)] text-center">All Reads</h2>
+    <div>
       <p className="text-base italic text-[var(--foreground)] text-center mb-8">Asterisk indicates book was read before the creation of the spreadsheet and was grandfathered in.</p>
       <div className="mb-6 flex justify-end">
         <div className="flex items-center gap-4">
@@ -73,7 +106,7 @@ export default function ReadsTable({ books }: { books: Book[] }) {
                   ' hover:bg-[var(--highlight)]/20'
                 }
               >
-                <td className="px-4 py-2 italic">{book.title}</td>
+                <td className="px-4 py-2 italic font-bold">{book.title}</td>
                 <td className="px-4 py-2">{book.author}</td>
                 <td className="px-4 py-2">{book.pages || ''}</td>
                 <td className="px-4 py-2">{book.year || ''}</td>
@@ -83,6 +116,6 @@ export default function ReadsTable({ books }: { books: Book[] }) {
           </tbody>
         </table>
       </div>
-    </section>
+    </div>
   );
 } 
