@@ -1,11 +1,11 @@
 import { google } from 'googleapis';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const SHEET_ID = '1c6zdCUsDR_oMYe1ZJBxDujmSjtYXUMRKROyUkr72z0Q';
 const RANGE = 'A2:L1000'; // Adjust range as needed
 
-export async function GET(req) {
+export async function GET(req: NextRequest) {
   try {
     // Check if credentials are available
     if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY) {
