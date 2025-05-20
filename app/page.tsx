@@ -1,4 +1,5 @@
 import Image from "next/image";
+import SwimmingFish from '../components/SwimmingFish';
 
 async function getRecentBooks() {
   try {
@@ -39,6 +40,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+      <SwimmingFish />
       {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
         <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-4 object-cover" />
