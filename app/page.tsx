@@ -3,10 +3,10 @@ import Image from "next/image";
 async function getRecentBooks() {
   try {
     // Use absolute URL for server component
-    const baseUrl = process.env.VERCEL_URL 
+    const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
-      
+      : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    
     const res = await fetch(`${baseUrl}/api/reading`, { 
       next: { revalidate: 3600 },
       cache: 'no-store'
