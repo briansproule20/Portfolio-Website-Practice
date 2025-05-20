@@ -2,9 +2,11 @@ import Image from "next/image";
 
 async function getRecentBooks() {
   try {
-    // Use relative URL for internal API route (works in Next.js server components on Vercel)
-    console.log('FETCHING: /api/reading');
-    const res = await fetch('/api/reading', { cache: 'no-store' });
+    // Use absolute URL for server-side fetches
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const fetchUrl = `${baseUrl}/api/reading`;
+    console.log('FETCHING:', fetchUrl);
+    const res = await fetch(fetchUrl, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch books');
     const data = await res.json();
     return data;
