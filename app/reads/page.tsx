@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ReadsTable from './ReadsTable';
 
 type Book = {
@@ -25,7 +27,7 @@ async function getAllBooks() {
 }
 
 export default async function ReadsPage() {
-  const { books } = await getAllBooks();
+  const books = (await getAllBooks()) || [];
   const cleanedBooks = books
     .slice(0, -1) // Remove the last row
     .filter((book: Book) => {
