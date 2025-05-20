@@ -3,15 +3,10 @@ import Image from "next/image";
 async function getRecentBooks() {
   try {
     // Use absolute URL for server component
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-    
-    const res = await fetch(`${baseUrl}/api/reading`, { 
-      next: { revalidate: 3600 },
-      cache: 'no-store'
-    });
-    
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    // SSR: Always fetch fresh data, never cache
+    const res = await fetch(`${baseUrl}/api/reading`, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch books');
     const data = await res.json();
     return data;
