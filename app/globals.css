@@ -8,21 +8,19 @@
   --card: #ede8de;       /* off-white */
 }
 
+.dark {
+  --background: #2d2a26;
+  --foreground: #ede8de;
+  --accent: #b7bfa3;
+  --highlight: #a89f91;
+  --card: #3e372a;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #2d2a26;
-    --foreground: #ede8de;
-    --accent: #b7bfa3;
-    --highlight: #a89f91;
-    --card: #3e372a;
-  }
 }
 
 body {
