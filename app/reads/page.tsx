@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { motion } from 'framer-motion';
 import ReadsTable from './ReadsTable';
 
 type Book = {
@@ -84,9 +85,71 @@ export default async function ReadsPage() {
 
     return (
       <div className="min-h-screen bg-[var(--background)]">
-        <section className="max-w-6xl mx-auto bg-[var(--card)] py-12 px-4 mt-16 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">My Reading List</h2>
+        {/* Hero Section */}
+        <section className="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-[var(--card)] opacity-50"></div>
+          <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <h1 className="text-6xl font-black mb-6 text-[var(--foreground)]">Reading List</h1>
+            <p className="text-xl text-[var(--accent)] font-serif italic">
+              Some things I've read...
+            </p>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="max-w-6xl mx-auto px-4 -mt-16 relative z-20">
+          <div className="bg-[var(--card)] rounded-xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <p className="text-4xl font-bold text-[var(--highlight)]">{cleanedBooks.length}</p>
+              <p className="text-[var(--accent)] mt-2">Books Read</p>
+            </div>
+            <div className="text-center">
+              <p className="text-4xl font-bold text-[var(--highlight)]">
+                {cleanedBooks.reduce((acc: number, book: Book) => acc + (book.rating ? parseFloat(book.rating.split('/')[0]) : 0) / cleanedBooks.length, 0).toFixed(1)}
+              </p>
+              <p className="text-[var(--accent)] mt-2">Average Rating</p>
+            </div>
+            <div className="text-center">
+              <p className="text-4xl font-bold text-[var(--highlight)]">
+                {cleanedBooks.reduce((acc: number, book: Book) => acc + (book.pages ? parseInt(book.pages) : 0), 0).toLocaleString()}
+              </p>
+              <p className="text-[var(--accent)] mt-2">Pages Read</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Books Table Section */}
+        <section className="max-w-6xl mx-auto bg-[var(--card)] py-12 px-4 mt-16 rounded-xl shadow-lg">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-[var(--foreground)] text-center">Book Collection</h2>
+            <p className="text-[var(--accent)] text-center mt-2">
+              Books do not appear in order read here. See spreadsheet for more detailed breakdown.
+            </p>
+          </div>
           <ReadsTable books={cleanedBooks} />
+        </section>
+
+        {/* Quote Section */}
+        <section className="max-w-4xl mx-auto px-4 py-24 text-center">
+          <blockquote className="text-2xl font-serif italic text-[var(--foreground)]">
+            "A reader lives a thousand lives before he dies. The man who never reads lives only one."
+          </blockquote>
+          <p className="text-[var(--accent)] mt-4">― George R.R. Martin</p>
+        </section>
+
+        {/* Spreadsheet Link Section */}
+        <section className="max-w-4xl mx-auto px-4 pb-24 text-center">
+          <a 
+            href="https://docs.google.com/spreadsheets/d/1c6zdCUsDR_oMYe1ZJBxDujmSjtYXUMRKROyUkr72z0Q/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[var(--highlight)] text-[var(--background)] px-8 py-4 rounded-lg font-semibold transition-all hover:scale-105 hover:shadow-lg"
+          >
+            View Complete Reading Log
+          </a>
+          <p className="text-[var(--accent)] mt-4 text-sm">
+            Click to see my detailed reading log spreadsheet with more information and statistics
+          </p>
         </section>
       </div>
     );

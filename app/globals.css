@@ -55,7 +55,26 @@ body {
   }
 }
 
+@keyframes ticker-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
 .animate-ticker {
-  animation: ticker 30s linear infinite;
+  animation: ticker 60s linear infinite;
   will-change: transform;
+}
+
+.animate-ticker-vertical {
+  animation: ticker-vertical 60s linear infinite;
+  will-change: transform;
+}
+
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
