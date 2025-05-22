@@ -30,6 +30,9 @@ export default function Header() {
               <Link href="/writing" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Writing
               </Link>
+              <Link href="/wanted" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Wanted
+              </Link>
               <ThemeToggle />
             </div>
           </nav>
