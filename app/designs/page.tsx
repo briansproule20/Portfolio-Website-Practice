@@ -64,7 +64,7 @@ export default function Designs() {
             transition={{ delay: 0.4 }}
             className="text-xl text-[var(--accent)] font-serif italic"
           >
-            Crafting digital experiences with purpose and precision
+            Crafting digital and print media with clean designs and memorable aesthetics.
           </motion.p>
         </div>
       </motion.section>

@@ -21,17 +21,17 @@ export default function Header() {
               <Link href="/designs" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Design
               </Link>
-              <Link href="/projects" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Projects
-              </Link>
               <Link href="/reads" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Reads
+              </Link>
+              <Link href="/wanted" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Wanted
               </Link>
               <Link href="/writing" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Writing
               </Link>
-              <Link href="/wanted" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Wanted
+              <Link href="/zines" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Zines
               </Link>
               <ThemeToggle />
             </div>

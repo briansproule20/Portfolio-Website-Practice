@@ -20,35 +20,36 @@ export default function Writing() {
 
   const writings: WritingPiece[] = [
     {
-      title: "lorem ipsum 1",
-      excerpt: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      category: "fiction",
-      date: "March 2024",
-      readTime: "12 min",
-      image: "/writing/dusk.jpg"
-    },
-    {
-      title: "lorem ipsum 2",
-      excerpt: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      title: "Free Will and Actualization in Chiang's Story of Your Life",
+      excerpt: "In Chiang's Story of Your Life, Louise's daughter is the focal point of the narrative, representing the beauty of teleological free will and actualizing a predetermined future.",
       category: "essays",
-      date: "February 2024",
-      readTime: "8 min",
-      image: "/writing/garden.jpg"
+      date: "March 2022",
+      readTime: "16 min",
+      image: "/writing/dusk.png"
     },
     {
-      title: "lorem ipsum 3",
-      excerpt: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      title: "The Spanish Civil War and its Influence on Twentieth Century Europe",
+      excerpt: "The Spanish Civil War attracted vast amounts of critical reception abroad, in large part because of mass executions carried out by both sides. Such events elicitedharsh artistic reception and fathered works like Orwell’s Homage to Catalonia, Hemingway’sFor Whom the Bell Tolls, and Picasso’s Guernica.",
+      category: "essays",
+      date: "May 2023",
+      readTime: "35 min",
+      image: "/writing/guernica.jpg"
+    },
+    {
+      title: "The Forgotten Mile",
+      excerpt: "A lone stretch of beach watches on as a family grows older, and the sands of time erode memories of the past.",
       category: "poetry",
       date: "January 2024",
-      readTime: "3 min"
+      readTime: "3 min",
+      image: "/writing/forgotten.jpg"
     },
     {
-      title: "lorem ipsum 4",
-      excerpt: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      title: "A Review of On Our Way Home from the Revolution: Reflections on Ukraine",
+      excerpt: "Essay Collection by: Sonya Bilocerkowycz.",
       category: "reviews",
       date: "December 2023",
-      readTime: "6 min",
-      image: "/writing/review.jpg"
+      readTime: "10 min",
+      image: "/writing/review.png"
     }
   ];
 
@@ -72,7 +73,7 @@ export default function Writing() {
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-6xl font-black mb-6 text-[var(--foreground)]">Writing</h1>
           <p className="text-xl text-[var(--accent)] font-serif italic">
-            Stories, essays, and thoughts on the digital age, nature, and the human experience
+           Essays, thoughts, and explorations on the information age, our connection to nature, historical perspectives, and the human experience. 
           </p>
         </div>
       </section>
@@ -124,7 +125,7 @@ export default function Writing() {
                 </div>
                 
                 {piece.image && (
-                  <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
+                  <div className="relative h-64 mb-4 rounded-lg overflow-hidden">
                     <Image
                       src={piece.image}
                       alt={piece.title}
