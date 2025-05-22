@@ -7,24 +7,17 @@ import { motion } from 'framer-motion';
 const designs = [
   {
     id: 1,
-    title: "Digital Landscapes",
-    category: "UI/UX",
-    description: "A series of digital interfaces inspired by natural landscapes",
-    image: "/images/design1.jpg",
+    title: "White Horse Conservation",
+    category: "Brand Identity / Digital Marketing",
+    description: "A series of logos and designs inspired by the rolling foothills of Western Pennsylvania.",
+    image: "/images/whitehorse1.png",
   },
   {
     id: 2,
-    title: "Typography Studies",
+    title: "Merit Systems",
     category: "Print",
-    description: "Exploring the intersection of classic and modern typography",
-    image: "/images/design2.jpg",
-  },
-  {
-    id: 3,
-    title: "Brand Evolution",
-    category: "Branding",
-    description: "Visual identity systems that grow with businesses",
-    image: "/images/design3.jpg",
+    description: "Mission: Open Source",
+    image: "/images/merit.png",
   },
 ];
 
@@ -81,7 +74,7 @@ export default function Designs() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-7xl mx-auto px-4 py-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="max-w-4xl mx-auto px-4 -mt-24 grid grid-cols-1 md:grid-cols-2 gap-8"
       >
         {designs.map((design) => (
           <motion.div
@@ -92,31 +85,37 @@ export default function Designs() {
             className="group relative aspect-[4/5] rounded-xl overflow-hidden bg-[var(--card)]"
           >
             <div className="absolute inset-0 z-10">
-              <Image
-                src={design.image}
-                alt={design.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-x-[10%] top-[5%] bottom-[35%] overflow-hidden">
+                <Image
+                  src={design.image}
+                  alt={design.title}
+                  fill
+                  className="object-cover object-[center_0%] transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
 
-            <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+            <div className={`absolute inset-0 z-20 p-8 flex flex-col ${
+              design.id === 2 
+                ? 'justify-start pt-[88%]' 
+                : 'justify-end'
+            } transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500`}>
               <div className="space-y-2">
-                <p className="text-white/70 text-sm tracking-wider uppercase">
+                <p className="text-[var(--highlight)] text-sm tracking-wider uppercase font-semibold">
                   {design.category}
                 </p>
-                <h3 className="text-white text-2xl font-bold">
+                <h3 className="text-[var(--accent)] text-2xl font-bold">
                   {design.title}
                 </h3>
-                <p className="text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                <p className="text-[var(--highlight)] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                   {design.description}
                 </p>
               </div>
             </div>
 
             <motion.div
-              className="absolute inset-0 z-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-10 transition-opacity duration-500"
+              className="absolute inset-0 z-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-40 transition-opacity duration-500"
               animate={{
                 scale: hoveredId === design.id ? 1.05 : 1,
               }}
