@@ -91,7 +91,7 @@ export default async function ReadsPage() {
           <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
             <h1 className="text-6xl font-black mb-6 text-[var(--foreground)]">Reading List</h1>
             <p className="text-xl text-[var(--accent)] font-serif italic">
-              Some things I've read...
+            "I have lived a thousand lives and I've loved a thousand loves. I've walked on distant worlds and seen the end of time. Because I read." ― George R. R. Martin
             </p>
           </div>
         </section>
