@@ -42,7 +42,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-6 px-2">
-              <Link href="/#about" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+              <Link href="/about" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 About
               </Link>
               <Link href="/#contact" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
@@ -50,6 +50,9 @@ export default function Header() {
               </Link>
               <Link href="/designs" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Design
+              </Link>
+              <Link href="/photos" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Photos
               </Link>
               <Link href="/reads" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Reads
@@ -76,7 +79,7 @@ export default function Header() {
         >
           <div className="flex flex-col space-y-4 px-4">
             <Link
-              href="/#about"
+              href="/about"
               className="text-foreground hover:text-accent transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -95,6 +98,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Design
+            </Link>
+            <Link
+              href="/photos"
+              className="text-foreground hover:text-accent transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Photos
             </Link>
             <Link
               href="/reads"

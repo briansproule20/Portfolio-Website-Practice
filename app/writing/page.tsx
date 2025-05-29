@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 type WritingCategory = 'essays' | 'poetry' | 'reviews';
 
@@ -65,27 +66,44 @@ export default function Writing() {
     : writings.filter(piece => piece.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-[var(--background)] pt-16">
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--card)] opacity-50"></div>
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--card)] to-transparent opacity-30" />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-6xl font-black mb-6 text-[var(--foreground)]">Writing</h1>
-          <p className="text-xl text-[var(--accent)] font-serif italic">
-           Essays, thoughts, and explorations on the information age, our connection to nature, historical perspectives, and the human experience. 
-          </p>
+          <motion.h1 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl md:text-7xl font-black mb-4 md:mb-6 text-[var(--foreground)] tracking-tight"
+          >
+            Writing
+          </motion.h1>
+          <motion.p 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
+          >
+            Essays, thoughts, and explorations on the information age, our connection to nature, historical perspectives, and the human experience.
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Category Navigation */}
-      <nav className="sticky top-16 z-20 bg-[var(--background)] border-b border-[var(--accent)] mb-12">
-        <div className="max-w-6xl mx-auto px-4 py-4 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-4 min-w-max">
+      <nav className="sticky top-16 z-20 bg-[var(--background)] border-b border-[var(--accent)] mb-8 md:mb-12">
+        <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 md:gap-4 min-w-max">
             {categories.map(category => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full transition-colors ${
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm md:text-base transition-colors ${
                   selectedCategory === category.id
                     ? 'bg-[var(--highlight)] text-[var(--foreground)]'
                     : 'text-[var(--accent)] hover:text-[var(--foreground)]'

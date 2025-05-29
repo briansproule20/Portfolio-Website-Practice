@@ -52,65 +52,6 @@ export default async function Home() {
         <ParallaxRing />
       </section>
 
-      {/* About Section */}
-      <section id="about" className="max-w-4xl mx-auto px-4 py-16">
-        <div className="bg-[var(--card)] rounded-2xl p-8 shadow-lg border border-[var(--accent)]">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-[var(--foreground)] flex items-center gap-2">
-                  <span className="w-8 h-1 bg-[var(--highlight)] rounded-full"></span>
-                  Who Am I?
-                </h3>
-                <p className="text-lg text-[var(--foreground)] leading-relaxed">
-                  I'm a publisher and former high school English teacher with a passion for sharing lasting narratives in unique, underrepresented voices and accessible forms. I enjoy working with modern technologies and creating experiences that pay homage to timeless designs and classic storytelling.
-                </p>
-                <p className="text-lg text-[var(--foreground)] leading-relaxed">
-                  My approach combines traditional publishing wisdom with innovative digital solutions, striving to make content more engaging and accessible to diverse audiences.
-                </p>
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-[var(--foreground)] flex items-center gap-2">
-                  <span className="w-8 h-1 bg-[var(--highlight)] rounded-full"></span>
-                  When I'm Not Reading or Writing...
-                </h3>
-                <p className="text-lg text-[var(--foreground)]">
-                 You may be able to find me:
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    'Exploring South Florida\'s waterways',
-                    'Playing the latest Sci-Fi/Fantasy RPG',
-                    'Struggling through a run',
-                    'Trying new recipes in the kitchen',
-                    'Caring for and talking to my houseplants',
-                    'Sketching and drawing (not very well)',
-                    'Acting like an amateur naturalist',
-                    'Outdoors in the sun, drink in hand',
-                  ].map((activity, index) => (
-                    <li key={index} className="flex items-center gap-3 text-lg text-[var(--foreground)]">
-                      <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>
-                      {activity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="mt-12 p-6 bg-[var(--background)] rounded-xl border border-[var(--accent)]">
-            <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4 flex items-center gap-2">
-              <span className="w-8 h-1 bg-[var(--highlight)] rounded-full"></span>
-              My Philosophy
-            </h3>
-            <p className="text-lg text-[var(--foreground)] italic leading-relaxed">
-              Every story deserves to be told in a way that resonates with its audience. My mission is to bridge the gap between traditional storytelling and modern short form media.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Reading Section */}
       <section className="max-w-5xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">What I've Been Reading</h2>
