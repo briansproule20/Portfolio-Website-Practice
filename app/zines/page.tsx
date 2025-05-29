@@ -77,7 +77,7 @@ export default function Zines() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative h-[50vh] flex items-center justify-center overflow-hidden"
+        className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--card)] to-transparent opacity-30" />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
@@ -85,7 +85,7 @@ export default function Zines() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-7xl font-black mb-6 text-[var(--foreground)] tracking-tight"
+            className="text-4xl md:text-7xl font-black mb-4 md:mb-6 text-[var(--foreground)] tracking-tight"
           >
             Zines
           </motion.h1>
@@ -93,7 +93,7 @@ export default function Zines() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xl text-[var(--accent)] font-serif italic"
+            className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
           >
             A collection of thoughts, research, publications, explorations, and informal ramblings.
           </motion.p>
@@ -101,12 +101,12 @@ export default function Zines() {
       </motion.section>
 
       {/* Category Navigation */}
-      <nav className="sticky top-16 z-20 bg-[var(--background)] border-b border-[var(--accent)] mb-12">
-        <div className="max-w-6xl mx-auto px-4 py-4 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-4 min-w-max">
+      <nav className="sticky top-16 z-20 bg-[var(--background)] border-b border-[var(--accent)] mb-8 md:mb-12">
+        <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 md:gap-4 min-w-max">
             <button
               onClick={() => setSelectedCategory('all')}
-              className={`px-4 py-2 rounded-full transition-colors ${
+              className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm md:text-base transition-colors ${
                 selectedCategory === 'all'
                   ? 'bg-[var(--highlight)] text-[var(--foreground)]'
                   : 'text-[var(--accent)] hover:text-[var(--foreground)]'
@@ -118,7 +118,7 @@ export default function Zines() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full transition-colors ${
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-sm md:text-base transition-colors ${
                   selectedCategory === category
                     ? 'bg-[var(--highlight)] text-[var(--foreground)]'
                     : 'text-[var(--accent)] hover:text-[var(--foreground)]'
@@ -135,9 +135,9 @@ export default function Zines() {
       <motion.section 
         initial="hidden"
         animate="visible"
-        className="max-w-6xl mx-auto px-4 pb-24"
+        className="max-w-6xl mx-auto px-4 pb-16 md:pb-24"
       >
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-4 md:gap-8 md:grid-cols-2">
           {filteredZines.map((zine, index) => (
             <motion.article
               key={zine.title}
@@ -145,38 +145,30 @@ export default function Zines() {
               initial="hidden"
               animate="visible"
               transition={{ delay: index * 0.1 }}
-              className={`group relative bg-[var(--card)] rounded-xl p-8 border-2 border-[var(--accent)] transition-all duration-300 ${
+              className={`group relative bg-[var(--card)] rounded-lg md:rounded-xl p-4 md:p-8 border-2 border-[var(--accent)] transition-all duration-300 ${
                 hoveredZine === zine.title ? 'scale-[1.02]' : ''
               }`}
               onMouseEnter={() => setHoveredZine(zine.title)}
               onMouseLeave={() => setHoveredZine(null)}
             >
               <div className="flex flex-col h-full">
-                <div className="mb-4">
-                  <span className="text-sm text-[var(--highlight)] uppercase tracking-wider font-medium">
+                <div className="mb-3 md:mb-4">
+                  <span className="text-xs md:text-sm text-[var(--highlight)] uppercase tracking-wider font-medium">
                     {zine.category}
                   </span>
-                  <h2 className="text-2xl font-bold text-[var(--foreground)] mt-2 mb-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-[var(--foreground)] mt-2 mb-2 md:mb-3">
                     {zine.title}
                   </h2>
                 </div>
                 
-                <p className="text-[var(--accent)] leading-relaxed mb-6">
+                <p className="text-sm md:text-base text-[var(--accent)] leading-relaxed mb-4 md:mb-6">
                   {zine.description}
                 </p>
                 
-                <div className="mt-auto">
-                  <a 
-                    href={zine.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
-                  >
-                    Read Zine 
-                    <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </a>
+                <div className="mt-auto pt-4 md:pt-6">
+                  <button className="text-sm md:text-base text-[var(--highlight)] hover:text-[var(--accent)] transition-colors">
+                    Read more →
+                  </button>
                 </div>
               </div>
             </motion.article>

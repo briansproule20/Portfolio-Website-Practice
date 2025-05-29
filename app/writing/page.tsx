@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-type WritingCategory = 'fiction' | 'essays' | 'poetry' | 'reviews';
+type WritingCategory = 'essays' | 'poetry' | 'reviews';
 
 interface WritingPiece {
   title: string;
@@ -11,7 +11,7 @@ interface WritingPiece {
   category: WritingCategory;
   date: string;
   readTime: string;
-  image?: string;
+  image: string;
 }
 
 export default function Writing() {
@@ -29,7 +29,7 @@ export default function Writing() {
     },
     {
       title: "The Spanish Civil War and its Influence on Twentieth Century Europe",
-      excerpt: "The Spanish Civil War attracted vast amounts of critical reception abroad, in large part because of mass executions carried out by both sides. Such events elicitedharsh artistic reception and fathered works like Orwell’s Homage to Catalonia, Hemingway’sFor Whom the Bell Tolls, and Picasso’s Guernica.",
+      excerpt: "The Spanish Civil War attracted vast amounts of critical reception abroad, in large part because of mass executions carried out by both sides. Such events elicited harsh artistic reception and fathered works like Orwell's Homage to Catalonia, Hemingway's For Whom the Bell Tolls, and Picasso's Guernica.",
       category: "essays",
       date: "May 2023",
       readTime: "35 min",
@@ -44,8 +44,8 @@ export default function Writing() {
       image: "/writing/forgotten.jpg"
     },
     {
-      title: "A Review of On Our Way Home from the Revolution: Reflections on Ukraine",
-      excerpt: "Essay Collection by: Sonya Bilocerkowycz.",
+      title: "On Our Way Home from the Revolution: Reflections on Ukraine",
+      excerpt: "Essay Collection by Sonya Bilocerkowycz",
       category: "reviews",
       date: "December 2023",
       readTime: "10 min",
@@ -55,15 +55,14 @@ export default function Writing() {
 
   const categories: { id: WritingCategory | 'all'; label: string }[] = [
     { id: 'all', label: 'All Writing' },
-    { id: 'fiction', label: 'Fiction' },
     { id: 'essays', label: 'Essays' },
     { id: 'poetry', label: 'Poetry' },
     { id: 'reviews', label: 'Reviews' }
   ];
 
-  const filteredWritings = selectedCategory === 'all' 
-    ? writings 
-    : writings.filter(w => w.category === selectedCategory);
+  const filteredWritings = selectedCategory === 'all'
+    ? writings
+    : writings.filter(piece => piece.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-[var(--background)] pt-16">
@@ -125,7 +124,7 @@ export default function Writing() {
                 </div>
                 
                 {piece.image && (
-                  <div className="relative h-64 mb-4 rounded-lg overflow-hidden">
+                  <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
                     <Image
                       src={piece.image}
                       alt={piece.title}

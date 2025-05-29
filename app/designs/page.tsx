@@ -74,7 +74,7 @@ export default function Designs() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-4xl mx-auto px-4 -mt-24 grid grid-cols-1 md:grid-cols-2 gap-8"
+        className="max-w-4xl mx-auto px-4 -mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8"
       >
         {designs.map((design) => (
           <motion.div

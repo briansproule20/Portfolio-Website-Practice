@@ -30,8 +30,8 @@ export default function Wanted() {
         <section className="bg-[var(--card)] py-12 px-4 mt-16">
           <div className="max-w-6xl mx-auto space-y-8">
             {/* Title and Subtitle */}
-            <div className="text-center space-y-4">
-              <h2 className="text-6xl font-black mb-4 text-[var(--foreground)] uppercase tracking-wider">
+            <div className="text-center space-y-4 w-full">
+              <h2 className="text-6xl font-black mb-4 text-[var(--foreground)] uppercase tracking-wider text-center w-full">
                 Wanted
               </h2>
               <p className="text-xl text-[var(--accent)] italic">
