@@ -1,6 +1,8 @@
 import Image from "next/image";
 import SwimmingFish from './components/SwimmingFish';
 import ParallaxRing from './components/ParallaxRing';
+import Link from 'next/link';
+import { getFeaturedPhotos, type Photo } from '../utils/photos';
 
 async function getRecentBooks() {
   try {
@@ -38,6 +40,7 @@ async function getRecentBooks() {
 
 export default async function Home() {
   const { books } = await getRecentBooks();
+  const featuredPhotos = getFeaturedPhotos();
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
@@ -50,6 +53,42 @@ export default async function Home() {
           <p className="text-xl max-w-2xl mb-6 text-[var(--foreground)]">My name is Brian, I'm a digitial and traditional publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a cup of tea, a snack, get comfy, and stay a while. Please mind the fish.</p>
         </div>
         <ParallaxRing />
+      </section>
+
+      {/* Featured Photos Section */}
+      <section className="max-w-5xl mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">Featured Photos</h2>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredPhotos.map((photo: Photo) => (
+            <Link href="/photos" key={photo.id} className="rounded-xl shadow-lg p-6 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors">
+              <div className="relative w-full h-44 mb-4 group">
+                <Image
+                  src={photo.image}
+                  alt={photo.title}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="text-white/90 text-sm">{photo.description}</p>
+                  </div>
+                </div>
+              </div>
+              <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">{photo.title}</h3>
+              <p className="text-[var(--accent)] mb-2">{photo.category}</p>
+            </Link>
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Link 
+            href="/photos" 
+            className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
+          >
+            View Gallery
+          </Link>
+        </div>
       </section>
 
       {/* Reading Section */}

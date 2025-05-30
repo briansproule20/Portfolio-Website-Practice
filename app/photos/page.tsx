@@ -1,16 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 // Shuffle function using Fisher-Yates algorithm
 const shuffleArray = (array: any[]) => {
+  console.log('Starting shuffle with array length:', array.length);
+  console.log('Original array:', array);
+  
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
+  
+  console.log('Shuffled array length:', shuffled.length);
+  console.log('Shuffled array:', shuffled);
   return shuffled;
 };
 
@@ -30,6 +36,24 @@ const photos = [
     category: "Friends",
     description: "Some Buckeyes out in enemy territory.",
     image: "/photos/ND.jpg",
+    width: 3024,
+    height: 4032
+  },
+  {
+    id: 3,
+    title: "Willys",
+    category: "Nature",
+    description: "The 1950's Willys Jeep, a staple of the cabin.",
+    image: "/photos/jeep.jpg",
+    width: 3024,
+    height: 4032
+  },
+  {
+    id: 4,
+    title: "A Winter Storm",
+    category: "Pets",
+    description: "Enjoying the snow in the foothills.",
+    image: "/photos/storm.jpg",
     width: 3024,
     height: 4032
   }
@@ -64,16 +88,36 @@ const item = {
 export default function Photos() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [shuffledPhotos, setShuffledPhotos] = useState(photos);
 
-  // Shuffle photos when the page loads
-  useEffect(() => {
-    setShuffledPhotos(shuffleArray(photos));
-  }, []);
+  // Create a new shuffled array on each render
+  const shuffledPhotos = useMemo(() => shuffleArray([...photos]), []);
+
+  // Assign random sizes to photos while maintaining aspect ratio
+  const photoSizes = useMemo(() => {
+    return shuffledPhotos.map(photo => {
+      // Calculate base size as percentage (based on aspect ratio)
+      const baseSize = (photo.height / photo.width) * 100;
+      
+      // Random scale between 0.8 and 1.1
+      const scale = 0.8 + (Math.random() * 0.3);
+      
+      // Calculate actual size with constraints
+      const minSize = 60; // Minimum height percentage
+      const maxSize = 120; // Maximum height percentage
+      const scaledSize = Math.min(Math.max(baseSize * scale, minSize), maxSize);
+      
+      return {
+        ...photo,
+        span: Math.random() > 0.7 ? 2 : 1, // 30% chance to span 2 columns
+        scaledHeight: scaledSize,
+        offset: Math.floor(Math.random() * 30), // Reduced maximum offset
+      };
+    });
+  }, [shuffledPhotos]);
 
   const filteredPhotos = selectedCategory === 'all'
-    ? shuffledPhotos
-    : shuffledPhotos.filter(photo => photo.category.toLowerCase() === selectedCategory);
+    ? photoSizes
+    : photoSizes.filter(photo => photo.category.toLowerCase() === selectedCategory);
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
@@ -131,48 +175,58 @@ export default function Photos() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-6xl mx-auto px-4 pb-16 columns-1 md:columns-2 lg:columns-3 gap-8"
+        className="max-w-7xl mx-auto px-4 pb-16"
       >
-        {filteredPhotos.map((photo) => (
-          <motion.div
-            key={photo.id}
-            variants={item}
-            className="relative break-inside-avoid mb-8 group"
-            onMouseEnter={() => setHoveredId(photo.id)}
-            onMouseLeave={() => setHoveredId(null)}
-          >
-            <div className="relative overflow-hidden bg-[var(--card)] border-2 border-[var(--accent)] hover:border-[var(--highlight)] transition-colors">
-              <div style={{ paddingTop: `${(photo.height / photo.width) * 100}%` }} />
-              <Image
-                src={photo.image}
-                alt={photo.title}
-                fill
-                className="object-contain transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority
-              />
-              {/* Info Overlay - only visible on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/70" />
-                {/* Text content */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white/70 text-sm tracking-wider uppercase mb-2">
-                      {photo.category}
-                    </p>
-                    <h3 className="text-white text-2xl font-bold mb-2">
-                      {photo.title}
-                    </h3>
-                    <p className="text-white/90">
-                      {photo.description}
-                    </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {filteredPhotos.map((photo) => (
+            <motion.div
+              key={photo.id}
+              variants={item}
+              className={`relative group ${
+                photo.span === 2 ? 'md:col-span-2' : ''
+              }`}
+              style={{
+                marginTop: `${photo.offset}px`,
+              }}
+            >
+              <div 
+                className="relative overflow-hidden bg-[var(--card)] border-2 border-[var(--accent)] hover:border-[var(--highlight)] transition-colors rounded-lg"
+                style={{
+                  paddingTop: `${photo.scaledHeight}%`,
+                }}
+              >
+                <Image
+                  src={photo.image}
+                  alt={photo.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes={photo.span === 2 
+                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                    : "(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  }
+                  priority
+                />
+                {/* Info Overlay - only visible on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="absolute inset-0 bg-black/70" />
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="text-white/70 text-sm tracking-wider uppercase mb-2">
+                        {photo.category}
+                      </p>
+                      <h3 className="text-white text-2xl font-bold mb-2">
+                        {photo.title}
+                      </h3>
+                      <p className="text-white/90">
+                        {photo.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </motion.section>
     </div>
   );
