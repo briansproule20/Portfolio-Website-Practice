@@ -166,9 +166,14 @@ export default function Zines() {
                 </p>
                 
                 <div className="mt-auto pt-4 md:pt-6">
-                  <button className="text-sm md:text-base text-[var(--highlight)] hover:text-[var(--accent)] transition-colors">
+                  <a 
+                    href={zine.pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="text-sm md:text-base text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
+                  >
                     Read more →
-                  </button>
+                  </a>
                 </div>
               </div>
             </motion.article>
