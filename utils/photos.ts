@@ -51,7 +51,7 @@ const photos: Photo[] = [
     title: "Grandma Rosie",
     category: "Memoriam",
     description: "Always getting down and playing with us kids. Love and miss you, Grandma Rosie.",
-    image: "/photos/rosie.jpg",
+    image: "/photos/rosie.JPG",
     width: 3024,
     height: 4032
   },
@@ -78,7 +78,7 @@ const photos: Photo[] = [
     title: "SCUBA Diving",
     category: "Nature",
     description: "Diving off the coast of Southern France, the Mediteranean Sea.",
-    image: "/photos/med.jpg",
+    image: "/photos/med.JPG",
     width: 4032,
     height: 3024
   }
