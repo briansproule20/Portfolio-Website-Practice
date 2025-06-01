@@ -114,7 +114,7 @@ export default function ReadsClient({ books }: ReadsClientProps) {
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-[var(--foreground)]">Where I Read</h2>
           <p className="text-[var(--accent)] mt-2">
-            Exploring literature around the globe. Hover over countries to see where I've read books.
+            Exploring literature around the globe. Hover over countries to see where I've read titles from.
           </p>
         </div>
         <div className="relative bg-[var(--card)] rounded-xl p-6 shadow-lg mb-12">

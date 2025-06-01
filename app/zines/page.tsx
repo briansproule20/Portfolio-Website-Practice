@@ -77,9 +77,10 @@ export default function Zines() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden"
+        className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden pt-16"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--card)] to-transparent opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <motion.h1 
             initial={{ y: 20, opacity: 0 }}
@@ -95,7 +96,7 @@ export default function Zines() {
             transition={{ delay: 0.4 }}
             className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
           >
-            A collection of thoughts, research, publications, explorations, and informal ramblings.
+            A collection of one page zines I've created.
           </motion.p>
         </div>
       </motion.section>

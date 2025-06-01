@@ -23,7 +23,7 @@ const photos: Photo[] = [
     id: 2,
     title: "Behind Enemy Lines",
     category: "Friends",
-    description: "Some Buckeyes out in enemy territory.",
+    description: "Buckeyes out in enemy territory.",
     image: "/photos/ND.jpg",
     width: 3024,
     height: 4032
@@ -32,7 +32,7 @@ const photos: Photo[] = [
     id: 3,
     title: "Willys",
     category: "Nature",
-    description: "The 1950's Willys Jeep, a staple of the cabin.",
+    description: "The 1950's Willys Jeep, a staple of the cabin, with Bear trotting up to the photographer for some attention.",
     image: "/photos/jeep.jpg",
     width: 3024,
     height: 4032
@@ -41,7 +41,7 @@ const photos: Photo[] = [
     id: 4,
     title: "A Winter Storm",
     category: "Pets",
-    description: "Enjoying the snow in the foothills.",
+    description: "Enjoying the snow in the foothills of Western Pennsylvania.",
     image: "/photos/storm.jpg",
     width: 3024,
     height: 4032
@@ -68,7 +68,7 @@ const photos: Photo[] = [
     id: 7,
     title: "Thanksgiving Dinner 2024",
     category: "Food",
-    description: "Traditional, Irish Thanksgiving dinner could be the best meal of the year.",
+    description: "Traditional, Irish Thanksgiving dinner could be my favorite meal of the year.",
     image: "/photos/thanksgiving.jpg",
     width: 3024,
     height: 4032
@@ -77,7 +77,7 @@ const photos: Photo[] = [
     id: 8,
     title: "SCUBA Diving",
     category: "Nature",
-    description: "Diving off the coast of Southern France, the Mediteranean Sea.",
+    description: "Diving off the coast of Southern France, Mediteranean Sea.",
     image: "/photos/med.JPG",
     width: 4032,
     height: 3024
