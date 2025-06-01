@@ -56,18 +56,36 @@ export default async function Home() {
       </section>
 
       {/* Featured Photos Section */}
-      <section className="max-w-5xl mx-auto px-4 py-12">
+      <section className="max-w-4xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">Featured Photos</h2>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featuredPhotos.map((photo: Photo) => (
-            <Link href="/photos" key={photo.id} className="rounded-xl shadow-lg p-6 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors">
-              <div className="relative w-full h-44 mb-4 group">
+            <Link 
+              href="/photos" 
+              key={photo.id} 
+              className={`rounded-xl shadow-lg p-4 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors ${
+                photo.width > photo.height ? 'sm:col-span-2' : ''
+              }`}
+            >
+              <div 
+                className="relative w-full mb-4 group"
+                style={{
+                  aspectRatio: photo.width > photo.height ? '6/4' : '3/4',
+                }}
+              >
                 <Image
                   src={photo.image}
                   alt={photo.title}
                   fill
-                  className="object-cover rounded-lg"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  className={`object-cover rounded-lg ${
+                    photo.title === "Grandma Rosie" ? "object-[35%_center]" : ""
+                  } ${
+                    photo.width > photo.height ? "object-[center_35%]" : ""
+                  }`}
+                  sizes={photo.width > photo.height 
+                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                    : "(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  }
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">

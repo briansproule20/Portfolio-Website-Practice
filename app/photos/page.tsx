@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import photos from '@/utils/photos';
 
 // Shuffle function using Fisher-Yates algorithm
 const shuffleArray = (array: any[]) => {
@@ -20,45 +21,6 @@ const shuffleArray = (array: any[]) => {
   return shuffled;
 };
 
-const photos = [
-  {
-    id: 1,
-    title: "Wolff's Cabin",
-    category: "Nature",
-    description: "A peaceful retreat in the wilderness, smoke rising over the water.",
-    image: "/photos/cabin.jpg",
-    width: 3024,
-    height: 4032
-  },
-  {
-    id: 2,
-    title: "Behind Enemy Lines",
-    category: "Friends",
-    description: "Some Buckeyes out in enemy territory.",
-    image: "/photos/ND.jpg",
-    width: 3024,
-    height: 4032
-  },
-  {
-    id: 3,
-    title: "Willys",
-    category: "Nature",
-    description: "The 1950's Willys Jeep, a staple of the cabin.",
-    image: "/photos/jeep.jpg",
-    width: 3024,
-    height: 4032
-  },
-  {
-    id: 4,
-    title: "A Winter Storm",
-    category: "Pets",
-    description: "Enjoying the snow in the foothills.",
-    image: "/photos/storm.jpg",
-    width: 3024,
-    height: 4032
-  }
-];
-
 const categories = [
   { id: 'all', label: 'All Photos' },
   { id: 'family', label: 'Family' },
@@ -67,7 +29,6 @@ const categories = [
   { id: 'memoriam', label: 'In Loving Memory' },
   { id: 'nature', label: 'Nature' },
   { id: 'pets', label: 'Pets' },
-  { id: 'style', label: 'Style' },
 ];
 
 const container = {
@@ -92,25 +53,14 @@ export default function Photos() {
   // Create a new shuffled array on each render
   const shuffledPhotos = useMemo(() => shuffleArray([...photos]), []);
 
-  // Assign random sizes to photos while maintaining aspect ratio
+  // Assign consistent sizes to photos while maintaining aspect ratio
   const photoSizes = useMemo(() => {
     return shuffledPhotos.map(photo => {
-      // Calculate base size as percentage (based on aspect ratio)
-      const baseSize = (photo.height / photo.width) * 100;
-      
-      // Random scale between 0.8 and 1.1
-      const scale = 0.8 + (Math.random() * 0.3);
-      
-      // Calculate actual size with constraints
-      const minSize = 60; // Minimum height percentage
-      const maxSize = 120; // Maximum height percentage
-      const scaledSize = Math.min(Math.max(baseSize * scale, minSize), maxSize);
-      
       return {
         ...photo,
-        span: Math.random() > 0.7 ? 2 : 1, // 30% chance to span 2 columns
-        scaledHeight: scaledSize,
-        offset: Math.floor(Math.random() * 30), // Reduced maximum offset
+        span: 1, // All photos take up one column for consistency
+        scaledHeight: 100, // Fixed height percentage
+        offset: 0, // Remove random offset for alignment
       };
     });
   }, [shuffledPhotos]);
@@ -183,27 +133,25 @@ export default function Photos() {
               key={photo.id}
               variants={item}
               className={`relative group ${
-                photo.span === 2 ? 'md:col-span-2' : ''
+                photo.width > photo.height ? 'md:col-span-2' : ''
               }`}
-              style={{
-                marginTop: `${photo.offset}px`,
-              }}
             >
               <div 
                 className="relative overflow-hidden bg-[var(--card)] border-2 border-[var(--accent)] hover:border-[var(--highlight)] transition-colors rounded-lg"
                 style={{
-                  paddingTop: `${photo.scaledHeight}%`,
+                  aspectRatio: photo.width > photo.height ? '6/4' : '3/4',
                 }}
               >
                 <Image
                   src={photo.image}
                   alt={photo.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes={photo.span === 2 
-                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
-                    : "(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                  }
+                  className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
+                    photo.title === "Grandma Rosie" ? "object-[35%_center]" : ""
+                  } ${
+                    photo.width > photo.height ? "object-[center_35%]" : ""
+                  }`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                   priority
                 />
                 {/* Info Overlay - only visible on hover */}
