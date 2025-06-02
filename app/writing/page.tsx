@@ -158,9 +158,20 @@ export default function Writing() {
                 </p>
                 
                 <div className="mt-auto pt-6">
-                  <button className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors">
-                    Read more →
-                  </button>
+                  {piece.title === "The Spanish Civil War and its Influence on Twentieth Century Europe" ? (
+                    <a 
+                      href="/pdfs/Spanish-War.pdf" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
+                    >
+                      Read more →
+                    </a>
+                  ) : (
+                    <button className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors">
+                      Read more →
+                    </button>
+                  )}
                 </div>
               </div>
             </article>
