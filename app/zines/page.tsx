@@ -8,7 +8,7 @@ const zines = [
   {
     title: "The Atlantic Ocean",
     category: "Nature & Conservation",
-    description: "For all of human history, we have depended on the natural world for the most foundational functions of life... We can mistreat, pollute, and destroy the natural world at our own peril, but do not look to history and claim we weren't warned.",
+    description: "We can mistreat, pollute, and destroy the natural world at our own peril, but do not look to history and claim we weren't warned of nature's wrath.",
     pdfUrl: "/pdfs/atlantic-ocean.pdf"
   },
   {
@@ -20,8 +20,8 @@ const zines = [
   {
     title: "A Local's Guide to Native Species",
     category: "Nature & Conservation",
-    description: "A journey through the foothills of the Appalachian Mountains.",
-    pdfUrl: "/pdfs/native-species-guide.pdf"
+    description: "A journey through the foothills of the Appalachian Mountains, featuring the native species of Penn's Woods.",
+    pdfUrl: "/pdfs/native-species.pdf"
   },
   {
     title: "Ink and Pen and Paper and Transistors",
