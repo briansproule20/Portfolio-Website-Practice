@@ -82,10 +82,10 @@ export default function Designs() {
             variants={item}
             onMouseEnter={() => setHoveredId(design.id)}
             onMouseLeave={() => setHoveredId(null)}
-            className="group relative aspect-[4/5] rounded-xl overflow-hidden bg-[var(--card)]"
+            className="group relative aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden bg-[var(--card)]"
           >
             <div className="absolute inset-0 z-10">
-              <div className="absolute inset-x-[10%] top-[5%] bottom-[35%] overflow-hidden">
+              <div className="absolute inset-x-[10%] top-[5%] bottom-[35%] md:bottom-[35%] overflow-hidden">
                 <Image
                   src={design.image}
                   alt={design.title}
@@ -93,29 +93,29 @@ export default function Designs() {
                   className="object-cover object-[center_0%] transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
 
-            <div className={`absolute inset-0 z-20 p-8 flex flex-col ${
+            <div className={`absolute inset-0 z-20 p-4 md:p-8 flex flex-col ${
               design.id === 2 
-                ? 'justify-start pt-[88%]' 
+                ? 'justify-start pt-[88%] md:pt-[88%]' 
                 : 'justify-end'
-            } transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500`}>
+            } transform translate-y-0 md:translate-y-8 group-hover:translate-y-0 transition-transform duration-500`}>
               <div className="space-y-2">
                 <p className="text-[var(--highlight)] text-sm tracking-wider uppercase font-semibold">
                   {design.category}
                 </p>
-                <h3 className="text-[var(--accent)] text-2xl font-bold">
+                <h3 className="text-[var(--accent)] text-xl md:text-2xl font-bold">
                   {design.title}
                 </h3>
-                <p className="text-[var(--highlight)] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                <p className="text-[var(--highlight)] text-sm md:text-base font-medium opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                   {design.description}
                 </p>
               </div>
             </div>
 
             <motion.div
-              className="absolute inset-0 z-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-40 transition-opacity duration-500"
+              className="absolute inset-0 z-0 bg-[var(--highlight)] opacity-40 md:opacity-0 group-hover:opacity-40 transition-opacity duration-500"
               animate={{
                 scale: hoveredId === design.id ? 1.05 : 1,
               }}

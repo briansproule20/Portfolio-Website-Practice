@@ -57,9 +57,6 @@ export default function Header() {
               <Link href="/reads" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Reads
               </Link>
-              <Link href="/wanted" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Wanted
-              </Link>
               <Link href="/writing" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Writing
               </Link>
@@ -112,13 +109,6 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Reads
-            </Link>
-            <Link
-              href="/wanted"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Wanted
             </Link>
             <Link
               href="/writing"

@@ -58,15 +58,33 @@ export default function ReadsClient({ books }: ReadsClientProps) {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero Section */}
-      <section className="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[var(--card)] opacity-50"></div>
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden pt-16"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-6xl font-black mb-6 text-[var(--foreground)]">Reading List</h1>
-          <p className="text-xl text-[var(--accent)] font-serif italic">
-          "I have lived a thousand lives and I've loved a thousand loves. I've walked on distant worlds and seen the end of time. Because I read." ― George R. R. Martin
-          </p>
+          <motion.h1 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl md:text-7xl font-black mb-4 md:mb-6 text-[var(--foreground)] tracking-tight"
+          >
+            Reading List
+          </motion.h1>
+          <motion.p 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
+          >
+            "I have lived a thousand lives and I've loved a thousand loves. I've walked on distant worlds and seen the end of time. Because I read." ― George R. R. Martin
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Stats Section */}
       <section className="max-w-6xl mx-auto px-4 -mt-16 relative z-20">
