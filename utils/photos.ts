@@ -81,7 +81,43 @@ const photos: Photo[] = [
     image: "/photos/med.JPG",
     width: 4032,
     height: 3024
-  }
+  },
+  {
+    id: 9,
+    title: "Lauterbrunnen",
+    category: "Friends",
+    description: "Exploring the Lauterbrunnen Valley in Switzerland.",
+    image: "/photos/Switz.JPG",
+    width: 3024,
+    height: 4032,
+  },
+  {
+    id: 10,
+    title: "Buckeyes",
+    category: "Friends",
+    description: "Celebrating graduation in the Horseshoe.",
+    image: "/photos/Bucks.JPG",
+    width: 4032,
+    height: 3024,
+  },
+  {
+    id: 11,
+    title: "A Day in Wrigleyville",
+    category: "Friends",
+    description: "Out and about in Wrigleyville, Chicago for Mass' birthday and the ZBB Concert.",
+    image: "/photos/Wrigley.JPG",
+    width: 3024,
+    height: 4032,
+  },
+  {
+    id: 12,
+    title: "Rusty on Dogwood",
+    category: "Pets",
+    description: "Rusty out in the yard, saying goodbye on my first day of second grade.",
+    image: "/photos/Rusty.JPG",
+    width: 4032,
+    height: 3024,
+  },
 ];
 
 export function getFeaturedPhotos(): Photo[] {
