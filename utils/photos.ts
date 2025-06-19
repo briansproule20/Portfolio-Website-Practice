@@ -118,6 +118,42 @@ const photos: Photo[] = [
     width: 4032,
     height: 3024,
   },
+  {
+    id: 13,
+    title: "Aunt Tine and Uncle Louis",
+    category: "Family",
+    description: "Visiting the Princess Diana Memorial Fountain in London.",
+    image: "/photos/Diana.JPG",
+    width: 4032,
+    height: 3024,
+  },
+  {
+    id: 14,
+    title: "William Penn's Woods in Winter",
+    category: "Nature",
+    description: "At the cabin in the aftermath of of a mid-winter snowstorm.",
+    image: "/photos/Woods.JPG",
+    width: 4032,
+    height: 3024,
+  },
+  {
+    id: 15,
+    title: "Baby Sister Lucy",
+    category: "Family",
+    description: "Our final foster baby, Lucy, who we took care of at the beginning of the pandemic.",
+    image: "/photos/Lucy.JPG",
+    width: 3024,
+    height: 4032,
+  },
+  {
+    id: 16,
+    title: "Das Boot",
+    category: "Family",
+    description: "Will and I working through our boots at Das Superkuchen while visiting Ry in San Francisco.",
+    image: "/photos/Boot.JPG",
+    width: 3024,
+    height: 4032,
+  },
 ];
 
 export function getFeaturedPhotos(): Photo[] {
