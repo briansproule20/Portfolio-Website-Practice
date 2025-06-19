@@ -114,7 +114,7 @@ const photos: Photo[] = [
     title: "Rusty on Dogwood",
     category: "Pets",
     description: "Rusty out in the yard, saying goodbye on my first day of second grade.",
-    image: "/photos/Rusty.JPG",
+    image: "/photos/rusty.JPG",
     width: 4032,
     height: 3024,
   },
