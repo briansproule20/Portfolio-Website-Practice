@@ -4,38 +4,79 @@ import { PersistentTrack, PlaylistRankings } from '@/types/rankings';
 
 const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
 
+// In-memory fallback for serverless environments
+let memoryRankings: PlaylistRankings | null = null;
+
 // Ensure data directory exists
 function ensureDataDirectory() {
-  const dataDir = path.join(process.cwd(), 'data');
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
+  try {
+    const dataDir = path.join(process.cwd(), 'data');
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+    return true;
+  } catch (error) {
+    console.warn('Cannot create data directory (serverless environment):', error);
+    return false;
   }
 }
 
-// Load existing rankings from file
+// Check if we can write files (not possible on Vercel/Netlify)
+function canWriteFiles(): boolean {
+  try {
+    const testFile = path.join(process.cwd(), 'test-write.tmp');
+    fs.writeFileSync(testFile, 'test');
+    fs.unlinkSync(testFile);
+    return true;
+  } catch (error) {
+    console.warn('File system is read-only (serverless environment)');
+    return false;
+  }
+}
+
+// Load existing rankings from file or memory
 export function loadRankings(): PlaylistRankings | null {
   try {
-    ensureDataDirectory();
-    if (!fs.existsSync(RANKINGS_FILE)) {
-      return null;
+    // Try memory first (for serverless)
+    if (memoryRankings) {
+      console.log('Loading rankings from memory');
+      return memoryRankings;
     }
-    const data = fs.readFileSync(RANKINGS_FILE, 'utf8');
-    const rankings = JSON.parse(data);
+
+    // Try file system
+    ensureDataDirectory();
+    if (fs.existsSync(RANKINGS_FILE)) {
+      const data = fs.readFileSync(RANKINGS_FILE, 'utf8');
+      const rankings = JSON.parse(data);
+      console.log('Loading rankings from file');
+      return rankings;
+    }
     
-    return rankings;
+    return null;
   } catch (error) {
     console.error('Error loading rankings:', error);
-    return null;
+    return memoryRankings; // Fallback to memory
   }
 }
 
-// Save rankings to file
+// Save rankings to file or memory
 export function saveRankings(rankings: PlaylistRankings): void {
   try {
-    ensureDataDirectory();
-    fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
+    // Always save to memory
+    memoryRankings = rankings;
+    console.log('Saved rankings to memory');
+
+    // Try to save to file if possible
+    if (canWriteFiles()) {
+      ensureDataDirectory();
+      fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
+      console.log('Saved rankings to file');
+    } else {
+      console.log('Using memory storage (serverless environment)');
+    }
   } catch (error) {
-    console.error('Error saving rankings:', error);
+    console.error('Error saving rankings (using memory only):', error);
+    // Memory save already happened above
   }
 }
 
