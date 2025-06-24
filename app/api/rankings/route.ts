@@ -27,7 +27,6 @@ async function getSpotifyToken() {
   
   console.log('🔍 Debug - Client ID exists:', !!clientId);
   console.log('🔍 Debug - Client Secret exists:', !!clientSecret);
-  console.log('🔍 Debug - All env vars:', Object.keys(process.env).filter(key => key.includes('SPOTIFY')));
   
   if (!clientId || !clientSecret) {
     console.error('❌ Missing Spotify credentials:', { 
