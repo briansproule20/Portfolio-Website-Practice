@@ -31,6 +31,17 @@ export interface PlaylistRankings {
   tracks: PersistentTrack[];
 }
 
+export interface VoteRecord {
+  id: string;
+  winnerId: string;
+  loserId: string;
+  timestamp: string;
+  winnerRatingBefore: number;
+  loserRatingBefore: number;
+  winnerRatingAfter: number;
+  loserRatingAfter: number;
+}
+
 // Get track statistics (client-safe function)
 export function getTrackStats(track: PersistentTrack) {
   const winRate = track.totalComparisons > 0 ? (track.totalWins / track.totalComparisons) * 100 : 0;

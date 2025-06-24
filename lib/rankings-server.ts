@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { PersistentTrack, PlaylistRankings } from '@/types/rankings';
+import { PersistentTrack, PlaylistRankings, VoteRecord } from '@/types/rankings';
 
 // Vercel KV import with fallback
 let kv: any = null;
@@ -11,10 +11,13 @@ try {
 }
 
 const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
+const VOTES_FILE = path.join(process.cwd(), 'data', 'votes-log.json');
 const KV_KEY = 'playlist-rankings';
+const KV_VOTES_KEY = 'playlist-votes';
 
 // In-memory fallback for development/testing
 let memoryRankings: PlaylistRankings | null = null;
+let memoryVotes: VoteRecord[] = [];
 
 // Ensure data directory exists
 function ensureDataDirectory() {
@@ -83,7 +86,46 @@ export async function loadRankings(): Promise<PlaylistRankings | null> {
   }
 }
 
-// Save rankings - synchronous version
+// Enhanced async save function for KV
+export async function saveRankingsAsync(rankings: PlaylistRankings): Promise<boolean> {
+  let success = false;
+  
+  try {
+    // Always save to memory as immediate fallback
+    memoryRankings = rankings;
+    console.log('Saved rankings to memory');
+
+    // Try to save to Vercel KV first (production)
+    if (kv) {
+      try {
+        await kv.set(KV_KEY, rankings);
+        console.log('✅ Saved rankings to Vercel KV');
+        success = true;
+      } catch (error) {
+        console.warn('❌ KV save failed, trying file storage:', error);
+      }
+    }
+
+    // Try to save to file if KV failed or not available
+    if (!success && canWriteFiles()) {
+      ensureDataDirectory();
+      fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
+      console.log('✅ Saved rankings to file');
+      success = true;
+    }
+
+    if (!success) {
+      console.log('⚠️ Using memory storage only (serverless environment)');
+    }
+    
+    return success;
+  } catch (error) {
+    console.error('❌ Error saving rankings (using memory only):', error);
+    return false;
+  }
+}
+
+// Save rankings - synchronous version (for backward compatibility)
 export function saveRankings(rankings: PlaylistRankings): void {
   try {
     // Always save to memory as immediate fallback
@@ -94,12 +136,12 @@ export function saveRankings(rankings: PlaylistRankings): void {
     if (canWriteFiles()) {
       ensureDataDirectory();
       fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
-      console.log('Saved rankings to file');
+      console.log('✅ Saved rankings to file (sync)');
     } else {
-      console.log('Using memory storage (serverless environment)');
+      console.log('⚠️ Using memory storage (serverless environment)');
     }
   } catch (error) {
-    console.error('Error saving rankings (using memory only):', error);
+    console.error('❌ Error saving rankings (using memory only):', error);
     // Memory save already happened above
   }
 }
@@ -162,13 +204,20 @@ export function updateRankings(
   rankings: PlaylistRankings,
   winnerId: string,
   loserId: string
-): PlaylistRankings {
+): { updatedRankings: PlaylistRankings; voteRecord: VoteRecord } {
   const winnerTrack = rankings.tracks.find(t => t.id === winnerId);
   const loserTrack = rankings.tracks.find(t => t.id === loserId);
 
   if (!winnerTrack || !loserTrack) {
-    return rankings;
+    return { 
+      updatedRankings: rankings, 
+      voteRecord: null as any 
+    };
   }
+
+  // Store ratings before changes
+  const winnerRatingBefore = winnerTrack.eloRating;
+  const loserRatingBefore = loserTrack.eloRating;
 
   // Calculate new Elo ratings
   const kFactor = 32;
@@ -228,11 +277,28 @@ export function updateRankings(
     return track;
   });
 
-  return {
+  const updatedRankings = {
     ...rankings,
     tracks: tracksWithHistory,
     totalVotes: rankings.totalVotes + 1,
     lastUpdated: new Date().toISOString()
+  };
+
+  // Create vote record
+  const voteRecord: VoteRecord = {
+    id: `vote_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    winnerId,
+    loserId,
+    timestamp: new Date().toISOString(),
+    winnerRatingBefore,
+    loserRatingBefore,
+    winnerRatingAfter: newWinnerRating,
+    loserRatingAfter: newLoserRating
+  };
+
+  return {
+    updatedRankings,
+    voteRecord
   };
 }
 
@@ -289,4 +355,82 @@ export function syncNewTracks(
     tracks: [...existingRankings.tracks, ...newTracks],
     lastUpdated: new Date().toISOString()
   };
+}
+
+// Log individual votes permanently
+export async function logVote(voteRecord: VoteRecord): Promise<void> {
+  try {
+    // Add to memory
+    memoryVotes.push(voteRecord);
+    
+    // Try to save to KV
+    if (kv) {
+      try {
+        const existingVotes = await kv.get(KV_VOTES_KEY) || [];
+        const updatedVotes = [...existingVotes, voteRecord];
+        await kv.set(KV_VOTES_KEY, updatedVotes);
+        console.log('✅ Logged vote to KV');
+      } catch (error) {
+        console.warn('❌ KV vote logging failed:', error);
+      }
+    }
+
+    // Try to save to file
+    if (canWriteFiles()) {
+      try {
+        ensureDataDirectory();
+        let existingVotes: VoteRecord[] = [];
+        
+        if (fs.existsSync(VOTES_FILE)) {
+          const data = fs.readFileSync(VOTES_FILE, 'utf8');
+          existingVotes = JSON.parse(data);
+        }
+        
+        existingVotes.push(voteRecord);
+        fs.writeFileSync(VOTES_FILE, JSON.stringify(existingVotes, null, 2));
+        console.log('✅ Logged vote to file');
+      } catch (error) {
+        console.warn('❌ File vote logging failed:', error);
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error logging vote:', error);
+  }
+}
+
+// Get vote history
+export async function getVoteHistory(): Promise<VoteRecord[]> {
+  try {
+    // Try KV first
+    if (kv) {
+      try {
+        const votes = await kv.get(KV_VOTES_KEY);
+        if (votes && Array.isArray(votes)) {
+          console.log('Loading vote history from KV');
+          return votes;
+        }
+      } catch (error) {
+        console.warn('KV vote history load failed:', error);
+      }
+    }
+
+    // Try file system
+    if (ensureDataDirectory() && fs.existsSync(VOTES_FILE)) {
+      try {
+        const data = fs.readFileSync(VOTES_FILE, 'utf8');
+        const votes = JSON.parse(data);
+        console.log('Loading vote history from file');
+        return votes;
+      } catch (error) {
+        console.warn('File vote history load failed:', error);
+      }
+    }
+
+    // Fallback to memory
+    console.log('Loading vote history from memory');
+    return memoryVotes;
+  } catch (error) {
+    console.error('Error loading vote history:', error);
+    return [];
+  }
 } 

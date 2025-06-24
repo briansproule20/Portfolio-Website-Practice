@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
   loadRankingsSync, 
+  loadRankings,
   saveRankings, 
+  saveRankingsAsync,
   initializeRankings, 
   updateRankings,
   getRankedTracks,
-  syncNewTracks
+  syncNewTracks,
+  logVote,
+  getVoteHistory
 } from '@/lib/rankings-server';
 
 // Configuration
@@ -154,6 +158,38 @@ export async function GET() {
   }
 }
 
+export async function PATCH(request: NextRequest) {
+  try {
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    if (action === 'vote-history') {
+      const votes = await getVoteHistory();
+      
+      return NextResponse.json({
+        success: true,
+        data: votes,
+        total: votes.length
+      });
+    }
+    
+    return NextResponse.json(
+      { success: false, error: 'Invalid action' },
+      { status: 400 }
+    );
+    
+  } catch (error) {
+    console.error('Error in rankings PATCH:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Unknown error' 
+      },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { winnerId, loserId } = await request.json();
@@ -165,8 +201,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Load current rankings
-    let rankings = loadRankingsSync();
+    // Load current rankings (try async first, fallback to sync)
+    let rankings = await loadRankings();
+    if (!rankings) {
+      rankings = loadRankingsSync();
+    }
     
     if (!rankings) {
       return NextResponse.json(
@@ -176,16 +215,30 @@ export async function POST(request: NextRequest) {
     }
 
     // Update rankings with the vote
-    const updatedRankings = updateRankings(rankings, winnerId, loserId);
+    const { updatedRankings, voteRecord } = updateRankings(rankings, winnerId, loserId);
     
-    // Save updated rankings
-    saveRankings(updatedRankings);
+    if (!voteRecord) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid winner/loser IDs' },
+        { status: 400 }
+      );
+    }
+
+    // Save updated rankings (try async first, fallback to sync)
+    const saved = await saveRankingsAsync(updatedRankings);
+    if (!saved) {
+      saveRankings(updatedRankings);
+    }
     
-    console.log(`🎵 Vote recorded: ${winnerId} beat ${loserId}`);
+    // Log the vote permanently
+    await logVote(voteRecord);
+    
+    console.log(`🎵 Vote recorded: ${winnerId} beat ${loserId} | Rating changes: ${voteRecord.winnerRatingBefore}→${voteRecord.winnerRatingAfter}, ${voteRecord.loserRatingBefore}→${voteRecord.loserRatingAfter}`);
     
     return NextResponse.json({
       success: true,
-      data: updatedRankings
+      data: updatedRankings,
+      voteId: voteRecord.id
     });
 
   } catch (error) {
