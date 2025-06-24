@@ -106,10 +106,11 @@ export default function Tunes() {
       const data = await response.json();
       
       if (data.success) {
-        setRankings(data.rankings);
-        setRankedTracks(data.rankedTracks);
+        setRankings(data.data);
+        const sortedTracks = [...data.data.tracks].sort((a, b) => b.eloRating - a.eloRating);
+        setRankedTracks(sortedTracks);
         setSessionVotes(prev => prev + 1);
-        generateNewPair(data.rankings.tracks);
+        generateNewPair(data.data.tracks);
       } else {
         setError(data.error || 'Failed to submit vote');
       }
