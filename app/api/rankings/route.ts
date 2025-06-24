@@ -3,7 +3,8 @@ import {
   loadRankings, 
   saveRankings, 
   initializeRankings, 
-  updateRankings, 
+  updateRankings,
+  getRankedTracks,
   syncNewTracks
 } from '@/lib/rankings-server';
 
@@ -25,14 +26,7 @@ async function getSpotifyToken() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   
-  console.log('🔍 Debug - Client ID exists:', !!clientId);
-  console.log('🔍 Debug - Client Secret exists:', !!clientSecret);
-  
   if (!clientId || !clientSecret) {
-    console.error('❌ Missing Spotify credentials:', { 
-      hasClientId: !!clientId, 
-      hasClientSecret: !!clientSecret 
-    });
     throw new Error('Spotify credentials not configured');
   }
 
