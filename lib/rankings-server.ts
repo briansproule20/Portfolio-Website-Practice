@@ -4,10 +4,59 @@ import { PersistentTrack, PlaylistRankings, VoteRecord } from '@/types/rankings'
 
 // Vercel KV import with fallback
 let kv: any = null;
+let redis: any = null;
+
 try {
   kv = require('@vercel/kv').kv;
 } catch (error) {
-  console.log('Vercel KV not available, using fallback storage');
+  console.log('Vercel KV not available');
+}
+
+// Redis client for Redis Cloud
+try {
+  const Redis = require('redis');
+  const redisUrl = process.env.REDIS_URL;
+  console.log('Redis URL check:', redisUrl ? 'configured' : 'not found');
+  
+  if (redisUrl) {
+    redis = Redis.createClient({
+      url: redisUrl,
+      socket: {
+        connectTimeout: 5000,
+        reconnectStrategy: (retries: number) => {
+          if (retries > 3) {
+            console.log('Redis max retries reached');
+            return false;
+          }
+          return Math.min(retries * 200, 1000);
+        }
+      }
+    });
+    
+    redis.on('error', (err: any) => console.log('Redis Client Error:', err));
+    redis.on('connect', () => console.log('✅ Redis connected'));
+    redis.on('ready', () => console.log('✅ Redis ready'));
+    
+    // Connect with timeout
+    const connectPromise = redis.connect();
+    setTimeout(() => {
+      if (!redis.isOpen) {
+        console.log('⚠️ Redis connection timeout, using fallback storage');
+      }
+    }, 3000);
+    
+    connectPromise.catch((err: any) => {
+      console.log('❌ Redis connection failed:', err);
+      redis = null;
+    });
+    
+    console.log('🔄 Redis Cloud client initialized');
+  } else {
+    console.log('❌ REDIS_URL environment variable not found');
+  }
+} catch (error) {
+  console.log('❌ Redis client setup failed:', error);
+  redis = null;
 }
 
 const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
@@ -45,10 +94,23 @@ function canWriteFiles(): boolean {
   }
 }
 
-// Load existing rankings with priority: KV > File > Memory
+// Load existing rankings with priority: KV/Redis > File > Memory
 export async function loadRankings(): Promise<PlaylistRankings | null> {
   try {
-    // Try Vercel KV first (production)
+    // Try Redis Cloud first
+    if (redis && redis.isOpen) {
+      try {
+        const redisData = await redis.get(KV_KEY);
+        if (redisData) {
+          console.log('Loading rankings from Redis Cloud');
+          return JSON.parse(redisData);
+        }
+      } catch (error) {
+        console.warn('Redis load failed, trying KV:', error);
+      }
+    }
+
+    // Try Vercel KV second
     if (kv) {
       try {
         const kvData = await kv.get(KV_KEY);
@@ -86,7 +148,7 @@ export async function loadRankings(): Promise<PlaylistRankings | null> {
   }
 }
 
-// Enhanced async save function for KV
+// Enhanced async save function for Redis/KV
 export async function saveRankingsAsync(rankings: PlaylistRankings): Promise<boolean> {
   let success = false;
   
@@ -95,8 +157,19 @@ export async function saveRankingsAsync(rankings: PlaylistRankings): Promise<boo
     memoryRankings = rankings;
     console.log('Saved rankings to memory');
 
-    // Try to save to Vercel KV first (production)
-    if (kv) {
+    // Try to save to Redis Cloud first
+    if (redis && redis.isOpen) {
+      try {
+        await redis.set(KV_KEY, JSON.stringify(rankings));
+        console.log('✅ Saved rankings to Redis Cloud');
+        success = true;
+      } catch (error) {
+        console.warn('❌ Redis save failed, trying KV:', error);
+      }
+    }
+
+    // Try to save to Vercel KV if Redis failed
+    if (!success && kv) {
       try {
         await kv.set(KV_KEY, rankings);
         console.log('✅ Saved rankings to Vercel KV');
@@ -106,7 +179,7 @@ export async function saveRankingsAsync(rankings: PlaylistRankings): Promise<boo
       }
     }
 
-    // Try to save to file if KV failed or not available
+    // Try to save to file if both Redis and KV failed
     if (!success && canWriteFiles()) {
       ensureDataDirectory();
       fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
@@ -363,7 +436,20 @@ export async function logVote(voteRecord: VoteRecord): Promise<void> {
     // Add to memory
     memoryVotes.push(voteRecord);
     
-    // Try to save to KV
+    // Try to save to Redis Cloud first
+    if (redis && redis.isOpen) {
+      try {
+        const existingVotesData = await redis.get(KV_VOTES_KEY);
+        const existingVotes = existingVotesData ? JSON.parse(existingVotesData) : [];
+        const updatedVotes = [...existingVotes, voteRecord];
+        await redis.set(KV_VOTES_KEY, JSON.stringify(updatedVotes));
+        console.log('✅ Logged vote to Redis Cloud');
+      } catch (error) {
+        console.warn('❌ Redis vote logging failed:', error);
+      }
+    }
+    
+    // Try to save to KV if Redis failed
     if (kv) {
       try {
         const existingVotes = await kv.get(KV_VOTES_KEY) || [];
@@ -401,7 +487,23 @@ export async function logVote(voteRecord: VoteRecord): Promise<void> {
 // Get vote history
 export async function getVoteHistory(): Promise<VoteRecord[]> {
   try {
-    // Try KV first
+    // Try Redis Cloud first
+    if (redis && redis.isOpen) {
+      try {
+        const votesData = await redis.get(KV_VOTES_KEY);
+        if (votesData) {
+          const votes = JSON.parse(votesData);
+          if (Array.isArray(votes)) {
+            console.log('Loading vote history from Redis Cloud');
+            return votes;
+          }
+        }
+      } catch (error) {
+        console.warn('Redis vote history load failed:', error);
+      }
+    }
+
+    // Try KV second
     if (kv) {
       try {
         const votes = await kv.get(KV_VOTES_KEY);
