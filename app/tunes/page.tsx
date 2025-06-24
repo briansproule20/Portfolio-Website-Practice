@@ -1,5 +1,6 @@
 'use client';
 
+// KV Redis storage now active for permanent vote storage! 🎵
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
