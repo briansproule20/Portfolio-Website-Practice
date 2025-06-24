@@ -83,43 +83,24 @@ export async function loadRankings(): Promise<PlaylistRankings | null> {
   }
 }
 
-// Save rankings with priority: KV + File + Memory
-export async function saveRankings(rankings: PlaylistRankings): Promise<void> {
+// Save rankings - synchronous version
+export function saveRankings(rankings: PlaylistRankings): void {
   try {
     // Always save to memory as immediate fallback
     memoryRankings = rankings;
+    console.log('Saved rankings to memory');
 
-    let kvSaved = false;
-    let fileSaved = false;
-
-    // Try Vercel KV (production)
-    if (kv) {
-      try {
-        await kv.set(KV_KEY, rankings);
-        console.log('Saved rankings to Vercel KV');
-        kvSaved = true;
-      } catch (error) {
-        console.warn('KV save failed:', error);
-      }
-    }
-
-    // Try file system (local development)
+    // Try to save to file if possible
     if (canWriteFiles()) {
-      try {
-        ensureDataDirectory();
-        fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
-        console.log('Saved rankings to file');
-        fileSaved = true;
-      } catch (error) {
-        console.warn('File save failed:', error);
-      }
-    }
-
-    if (!kvSaved && !fileSaved) {
-      console.log('Using memory storage only');
+      ensureDataDirectory();
+      fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
+      console.log('Saved rankings to file');
+    } else {
+      console.log('Using memory storage (serverless environment)');
     }
   } catch (error) {
-    console.error('Error saving rankings:', error);
+    console.error('Error saving rankings (using memory only):', error);
+    // Memory save already happened above
   }
 }
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { 
-  loadRankings, 
+  loadRankingsSync, 
   saveRankings, 
   initializeRankings, 
   updateRankings,
@@ -114,15 +114,15 @@ export async function GET() {
   try {
     console.log('🎵 Loading rankings...');
     
-    // Load existing rankings (async now)
-    let rankings = await loadRankings();
+    // Load existing rankings
+    let rankings = loadRankingsSync();
     
     // If no rankings exist, fetch from Spotify and initialize
     if (!rankings) {
       console.log('🎵 No rankings found, initializing from Spotify...');
       const playlistData = await fetchPlaylistFromSpotify(PLAYLIST_ID);
       rankings = initializeRankings(playlistData);
-      await saveRankings(rankings);
+      saveRankings(rankings);
       console.log(`🎵 Initialized rankings with ${rankings.tracks.length} tracks`);
     } else {
       // Check for new tracks from Spotify
@@ -132,7 +132,7 @@ export async function GET() {
       
       if (updatedRankings.tracks.length > rankings.tracks.length) {
         rankings = updatedRankings;
-        await saveRankings(rankings);
+        saveRankings(rankings);
         console.log(`🎵 Added ${updatedRankings.tracks.length - rankings.tracks.length} new tracks`);
       }
     }
@@ -165,8 +165,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Load current rankings (async now)
-    let rankings = await loadRankings();
+    // Load current rankings
+    let rankings = loadRankingsSync();
     
     if (!rankings) {
       return NextResponse.json(
@@ -178,8 +178,8 @@ export async function POST(request: NextRequest) {
     // Update rankings with the vote
     const updatedRankings = updateRankings(rankings, winnerId, loserId);
     
-    // Save updated rankings (async now)
-    await saveRankings(updatedRankings);
+    // Save updated rankings
+    saveRankings(updatedRankings);
     
     console.log(`🎵 Vote recorded: ${winnerId} beat ${loserId}`);
     
