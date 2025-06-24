@@ -23,7 +23,7 @@ const USER_MAPPING: { [key: string]: string } = {
 };
 
 async function getSpotifyToken() {
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   
   if (!clientId || !clientSecret) {
