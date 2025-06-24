@@ -119,14 +119,14 @@ export async function GET() {
     console.log('🎵 Loading rankings...');
     
     // Load existing rankings
-    let rankings = loadRankingsSync();
+    let rankings = await loadRankings();
     
     // If no rankings exist, fetch from Spotify and initialize
     if (!rankings) {
       console.log('🎵 No rankings found, initializing from Spotify...');
       const playlistData = await fetchPlaylistFromSpotify(PLAYLIST_ID);
       rankings = initializeRankings(playlistData);
-      saveRankings(rankings);
+      await saveRankingsAsync(rankings);
       console.log(`🎵 Initialized rankings with ${rankings.tracks.length} tracks`);
     } else {
       // Check for new tracks from Spotify
@@ -136,7 +136,7 @@ export async function GET() {
       
       if (updatedRankings.tracks.length > rankings.tracks.length) {
         rankings = updatedRankings;
-        saveRankings(rankings);
+        await saveRankingsAsync(rankings);
         console.log(`🎵 Added ${updatedRankings.tracks.length - rankings.tracks.length} new tracks`);
       }
     }
