@@ -5,11 +5,9 @@ import { PersistentTrack, PlaylistRankings } from '@/types/rankings';
 // Vercel KV import with fallback
 let kv: any = null;
 try {
-  const kvModule = require('@vercel/kv');
-  kv = kvModule.kv;
-  console.log('✅ Vercel KV loaded successfully');
+  kv = require('@vercel/kv').kv;
 } catch (error) {
-  console.log('⚠️ Vercel KV not available, using fallback storage:', error instanceof Error ? error.message : String(error));
+  console.log('Vercel KV not available, using fallback storage');
 }
 
 const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
@@ -47,8 +45,8 @@ function canWriteFiles(): boolean {
 // Load existing rankings with priority: KV > File > Memory
 export async function loadRankings(): Promise<PlaylistRankings | null> {
   try {
-    // Try Vercel KV first (production) - TEMPORARILY DISABLED
-    if (false && kv) {
+    // Try Vercel KV first (production)
+    if (kv) {
       try {
         const kvData = await kv.get(KV_KEY);
         if (kvData) {
@@ -94,8 +92,8 @@ export async function saveRankings(rankings: PlaylistRankings): Promise<void> {
     let kvSaved = false;
     let fileSaved = false;
 
-    // Try Vercel KV (production) - TEMPORARILY DISABLED
-    if (false && kv) {
+    // Try Vercel KV (production)
+    if (kv) {
       try {
         await kv.set(KV_KEY, rankings);
         console.log('Saved rankings to Vercel KV');
