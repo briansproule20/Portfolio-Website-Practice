@@ -1,15 +1,4 @@
-# Portfolio Website Practice
-
-This is a Next.js portfolio website with music ranking system.
-
-## Features
-- Music hot-or-not voting system with Elo rankings
-- Permanent storage via Vercel KV (Redis)
-- Spotify playlist integration
-- Responsive design
-
-## Latest Update
-- Added permanent vote storage with Redis KV database 🎵
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
