@@ -2,9 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import { PersistentTrack, PlaylistRankings } from '@/types/rankings';
 
-const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
+// Vercel KV import with fallback
+let kv: any = null;
+try {
+  kv = require('@vercel/kv').kv;
+} catch (error) {
+  console.log('Vercel KV not available, using fallback storage');
+}
 
-// In-memory fallback for serverless environments
+const RANKINGS_FILE = path.join(process.cwd(), 'data', 'playlist-rankings.json');
+const KV_KEY = 'playlist-rankings';
+
+// In-memory fallback for development/testing
 let memoryRankings: PlaylistRankings | null = null;
 
 // Ensure data directory exists
@@ -16,7 +25,7 @@ function ensureDataDirectory() {
     }
     return true;
   } catch (error) {
-    console.warn('Cannot create data directory (serverless environment):', error);
+    console.warn('Cannot create data directory:', error);
     return false;
   }
 }
@@ -29,54 +38,108 @@ function canWriteFiles(): boolean {
     fs.unlinkSync(testFile);
     return true;
   } catch (error) {
-    console.warn('File system is read-only (serverless environment)');
     return false;
   }
 }
 
-// Load existing rankings from file or memory
-export function loadRankings(): PlaylistRankings | null {
+// Load existing rankings with priority: KV > File > Memory
+export async function loadRankings(): Promise<PlaylistRankings | null> {
   try {
-    // Try memory first (for serverless)
+    // Try Vercel KV first (production)
+    if (kv) {
+      try {
+        const kvData = await kv.get(KV_KEY);
+        if (kvData) {
+          console.log('Loading rankings from Vercel KV');
+          return kvData as PlaylistRankings;
+        }
+      } catch (error) {
+        console.warn('KV load failed, trying file storage:', error);
+      }
+    }
+
+    // Try file system (local development)
+    if (ensureDataDirectory() && fs.existsSync(RANKINGS_FILE)) {
+      try {
+        const data = fs.readFileSync(RANKINGS_FILE, 'utf8');
+        const rankings = JSON.parse(data);
+        console.log('Loading rankings from file');
+        return rankings;
+      } catch (error) {
+        console.warn('File load failed, trying memory:', error);
+      }
+    }
+
+    // Fallback to memory
     if (memoryRankings) {
       console.log('Loading rankings from memory');
       return memoryRankings;
-    }
-
-    // Try file system
-    ensureDataDirectory();
-    if (fs.existsSync(RANKINGS_FILE)) {
-      const data = fs.readFileSync(RANKINGS_FILE, 'utf8');
-      const rankings = JSON.parse(data);
-      console.log('Loading rankings from file');
-      return rankings;
     }
     
     return null;
   } catch (error) {
     console.error('Error loading rankings:', error);
-    return memoryRankings; // Fallback to memory
+    return memoryRankings;
   }
 }
 
-// Save rankings to file or memory
-export function saveRankings(rankings: PlaylistRankings): void {
+// Save rankings with priority: KV + File + Memory
+export async function saveRankings(rankings: PlaylistRankings): Promise<void> {
   try {
-    // Always save to memory
+    // Always save to memory as immediate fallback
     memoryRankings = rankings;
-    console.log('Saved rankings to memory');
 
-    // Try to save to file if possible
+    let kvSaved = false;
+    let fileSaved = false;
+
+    // Try Vercel KV (production)
+    if (kv) {
+      try {
+        await kv.set(KV_KEY, rankings);
+        console.log('Saved rankings to Vercel KV');
+        kvSaved = true;
+      } catch (error) {
+        console.warn('KV save failed:', error);
+      }
+    }
+
+    // Try file system (local development)
     if (canWriteFiles()) {
-      ensureDataDirectory();
-      fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
-      console.log('Saved rankings to file');
-    } else {
-      console.log('Using memory storage (serverless environment)');
+      try {
+        ensureDataDirectory();
+        fs.writeFileSync(RANKINGS_FILE, JSON.stringify(rankings, null, 2));
+        console.log('Saved rankings to file');
+        fileSaved = true;
+      } catch (error) {
+        console.warn('File save failed:', error);
+      }
+    }
+
+    if (!kvSaved && !fileSaved) {
+      console.log('Using memory storage only');
     }
   } catch (error) {
-    console.error('Error saving rankings (using memory only):', error);
-    // Memory save already happened above
+    console.error('Error saving rankings:', error);
+  }
+}
+
+// Synchronous version for backward compatibility
+export function loadRankingsSync(): PlaylistRankings | null {
+  // This is only used in non-async contexts, return memory/file only
+  try {
+    if (memoryRankings) {
+      return memoryRankings;
+    }
+
+    if (ensureDataDirectory() && fs.existsSync(RANKINGS_FILE)) {
+      const data = fs.readFileSync(RANKINGS_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error loading rankings sync:', error);
+    return null;
   }
 }
 

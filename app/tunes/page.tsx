@@ -63,9 +63,10 @@ export default function Tunes() {
       const data = await response.json();
       
       if (data.success) {
-        setRankings(data.rankings);
-        setRankedTracks(data.rankedTracks);
-        generateNewPair(data.rankings.tracks);
+        setRankings(data.data);
+        const sortedTracks = [...data.data.tracks].sort((a, b) => b.eloRating - a.eloRating);
+        setRankedTracks(sortedTracks);
+        generateNewPair(data.data.tracks);
       } else {
         setError(data.error || 'Failed to load rankings');
       }
