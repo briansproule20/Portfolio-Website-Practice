@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const designs = [
@@ -11,6 +12,7 @@ const designs = [
     category: "Brand Identity / Digital Marketing",
     description: "A series of logos and designs inspired by the rolling foothills of Western Pennsylvania.",
     image: "/images/whitehorse1.png",
+    href: "/designs/whitehorse",
   },
   {
     id: 2,
@@ -18,6 +20,7 @@ const designs = [
     category: "Print",
     description: "Mission: Open Source",
     image: "/images/merit.png",
+    href: "/designs/merit",
   },
 ];
 
@@ -77,13 +80,13 @@ export default function Designs() {
         className="max-w-4xl mx-auto px-4 -mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8"
       >
         {designs.map((design) => (
-          <motion.div
-            key={design.id}
-            variants={item}
-            onMouseEnter={() => setHoveredId(design.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            className="group relative aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden bg-[var(--card)]"
-          >
+          <Link key={design.id} href={design.href}>
+            <motion.div
+              variants={item}
+              onMouseEnter={() => setHoveredId(design.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className="group relative aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden bg-[var(--card)] cursor-pointer"
+            >
             <div className="absolute inset-0 z-10">
               <div className="absolute inset-x-[10%] top-[5%] bottom-[35%] md:bottom-[35%] overflow-hidden">
                 <Image
@@ -121,7 +124,8 @@ export default function Designs() {
               }}
               transition={{ duration: 0.3 }}
             />
-          </motion.div>
+            </motion.div>
+          </Link>
         ))}
       </motion.section>
 
