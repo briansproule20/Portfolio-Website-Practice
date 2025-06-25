@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SwimmingFish from './components/SwimmingFish';
 import ParallaxRing from './components/ParallaxRing';
+import ChatWidget from './components/ChatWidget';
 import Link from 'next/link';
 import { getFeaturedPhotos, type Photo } from '../utils/photos';
 
@@ -45,6 +46,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
       <SwimmingFish />
+      <ChatWidget />
       {/* Hero Section */}
       <section className="flex-1 flex flex-col md:flex-row items-center justify-between px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
         <div className="flex-1">
