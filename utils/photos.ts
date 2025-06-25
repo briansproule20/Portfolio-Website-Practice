@@ -154,6 +154,24 @@ const photos: Photo[] = [
     width: 3024,
     height: 4032,
   },
+  {
+    id: 17,
+    title: "Tarpon River Rats",
+    category: "Family",
+    description: "Dinner at Coconuts, missing baby Theo!",
+    image: "/photos/Critters.JPG",
+    width: 3024,
+    height: 4032,
+  },
+  {
+    id: 18,
+    title: "Cornhole Champs",
+    category: "Friends",
+    description: "Dawson and I winning the cornhole tournament at Theta, Ohio State University.",
+    image: "/photos/Champs.JPG",
+    width: 3024,
+    height: 4032,
+  },
 ];
 
 export function getFeaturedPhotos(): Photo[] {
