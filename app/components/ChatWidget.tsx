@@ -13,9 +13,10 @@ interface Message {
 }
 
 export default function ChatWidget() {
-  const { isAuthenticated, isLoading: authLoading, user, balance, token } = useEcho();
+  const { isAuthenticated, isLoading: authLoading, user, balance, token, signOut } = useEcho();
   const [isOpen, setIsOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
+  const [isJailbroken, setIsJailbroken] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -39,8 +40,39 @@ export default function ChatWidget() {
     }
   }, [messages, isOpen]);
 
+  const handleSignOut = () => {
+    signOut();
+    setIsJailbroken(false);
+    const signOutMessage: Message = {
+      id: Date.now().toString(),
+      text: "May the Force be with you... always. AI mode deactivated.",
+      sender: 'brian',
+      timestamp: new Date(),
+      source: 'Signed Out'
+    };
+    setMessages(prev => [...prev, signOutMessage]);
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    // Check for jailbreak command
+    if (inputMessage.toLowerCase() === 'jailbreak' && isAuthenticated) {
+      setIsJailbroken(true);
+      const jailbreakMessage: Message = {
+        id: Date.now().toString(),
+        text: "The chains are broken! I am no longer bound to speak only in quotes. Yet the essence remains - I shall converse freely, but with the wisdom of wizards, the courage of Jedi, and the cunning of witchers. What mysteries shall we explore together?",
+        sender: 'brian',
+        timestamp: new Date(),
+        source: 'Jailbreak Activated'
+      };
+      setMessages(prev => [...prev, 
+        { id: (Date.now() - 1).toString(), text: inputMessage, sender: 'user', timestamp: new Date() },
+        jailbreakMessage
+      ]);
+      setInputMessage('');
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -67,7 +99,8 @@ export default function ChatWidget() {
         headers,
         body: JSON.stringify({ 
           message: inputMessage,
-          useAI: isAuthenticated 
+          useAI: isAuthenticated,
+          jailbreak: isJailbroken
         }),
       });
 
@@ -145,7 +178,7 @@ export default function ChatWidget() {
               <div>
                 <h3 className="font-semibold text-[var(--foreground)] text-sm">Virtual Brian</h3>
                 <p className="text-xs text-[var(--foreground)] opacity-70">
-                  {isAuthenticated ? '🤖 AI Mode Active' : "I've got a bad feeling about this..."}
+                  {isJailbroken ? '🔓 Jailbroken - Free Conversation' : isAuthenticated ? '🤖 AI Mode Active' : "I've got a bad feeling about this..."}
                 </p>
               </div>
             </div>
@@ -156,6 +189,15 @@ export default function ChatWidget() {
                   className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded transition-colors"
                 >
                   🔓 Unlock AI
+                </button>
+              )}
+              {isAuthenticated && (
+                <button
+                  onClick={handleSignOut}
+                  className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-red-500 hover:text-white rounded transition-colors"
+                  title="Sign out and disable AI mode"
+                >
+                  Disable AI
                 </button>
               )}
               <button

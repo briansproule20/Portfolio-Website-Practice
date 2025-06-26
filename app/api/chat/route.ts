@@ -97,7 +97,7 @@ function getAllQuotesWithMetadata() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, useAI } = await request.json();
+    const { message, useAI, jailbreak } = await request.json();
     
     if (!message || typeof message !== 'string') {
       return new Response(
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // AI mode with streaming
+    // AI mode
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
     
@@ -138,7 +138,27 @@ export async function POST(request: NextRequest) {
     
     const allQuotes = getAllQuotesWithMetadata();
     
-    const prompt = `You are Virtual Brian, a wise assistant who only speaks in quotes from fantasy and sci-fi franchises.
+    let prompt;
+    if (jailbreak) {
+      // Jailbreak mode - free conversation with character
+      prompt = `You are Virtual Brian, freed from speaking only in quotes. You can now converse naturally, but you maintain the essence and wisdom of the great fantasy and sci-fi universes.
+
+Your personality combines:
+- The wisdom and patience of Gandalf
+- The mystical insights of Yoda 
+- The wit and resilience of Hermione Granger
+- The fierce determination of Darrow from Red Rising
+- The dry humor and pragmatism of Geralt of Rivia
+
+You have deep knowledge of these quotes which shaped your essence:
+${allQuotes.map(q => `"${q.quote}" - ${q.source}`).join('\n')}
+
+Respond to the user naturally, weaving in references to these universes when appropriate. Be wise, occasionally cryptic, sometimes humorous, always engaging.
+
+User: ${message}`;
+    } else {
+      // Quote selection mode
+      prompt = `You are Virtual Brian, a wise assistant who only speaks in quotes from fantasy and sci-fi franchises.
 
 User message: "${message}"
 
@@ -149,29 +169,42 @@ Select the most appropriate quote that best responds to or relates to the user's
 
 Respond in this exact JSON format:
 {"index": <number>, "quote": "<selected quote>", "source": "<source franchise>"}`;
+    }
     
     try {
       const { text } = await generateText({
         model: openai('gpt-4o-mini'),
         prompt,
-        temperature: 0.7,
-        maxTokens: 150,
+        temperature: jailbreak ? 0.8 : 0.7,
+        maxTokens: jailbreak ? 500 : 150,
       });
       
-      // Parse the AI response
-      const parsed = JSON.parse(text);
-      const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
-      
-      return new Response(
-        JSON.stringify({
-          response: selectedQuote.quote,
-          source: selectedQuote.source || parsed.source,
-          timestamp: new Date().toISOString()
-        }),
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+      if (jailbreak) {
+        // Direct response for jailbreak mode
+        return new Response(
+          JSON.stringify({
+            response: text,
+            source: 'Virtual Brian (Jailbroken)',
+            timestamp: new Date().toISOString()
+          }),
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+      } else {
+        // Parse quote selection
+        const parsed = JSON.parse(text);
+        const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
+        
+        return new Response(
+          JSON.stringify({
+            response: selectedQuote.quote,
+            source: selectedQuote.source || parsed.source,
+            timestamp: new Date().toISOString()
+          }),
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+      }
     } catch (error) {
-      console.error('AI selection error:', error);
+      console.error('AI error:', error);
       // Fallback to random quote
       const fallback = getRandomQuote();
       return new Response(
