@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateText } from "ai";
+import { NextRequest, NextResponse } from "next/server";
 
 // Collection of quotes from the three franchises
 const quotes = {
@@ -196,18 +196,37 @@ Respond in this exact JSON format:
           { headers: { "Content-Type": "application/json" } },
         );
       } else {
-        // Parse quote selection
-        const parsed = JSON.parse(text);
-        const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
+        // Parse quote selection - handle potential markdown formatting
+        let jsonText = text.trim();
 
-        return new Response(
-          JSON.stringify({
-            response: selectedQuote.quote,
-            source: selectedQuote.source || parsed.source,
-            timestamp: new Date().toISOString(),
-          }),
-          { headers: { "Content-Type": "application/json" } },
-        );
+        // Remove markdown code blocks if present
+        if (jsonText.includes("```")) {
+          const match = jsonText.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+          if (match) {
+            jsonText = match[1];
+          } else {
+            jsonText = jsonText
+              .replace(/^```(json)?\n?/, "")
+              .replace(/\n?```$/, "");
+          }
+        }
+
+        try {
+          const parsed = JSON.parse(jsonText);
+          const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
+
+          return new Response(
+            JSON.stringify({
+              response: selectedQuote.quote,
+              source: selectedQuote.source || parsed.source,
+              timestamp: new Date().toISOString(),
+            }),
+            { headers: { "Content-Type": "application/json" } },
+          );
+        } catch (parseError) {
+          console.error("JSON parse error:", parseError);
+          throw parseError;
+        }
       }
     } catch (error) {
       console.error("AI error:", error);
