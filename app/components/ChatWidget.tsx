@@ -13,6 +13,7 @@ interface Message {
 }
 
 export default function ChatWidget() {
+  const [mounted, setMounted] = useState(false);
   const { isAuthenticated, isLoading: authLoading, user, balance, token, signOut } = useEcho();
   const [isOpen, setIsOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
@@ -33,6 +34,10 @@ export default function ChatWidget() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -134,12 +139,16 @@ export default function ChatWidget() {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-4 right-4 left-4 sm:left-auto z-50 flex justify-end">
@@ -278,7 +287,7 @@ export default function ChatWidget() {
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder="Ask Virtual Brian..."
                 className="flex-1 px-2 py-1 text-xs border border-[var(--accent)] rounded bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--accent)] focus:border-[var(--highlight)] focus:outline-none transition-colors"
                 disabled={isLoading}
