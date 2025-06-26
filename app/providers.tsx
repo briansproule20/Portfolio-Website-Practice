@@ -2,6 +2,7 @@
 
 import { EchoProvider } from "@zdql/echo-react-sdk";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AmbientSoundProvider } from "./context/AmbientSoundContext";
 import { useEffect, useState } from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -18,12 +19,22 @@ export function Providers({ children }: { children: React.ReactNode }) {
   };
 
   if (!mounted) {
-    return <ThemeProvider>{children}</ThemeProvider>;
+    return (
+      <ThemeProvider>
+        <AmbientSoundProvider>
+          {children}
+        </AmbientSoundProvider>
+      </ThemeProvider>
+    );
   }
 
   return (
     <EchoProvider config={echoConfig}>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <AmbientSoundProvider>
+          {children}
+        </AmbientSoundProvider>
+      </ThemeProvider>
     </EchoProvider>
   );
 }

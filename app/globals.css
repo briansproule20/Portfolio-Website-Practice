@@ -4,6 +4,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ambient Sound Slider Styles */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--accent);
+  outline: none;
+  border-radius: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--highlight);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--background);
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--highlight);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--background);
+}
+
 :root {
   --background: #f5f3ef; /* light beige */
   --foreground: #3e372a; /* deep taupe */

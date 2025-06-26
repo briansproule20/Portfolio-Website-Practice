@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
+import AmbientSoundToggleWrapper from './AmbientSoundToggleWrapper';
 import { useState } from 'react';
 
 export default function Header() {
@@ -63,7 +64,10 @@ export default function Header() {
               <Link href="/zines" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Zines
               </Link>
-              <ThemeToggle />
+              <div className="flex items-center gap-2">
+                <AmbientSoundToggleWrapper />
+                <ThemeToggle />
+              </div>
             </div>
           </nav>
         </div>
@@ -124,7 +128,8 @@ export default function Header() {
             >
               Zines
             </Link>
-            <div className="pt-2">
+            <div className="pt-2 flex items-center gap-2">
+              <AmbientSoundToggleWrapper />
               <ThemeToggle />
             </div>
           </div>
