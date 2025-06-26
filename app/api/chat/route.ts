@@ -1,4 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { createOpenAI } from "@ai-sdk/openai";
+import { generateText } from "ai";
+import { NextRequest, NextResponse } from "next/server";
 
 // Collection of quotes from the three franchises
 const quotes = {
@@ -10,7 +12,7 @@ const quotes = {
     "There is some good in this world, and it's worth fighting for.",
     "Courage is found in unlikely places.",
     "The road goes ever on and on.",
-    "A wizard is never late, nor is he early. He arrives precisely when he means to."
+    "A wizard is never late, nor is he early. He arrives precisely when he means to.",
   ],
   starWars: [
     "May the Force be with you.",
@@ -20,7 +22,7 @@ const quotes = {
     "In my experience, there's no such thing as luck.",
     "The Force is strong with this one.",
     "Help me, Obi-Wan Kenobi. You're my only hope.",
-    "I find your lack of faith disturbing."
+    "I find your lack of faith disturbing.",
   ],
   harryPotter: [
     "It is our choices that show what we truly are, far more than our abilities.",
@@ -30,7 +32,7 @@ const quotes = {
     "Working hard is important, but there's something that matters even more: believing in yourself.",
     "The ones that love us never really leave us.",
     "Fear of a name increases fear of the thing itself.",
-    "After all this time? Always."
+    "After all this time? Always.",
   ],
   redRising: [
     "I would have lived in peace. But my enemies brought me war.",
@@ -44,68 +46,216 @@ const quotes = {
   ],
   witcher: [
     "Hmm.",
-    "Fuck.", 
+    "Fuck.",
     "Wind's howling.",
     "Evil is evil. Lesser, greater, middling, it's all the same.",
     "If I'm to choose between one evil and another, I'd rather not choose at all.",
     "People like to invent monsters and monstrosities. Then they seem less monstrous themselves.",
     "Destiny is just the embodiment of the soul's desire to grow.",
     "Every legend, every fairy tale has a grain of truth to it.",
-    "I'm not a hero. I'm a monster."
-  ]
+    "I'm not a hero. I'm a monster.",
+  ],
 };
 
 function getRandomQuote(): { quote: string; source: string } {
   const franchises = Object.keys(quotes) as Array<keyof typeof quotes>;
-  const randomFranchise = franchises[Math.floor(Math.random() * franchises.length)];
+  const randomFranchise =
+    franchises[Math.floor(Math.random() * franchises.length)];
   const franchiseQuotes = quotes[randomFranchise];
-  const randomQuote = franchiseQuotes[Math.floor(Math.random() * franchiseQuotes.length)];
-  
+  const randomQuote =
+    franchiseQuotes[Math.floor(Math.random() * franchiseQuotes.length)];
+
   const sourceMap = {
     lotr: "The Lord of the Rings",
     starWars: "Star Wars",
     harryPotter: "Harry Potter",
     redRising: "Red Rising",
-    witcher: "The Witcher"
+    witcher: "The Witcher",
   };
-  
+
   return {
     quote: randomQuote,
-    source: sourceMap[randomFranchise]
+    source: sourceMap[randomFranchise],
   };
+}
+
+function getAllQuotesWithMetadata() {
+  const sourceMap = {
+    lotr: "The Lord of the Rings",
+    starWars: "Star Wars",
+    harryPotter: "Harry Potter",
+    redRising: "Red Rising",
+    witcher: "The Witcher",
+  };
+
+  return Object.entries(quotes).flatMap(([franchise, quoteList]) =>
+    quoteList.map((quote) => ({
+      quote,
+      franchise,
+      source: sourceMap[franchise as keyof typeof sourceMap],
+    })),
+  );
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json();
-    
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    const { message, useAI, jailbreak } = await request.json();
+
+    if (!message || typeof message !== "string") {
+      return new Response(JSON.stringify({ error: "Message is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
-    
-    // Add a small delay to make it feel more natural
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
-    
-    const response = getRandomQuote();
-    
-    return NextResponse.json({
-      response: response.quote,
-      source: response.source,
-      timestamp: new Date().toISOString()
+
+    // For non-AI mode, return a random quote immediately
+    if (!useAI) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, 500 + Math.random() * 1000),
+      );
+      const response = getRandomQuote();
+      return new Response(
+        JSON.stringify({
+          response: response.quote,
+          source: response.source,
+          timestamp: new Date().toISOString(),
+        }),
+        { headers: { "Content-Type": "application/json" } },
+      );
+    }
+
+    // AI mode
+    const authHeader = request.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+
+    if (!token) {
+      return new Response(
+        JSON.stringify({ error: "Authentication required for AI mode" }),
+        { status: 401, headers: { "Content-Type": "application/json" } },
+      );
+    }
+
+    const openai = createOpenAI({
+      apiKey: token,
+      baseURL: "https://echo.router.merit.systems",
     });
-    
+
+    const allQuotes = getAllQuotesWithMetadata();
+
+    let prompt;
+    if (jailbreak) {
+      // Jailbreak mode - free conversation with character
+      prompt = `You are Virtual Brian, freed from speaking only in quotes. You can now converse naturally, but you maintain the essence and wisdom of the great fantasy and sci-fi universes.
+
+Your personality combines:
+- The wisdom and patience of Gandalf
+- The mystical insights of Yoda 
+- The wit and resilience of Hermione Granger
+- The fierce determination of Darrow from Red Rising
+- The dry humor and pragmatism of Geralt of Rivia
+
+You have deep knowledge of these quotes which shaped your essence:
+${allQuotes.map((q) => `"${q.quote}" - ${q.source}`).join("\n")}
+
+Respond to the user naturally, weaving in references to these universes when appropriate. Be wise, occasionally cryptic, sometimes humorous, always engaging.
+
+IMPORTANT: Keep your response under 400 characters to ensure brevity.
+
+User: ${message}`;
+    } else {
+      // Quote selection mode
+      prompt = `You are Virtual Brian, a wise assistant who only speaks in quotes from fantasy and sci-fi franchises.
+
+User message: "${message}"
+
+Available quotes:
+${allQuotes.map((q, i) => `${i + 1}. "${q.quote}" (${q.source})`).join("\n")}
+
+Select the most appropriate quote that best responds to or relates to the user's message. Consider the emotional tone, topic, and context.
+
+Respond in this exact JSON format:
+{"index": <number>, "quote": "<selected quote>", "source": "<source franchise>"}`;
+    }
+
+    try {
+      const { text } = await generateText({
+        model: openai("gpt-4o"),
+        prompt,
+        temperature: jailbreak ? 0.8 : 0.7,
+        maxTokens: jailbreak ? 150 : 150, // Limit to ensure under 500 chars
+      });
+
+      if (jailbreak) {
+        // Direct response for jailbreak mode
+        return new Response(
+          JSON.stringify({
+            response: text,
+            source: "Virtual Brian (Jailbroken)",
+            timestamp: new Date().toISOString(),
+          }),
+          { headers: { "Content-Type": "application/json" } },
+        );
+      } else {
+        // Parse quote selection - handle potential markdown formatting
+        let jsonText = text.trim();
+
+        // Remove markdown code blocks if present
+        if (jsonText.includes("```")) {
+          const match = jsonText.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
+          if (match) {
+            jsonText = match[1];
+          } else {
+            jsonText = jsonText
+              .replace(/^```(json)?\n?/, "")
+              .replace(/\n?```$/, "");
+          }
+        }
+
+        try {
+          const parsed = JSON.parse(jsonText);
+          const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
+
+          return new Response(
+            JSON.stringify({
+              response: selectedQuote.quote,
+              source: selectedQuote.source || parsed.source,
+              timestamp: new Date().toISOString(),
+            }),
+            { headers: { "Content-Type": "application/json" } },
+          );
+        } catch (parseError) {
+          console.error("JSON parse error:", parseError);
+          throw parseError;
+        }
+      }
+    } catch (error) {
+      console.error("AI error:", error);
+      // Fallback to random quote
+      const fallback = getRandomQuote();
+      return new Response(
+        JSON.stringify({
+          response: fallback.quote,
+          source: fallback.source,
+          timestamp: new Date().toISOString(),
+        }),
+        { headers: { "Content-Type": "application/json" } },
+      );
+    }
   } catch (error) {
-    console.error('Chat API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error("Chat API error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }
 
 export async function GET() {
-  return NextResponse.json({ 
-    message: 'Chat API is running',
+  return NextResponse.json({
+    message: "Chat API is running",
     availableQuotes: Object.keys(quotes).reduce((acc, key) => {
       acc[key] = quotes[key as keyof typeof quotes].length;
       return acc;
-    }, {} as Record<string, number>)
+    }, {} as Record<string, number>),
   });
-} 
+}

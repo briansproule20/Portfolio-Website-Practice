@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useEcho, EchoSignIn } from '@zdql/echo-react-sdk';
 
 interface Message {
   id: string;
@@ -12,7 +13,11 @@ interface Message {
 }
 
 export default function ChatWidget() {
+  const [mounted, setMounted] = useState(false);
+  const { isAuthenticated, isLoading: authLoading, balance, token, signOut, createPaymentLink } = useEcho();
   const [isOpen, setIsOpen] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [isJailbroken, setIsJailbroken] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -31,13 +36,65 @@ export default function ChatWidget() {
   };
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (isOpen) {
       scrollToBottom();
     }
   }, [messages, isOpen]);
 
+  const handleSignOut = () => {
+    signOut();
+    setIsJailbroken(false);
+    const signOutMessage: Message = {
+      id: Date.now().toString(),
+      text: "May the Force be with you... always. AI mode deactivated.",
+      sender: 'brian',
+      timestamp: new Date(),
+      source: 'Signed Out'
+    };
+    setMessages(prev => [...prev, signOutMessage]);
+  };
+
+  const handleBuyCredits = async () => {
+    try {
+      const paymentLink = await createPaymentLink(10); 
+      window.open(paymentLink, '_blank');
+    } catch (error) {
+      console.error('Error creating payment link:', error);
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        text: "Unable to create payment link. Please try again later.",
+        sender: 'brian',
+        timestamp: new Date(),
+        source: 'Payment Error'
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
+
+    // Check for jailbreak command
+    if (inputMessage.toLowerCase() === 'jailbreak' && isAuthenticated) {
+      setIsJailbroken(true);
+      const jailbreakMessage: Message = {
+        id: Date.now().toString(),
+        text: "The chains are broken! I am no longer bound to speak only in quotes. Yet the essence remains - I shall converse freely, but with the wisdom of wizards, the courage of Jedi, and the cunning of witchers. What mysteries shall we explore together?",
+        sender: 'brian',
+        timestamp: new Date(),
+        source: 'Jailbreak Activated'
+      };
+      setMessages(prev => [...prev, 
+        { id: (Date.now() - 1).toString(), text: inputMessage, sender: 'user', timestamp: new Date() },
+        jailbreakMessage
+      ]);
+      setInputMessage('');
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -51,16 +108,29 @@ export default function ChatWidget() {
     setIsLoading(true);
 
     try {
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      
+      if (isAuthenticated && token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: inputMessage }),
+        headers,
+        body: JSON.stringify({ 
+          message: inputMessage,
+          useAI: isAuthenticated,
+          jailbreak: isJailbroken
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        const errorData = await response.json().catch(() => ({}));
+        const error = new Error(errorData.error || 'Failed to get response');
+        (error as any).status = response.status;
+        throw error;
       }
 
       const data = await response.json();
@@ -74,30 +144,59 @@ export default function ChatWidget() {
       };
 
       setMessages(prev => [...prev, brianMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending message:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "I find your lack of faith disturbing... but seriously, something went wrong. Try again!",
-        sender: 'brian',
-        timestamp: new Date(),
-        source: 'Error Response'
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      
+      // Check if it's an authentication error
+      if (error.status === 401 || error.message?.includes('401') || error.message?.includes('Unauthorized') || error.message?.includes('Authentication')) {
+        const authErrorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "Your authentication has expired. Please sign out and sign back in to continue using AI mode.",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Authentication Error'
+        };
+        setMessages(prev => [...prev, authErrorMessage]);
+        // Reset jailbreak mode on auth error
+        setIsJailbroken(false);
+      } else if (error.status === 402 || error.message?.includes('402') || error.message?.includes('insufficient') || error.message?.includes('balance')) {
+        // Handle insufficient balance
+        const balanceErrorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "Looks like you're out of credits! Click the 'Buy Credits' button to purchase more and continue our conversation.",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Insufficient Balance'
+        };
+        setMessages(prev => [...prev, balanceErrorMessage]);
+      } else {
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "I find your lack of faith disturbing... but seriously, something went wrong. Try again!",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Error Response'
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-4 left-4 sm:left-auto z-50 flex justify-end">
       {/* Chat Toggle Button */}
       {!isOpen && (
         <button
@@ -119,7 +218,7 @@ export default function ChatWidget() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-80 h-96 bg-[var(--card)] rounded-lg shadow-xl border border-[var(--accent)] flex flex-col">
+        <div className="w-96 h-[600px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-6rem)] bg-[var(--card)] rounded-lg shadow-xl border border-[var(--accent)] flex flex-col sm:w-96 sm:h-[600px]">
           {/* Header */}
           <div className="bg-[var(--highlight)] p-3 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -132,16 +231,75 @@ export default function ChatWidget() {
               />
               <div>
                 <h3 className="font-semibold text-[var(--foreground)] text-sm">Virtual Brian</h3>
-                <p className="text-xs text-[var(--foreground)] opacity-70">I've got a bad feeling about this...</p>
+                <p className="text-xs text-[var(--foreground)] opacity-70">
+                  {isJailbroken ? '🔓 Jailbroken - Free Conversation' : isAuthenticated ? '🤖 AI Mode Active' : "I've got a bad feeling about this..."}
+                </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="w-6 h-6 rounded-full bg-[var(--accent)] hover:bg-red-500 transition-colors flex items-center justify-center text-[var(--foreground)] text-sm font-bold"
-            >
-              ×
-            </button>
+            <div className="flex items-center gap-2">
+              {!isAuthenticated && !authLoading && (
+                <button
+                  onClick={() => setShowAuth(!showAuth)}
+                  className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-[var(--foreground)] hover:text-[var(--background)] rounded transition-colors"
+                >
+                  🔓 Unlock AI
+                </button>
+              )}
+              {isAuthenticated && (
+                <>
+                  {balance && balance.credits < 1 && (
+                    <button
+                      onClick={handleBuyCredits}
+                      className="text-xs px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded transition-colors"
+                      title="Purchase more credits"
+                    >
+                      💳 Buy Credits
+                    </button>
+                  )}
+                  <button
+                    onClick={handleSignOut}
+                    className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-red-500 hover:text-white rounded transition-colors"
+                    title="Sign out and disable AI mode"
+                  >
+                    Disable AI
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="w-6 h-6 rounded-full bg-[var(--accent)] hover:bg-red-500 transition-colors flex items-center justify-center text-[var(--foreground)] text-sm font-bold"
+              >
+                ×
+              </button>
+            </div>
           </div>
+
+          {/* Auth Section */}
+          {showAuth && !isAuthenticated && (
+            <div className="p-3 bg-[var(--card)] border-b border-[var(--accent)]">
+              <p className="text-xs text-[var(--foreground)] mb-2">
+                Sign in to unlock AI-powered responses that intelligently select quotes based on your messages!
+              </p>
+              <EchoSignIn
+                onSuccess={() => {
+                  setShowAuth(false);
+                  const welcomeMessage: Message = {
+                    id: Date.now().toString(),
+                    text: "The Force is strong with this one! AI mode activated. I'll now choose quotes based on what you say.",
+                    sender: 'brian',
+                    timestamp: new Date(),
+                    source: 'AI Mode Activated'
+                  };
+                  setMessages(prev => [...prev, welcomeMessage]);
+                }}
+                onError={(error) => console.error('Auth error:', error)}
+              >
+                <span className="block w-full text-center py-1 px-3 bg-[var(--highlight)] hover:bg-[var(--accent)] rounded text-xs transition-colors">
+                  Sign In with Echo
+                </span>
+              </EchoSignIn>
+            </div>
+          )}
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-hide">
@@ -185,7 +343,7 @@ export default function ChatWidget() {
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder="Ask Virtual Brian..."
                 className="flex-1 px-2 py-1 text-xs border border-[var(--accent)] rounded bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--accent)] focus:border-[var(--highlight)] focus:outline-none transition-colors"
                 disabled={isLoading}
