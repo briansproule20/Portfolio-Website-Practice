@@ -15,14 +15,11 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   useEffect(() => {
     // Check if user has visited before
     const hasVisited = localStorage.getItem('hasVisitedPortfolio');
-    console.log('Debug - hasVisited:', hasVisited);
     
     if (!hasVisited) {
-      console.log('Debug - Setting showTerminal to true');
       setShowTerminal(true);
       setIsFirstVisit(true);
     } else {
-      console.log('Debug - User has visited before, not showing terminal');
       setIsFirstVisit(false);
     }
   }, []);

@@ -12,7 +12,37 @@ const TerminalWelcome: React.FC<TerminalWelcomeProps> = ({ onComplete }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [showSkipMessage, setShowSkipMessage] = useState(false);
 
-  const terminalLines = [
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const terminalLines = isMobile ? [
+    '> INIT STATION CONNECTION...',
+    '> CONNECTING TO BRIAN-ALPHA...',
+    '> [████████████████████] 100%',
+    '> AUTH SUCCESSFUL',
+    '> LOADING PROFILE...',
+    '> PROFILE: BRIAN SPROULE',
+    '> ROLE: WRITER|PUBLISHER|DESIGNER',
+    '> ACCESS: VISITOR',
+    '> SYSTEMS ONLINE',
+    '> ENV CONTROLS: STABLE',
+    '> LIFE SUPPORT: OPTIMAL',
+    '> GRAVITY: ENABLED',
+    '> COMMS: ACTIVE',
+    '> WELCOME TO PORTFOLIO STATION',
+    '> TAP TO CONTINUE...'
+  ] : [
     '> INITIALIZING SPACE STATION CONNECTION...',
     '> CONNECTING TO BRIAN-STATION-ALPHA...',
     '> [████████████████████████████████] 100%',
@@ -75,33 +105,38 @@ const TerminalWelcome: React.FC<TerminalWelcomeProps> = ({ onComplete }) => {
     const currentLine = terminalLines[currentLineIndex];
     
     if (currentText.length < currentLine.length) {
-      // Typing effect
+      // Typing effect - faster on mobile
+      const baseSpeed = isMobile ? 20 : 30;
+      const randomVariation = isMobile ? 10 : 20;
       const timer = setTimeout(() => {
         setCurrentText(currentLine.substring(0, currentText.length + 1));
-      }, 30 + Math.random() * 20); // Variable typing speed for realism
+      }, baseSpeed + Math.random() * randomVariation);
       
       return () => clearTimeout(timer);
     } else {
-      // Move to next line after a pause
+      // Move to next line after a pause - shorter pause on mobile
+      const basePause = isMobile ? 200 : 300;
+      const randomPause = isMobile ? 100 : 200;
       const timer = setTimeout(() => {
         setCurrentLineIndex(prev => prev + 1);
         setCurrentText('');
-      }, 300 + Math.random() * 200);
+      }, basePause + Math.random() * randomPause);
       
       return () => clearTimeout(timer);
     }
   }, [currentText, currentLineIndex, terminalLines, isComplete, onComplete]);
 
   return (
-    <div className={`fixed inset-0 z-[9999] bg-black font-mono text-green-400 transition-opacity duration-500 ${
+    <div className={`fixed inset-0 z-[9999] bg-black font-mono text-green-400 transition-opacity duration-500 overflow-hidden ${
       isComplete ? 'opacity-0 pointer-events-none' : 'opacity-100'
     }`}>
-      <div className="h-full flex flex-col justify-center items-start p-8 max-w-4xl mx-auto">
+      <div className="h-full flex flex-col justify-center items-start p-4 sm:p-8 max-w-4xl mx-auto overflow-hidden">
         {/* Terminal header */}
-        <div className="mb-8 text-green-500">
-          <div className="text-sm opacity-70">BRIAN-STATION-ALPHA TERMINAL v2.4.7</div>
-          <div className="text-sm opacity-70">Earth Standard Time: {new Date().toLocaleString()}</div>
-          <div className="border-b border-green-800 w-full my-2"></div>
+        <div className="mb-4 sm:mb-8 text-green-500">
+          <div className="text-xs sm:text-sm opacity-70">BRIAN-STATION-ALPHA TERMINAL v2.4.7</div>
+          <div className="text-xs sm:text-sm opacity-70 hidden sm:block">Earth Standard Time: {new Date().toLocaleString()}</div>
+          <div className="text-xs sm:hidden opacity-70">EST: {new Date().toLocaleTimeString()}</div>
+          <div className="border-b border-green-800 w-full my-1 sm:my-2"></div>
         </div>
 
         {/* Terminal output */}
@@ -109,7 +144,7 @@ const TerminalWelcome: React.FC<TerminalWelcomeProps> = ({ onComplete }) => {
           {terminalLines.slice(0, currentLineIndex).map((line, index) => (
             <div 
               key={index} 
-              className={`mb-2 text-lg leading-relaxed ${
+              className={`mb-1 sm:mb-2 text-sm sm:text-lg leading-relaxed ${
                 line.includes('WELCOME') || line.includes('SUCCESSFUL') || line.includes('ONLINE') 
                   ? 'terminal-glow text-green-300' 
                   : ''
@@ -120,7 +155,7 @@ const TerminalWelcome: React.FC<TerminalWelcomeProps> = ({ onComplete }) => {
           ))}
           
           {currentLineIndex < terminalLines.length && (
-            <div className="mb-2 text-lg leading-relaxed">
+            <div className="mb-1 sm:mb-2 text-sm sm:text-lg leading-relaxed">
               {currentText}
               <span className="terminal-cursor">_</span>
             </div>
@@ -129,8 +164,9 @@ const TerminalWelcome: React.FC<TerminalWelcomeProps> = ({ onComplete }) => {
 
         {/* Skip message */}
         {showSkipMessage && !isComplete && (
-          <div className="fixed bottom-8 right-8 text-green-600 text-sm animate-pulse">
-            Press ESC, SPACE, or ENTER to skip
+          <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 text-green-600 text-xs sm:text-sm animate-pulse text-center sm:text-right">
+            <div className="sm:hidden">Tap to skip</div>
+            <div className="hidden sm:block">Press ESC, SPACE, or ENTER to skip</div>
           </div>
         )}
 
