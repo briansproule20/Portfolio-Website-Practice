@@ -13,10 +13,10 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
 
   useEffect(() => {
-    // Check if user has visited before
-    const hasVisited = localStorage.getItem('hasVisitedPortfolio');
+    // Check if user has visited before in this session
+    const hasVisitedThisSession = sessionStorage.getItem('hasVisitedPortfolio');
     
-    if (!hasVisited) {
+    if (!hasVisitedThisSession) {
       setShowTerminal(true);
       setIsFirstVisit(true);
     } else {
@@ -26,7 +26,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   const handleTerminalComplete = () => {
     setShowTerminal(false);
-    localStorage.setItem('hasVisitedPortfolio', 'true');
+    sessionStorage.setItem('hasVisitedPortfolio', 'true');
   };
 
   return (
