@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { sketches as sketchData, type Sketch } from '../../data/sketches';
+import { sketches as sketchData, type Sketch } from '@/data/sketches';
 
 // Process sketch data to add full image paths
 const processedSketches: Sketch[] = sketchData.map(sketch => ({
