@@ -14,7 +14,7 @@ interface Message {
 
 export default function ChatWidget() {
   const [mounted, setMounted] = useState(false);
-  const { isAuthenticated, isLoading: authLoading, user, balance, token, signOut } = useEcho();
+  const { isAuthenticated, isLoading: authLoading, balance, token, signOut, createPaymentLink } = useEcho();
   const [isOpen, setIsOpen] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [isJailbroken, setIsJailbroken] = useState(false);
@@ -56,6 +56,23 @@ export default function ChatWidget() {
       source: 'Signed Out'
     };
     setMessages(prev => [...prev, signOutMessage]);
+  };
+
+  const handleBuyCredits = async () => {
+    try {
+      const paymentLink = await createPaymentLink(10); 
+      window.open(paymentLink, '_blank');
+    } catch (error) {
+      console.error('Error creating payment link:', error);
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        text: "Unable to create payment link. Please try again later.",
+        sender: 'brian',
+        timestamp: new Date(),
+        source: 'Payment Error'
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const sendMessage = async () => {
@@ -110,7 +127,10 @@ export default function ChatWidget() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        const errorData = await response.json().catch(() => ({}));
+        const error = new Error(errorData.error || 'Failed to get response');
+        (error as any).status = response.status;
+        throw error;
       }
 
       const data = await response.json();
@@ -124,16 +144,41 @@ export default function ChatWidget() {
       };
 
       setMessages(prev => [...prev, brianMessage]);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending message:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "I find your lack of faith disturbing... but seriously, something went wrong. Try again!",
-        sender: 'brian',
-        timestamp: new Date(),
-        source: 'Error Response'
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      
+      // Check if it's an authentication error
+      if (error.status === 401 || error.message?.includes('401') || error.message?.includes('Unauthorized') || error.message?.includes('Authentication')) {
+        const authErrorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "Your authentication has expired. Please sign out and sign back in to continue using AI mode.",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Authentication Error'
+        };
+        setMessages(prev => [...prev, authErrorMessage]);
+        // Reset jailbreak mode on auth error
+        setIsJailbroken(false);
+      } else if (error.status === 402 || error.message?.includes('402') || error.message?.includes('insufficient') || error.message?.includes('balance')) {
+        // Handle insufficient balance
+        const balanceErrorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "Looks like you're out of credits! Click the 'Buy Credits' button to purchase more and continue our conversation.",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Insufficient Balance'
+        };
+        setMessages(prev => [...prev, balanceErrorMessage]);
+      } else {
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: "I find your lack of faith disturbing... but seriously, something went wrong. Try again!",
+          sender: 'brian',
+          timestamp: new Date(),
+          source: 'Error Response'
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -201,13 +246,24 @@ export default function ChatWidget() {
                 </button>
               )}
               {isAuthenticated && (
-                <button
-                  onClick={handleSignOut}
-                  className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-red-500 hover:text-white rounded transition-colors"
-                  title="Sign out and disable AI mode"
-                >
-                  Disable AI
-                </button>
+                <>
+                  {balance && balance.credits < 1 && (
+                    <button
+                      onClick={handleBuyCredits}
+                      className="text-xs px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded transition-colors"
+                      title="Purchase more credits"
+                    >
+                      💳 Buy Credits
+                    </button>
+                  )}
+                  <button
+                    onClick={handleSignOut}
+                    className="text-xs px-2 py-1 bg-[var(--accent)] hover:bg-red-500 hover:text-white rounded transition-colors"
+                    title="Sign out and disable AI mode"
+                  >
+                    Disable AI
+                  </button>
+                </>
               )}
               <button
                 onClick={() => setIsOpen(false)}
