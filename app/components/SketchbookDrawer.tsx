@@ -3,7 +3,81 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { sketches as sketchData, type Sketch } from '@/data/sketches';
+
+export interface Sketch {
+  id: number;
+  title: string;
+  description: string;
+  image: string; // Path relative to /public/sketches/
+  tags: string[];
+  date: string;
+  aspectRatio?: 'square' | 'portrait' | 'landscape' | 'wide';
+  size?: 'small' | 'medium' | 'large';
+}
+
+// Sketch data - directly embedded to avoid import issues during build
+const sketchData: Sketch[] = [
+  {
+    id: 1,
+    title: "Tolkien-Inspired Landscape",
+    description: "Hand-drawn fantasy landscape with mountains, dragon, and Elvish-style text. Exploring themes from 'Far to the East, over ranges and rivers...' with personal notes and sketches.",
+    image: "tolkien-inspired-sketch.JPG",
+    tags: ["Fantasy", "Landscape", "Tolkien", "Hand-drawn", "Literature"],
+    date: "2024-01-20",
+    aspectRatio: "wide",
+    size: "large"
+  },
+  {
+    id: 2,
+    title: "The Two Trees of Valinor",
+    description: "Telperion and Laurelin, the two trees of Valinor. The trees are the the replacement for the lamps of Valar.",
+    image: "two-trees.JPG",
+    tags: ["Fantasy", "Landscape", "Tolkien", "Hand-drawn", "Literature"],
+    date: "2024-01-15",
+    aspectRatio: "landscape",
+    size: "large"
+  },
+  {
+    id: 3,
+    title: "Hey Boo... Ghost Sketch",
+    description: "A playful hand-drawn ghost emerging from a tombstone with 'R.I.P' inscription. The friendly spirit says 'Hey Boo...' in a speech bubble, combining spooky and whimsical elements.",
+    image: "ghost-sketch.JPG",
+    tags: ["Halloween", "Ghost", "Whimsical", "Hand-drawn", "Spooky"],
+    date: "2024-01-12",
+    aspectRatio: "portrait",
+    size: "medium"
+  },
+  {
+    id: 4,
+    title: "Purgatory",
+    description: "A contemplative sketch exploring themes of limbo and transition. Hand-drawn artwork capturing the ethereal nature of being caught between states of existence.",
+    image: "purgatory-sketch.JPG",
+    tags: ["Spiritual", "Philosophy", "Hand-drawn", "Contemplative", "Abstract"],
+    date: "2024-01-11",
+    aspectRatio: "portrait",
+    size: "medium"
+  },
+  {
+    id: 5,
+    title: "Coniferous Tree Study",
+    description: "Detailed hand-drawn study of a coniferous tree with careful attention to texture, shading, and natural form. Shows the layered branches and textured bark of what appears to be a pine or fir tree.",
+    image: "tree-sketch.JPG",
+    tags: ["Nature", "Trees", "Hand-drawn", "Study", "Botanical"],
+    date: "2024-01-09",
+    aspectRatio: "portrait",
+    size: "large"
+  },
+  {
+    id: 6,
+    title: "Woods",
+    description: "A serene forest scene capturing the depth and mystery of woodland landscapes. Hand-drawn sketch exploring the interplay of light, shadow, and natural textures among trees.",
+    image: "woods-sketch.JPG",
+    tags: ["Nature", "Forest", "Landscape", "Hand-drawn", "Trees"],
+    date: "2024-01-08",
+    aspectRatio: "portrait",
+    size: "medium"
+  },
+];
 
 // Process sketch data to add full image paths
 const processedSketches: Sketch[] = sketchData.map(sketch => ({
