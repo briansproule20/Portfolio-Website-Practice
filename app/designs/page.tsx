@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import SketchbookDrawer from '../components/SketchbookDrawer';
 
 const designs = [
   {
@@ -41,9 +42,10 @@ const item = {
 
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [isSketchbookOpen, setIsSketchbookOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-screen bg-[var(--background)] relative">
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0 }}
@@ -149,6 +151,12 @@ export default function Designs() {
           </button>
         </motion.div>
       </section>
+
+      {/* Sketchbook Drawer */}
+      <SketchbookDrawer 
+        isOpen={isSketchbookOpen} 
+        onToggle={() => setIsSketchbookOpen(!isSketchbookOpen)} 
+      />
     </div>
   );
 } 

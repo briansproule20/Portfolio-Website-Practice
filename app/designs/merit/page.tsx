@@ -136,6 +136,104 @@ export default function Merit() {
           <p className="text-xl text-[var(--accent)] font-serif italic mb-4">
             Print Design / Mission: Open Source
           </p>
+          
+          {/* Merit Systems Button */}
+          <motion.div
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mb-8 text-center"
+          >
+            <p className="text-sm text-[var(--accent)] mb-3 font-medium">
+              Visit Merit Systems and Add to your Repo
+            </p>
+            <motion.a
+              href="https://www.merit.systems/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center relative group cursor-pointer"
+              aria-label="Visit Merit Systems website"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {/* Animated ring effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-[var(--highlight)] opacity-0 group-hover:opacity-100"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0, 0.8, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Pulsing glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[var(--highlight)] opacity-0 group-hover:opacity-20 blur-xl"
+                animate={{
+                  scale: [0.8, 1.2, 0.8],
+                  opacity: [0, 0.3, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Main logo container */}
+              <motion.div
+                className="relative z-10 p-2"
+                animate={{
+                  rotateY: [0, 360],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+                <Image
+                  src="/images/merit.png"
+                  alt="Merit Systems Logo"
+                  width={56}
+                  height={56}
+                  className="drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
+                />
+              </motion.div>
+              
+              {/* Orbiting particles */}
+              <motion.div
+                className="absolute w-2 h-2 bg-[var(--highlight)] rounded-full opacity-60"
+                animate={{
+                  rotate: 360,
+                  x: [20, -20, 20],
+                  y: [0, -15, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+              <motion.div
+                className="absolute w-1.5 h-1.5 bg-[var(--accent)] rounded-full opacity-40"
+                animate={{
+                  rotate: -360,
+                  x: [-25, 25, -25],
+                  y: [10, -10, 10],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </motion.a>
+          </motion.div>
         </motion.div>
 
         {/* Image Slideshow */}
