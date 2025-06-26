@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createOpenAI } from '@ai-sdk/openai';
+import { generateText } from 'ai';
 
 // Collection of quotes from the three franchises
 const quotes = {
@@ -75,24 +77,112 @@ function getRandomQuote(): { quote: string; source: string } {
   };
 }
 
+function getAllQuotesWithMetadata() {
+  const sourceMap = {
+    lotr: "The Lord of the Rings",
+    starWars: "Star Wars",
+    harryPotter: "Harry Potter",
+    redRising: "Red Rising",
+    witcher: "The Witcher"
+  };
+  
+  return Object.entries(quotes).flatMap(([franchise, quoteList]) => 
+    quoteList.map(quote => ({ 
+      quote, 
+      franchise,
+      source: sourceMap[franchise as keyof typeof sourceMap]
+    }))
+  );
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json();
+    const { message, useAI } = await request.json();
     
     if (!message || typeof message !== 'string') {
-      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+      return new Response(
+        JSON.stringify({ error: 'Message is required' }), 
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
     
-    // Add a small delay to make it feel more natural
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+    // For non-AI mode, return a random quote immediately
+    if (!useAI) {
+      await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+      const response = getRandomQuote();
+      return new Response(
+        JSON.stringify({
+          response: response.quote,
+          source: response.source,
+          timestamp: new Date().toISOString()
+        }),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+    }
     
-    const response = getRandomQuote();
+    // AI mode with streaming
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '');
     
-    return NextResponse.json({
-      response: response.quote,
-      source: response.source,
-      timestamp: new Date().toISOString()
+    if (!token) {
+      return new Response(
+        JSON.stringify({ error: 'Authentication required for AI mode' }), 
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    const openai = createOpenAI({
+      apiKey: token,
+      baseURL: 'https://echo.router.merit.systems',
     });
+    
+    const allQuotes = getAllQuotesWithMetadata();
+    
+    const prompt = `You are Virtual Brian, a wise assistant who only speaks in quotes from fantasy and sci-fi franchises.
+
+User message: "${message}"
+
+Available quotes:
+${allQuotes.map((q, i) => `${i + 1}. "${q.quote}" (${q.source})`).join('\n')}
+
+Select the most appropriate quote that best responds to or relates to the user's message. Consider the emotional tone, topic, and context.
+
+Respond in this exact JSON format:
+{"index": <number>, "quote": "<selected quote>", "source": "<source franchise>"}`;
+    
+    try {
+      const { text } = await generateText({
+        model: openai('gpt-4o-mini'),
+        prompt,
+        temperature: 0.7,
+        maxTokens: 150,
+      });
+      
+      // Parse the AI response
+      const parsed = JSON.parse(text);
+      const selectedQuote = allQuotes[parsed.index - 1] || getRandomQuote();
+      
+      return new Response(
+        JSON.stringify({
+          response: selectedQuote.quote,
+          source: selectedQuote.source || parsed.source,
+          timestamp: new Date().toISOString()
+        }),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+    } catch (error) {
+      console.error('AI selection error:', error);
+      // Fallback to random quote
+      const fallback = getRandomQuote();
+      return new Response(
+        JSON.stringify({
+          response: fallback.quote,
+          source: fallback.source,
+          timestamp: new Date().toISOString()
+        }),
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+    }
     
   } catch (error) {
     console.error('Chat API error:', error);

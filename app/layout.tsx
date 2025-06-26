@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./context/ThemeContext";
+import { Providers } from "./providers";
 import Header from "./components/Header";
 
 const inter = Inter({
@@ -45,10 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <ThemeProvider>
+        <Providers>
           <Header />
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
