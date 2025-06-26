@@ -12,7 +12,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   const echoConfig = {
-    appId: "ec4e4459-effe-4331-aaa5-046ec8279a1c",
+    appId: "e4221534-92c7-4129-ad1d-50169a0c5841",
     apiUrl: "https://echo.merit.systems",
     redirectUri: mounted ? window.location.origin : "http://localhost:3000",
   };

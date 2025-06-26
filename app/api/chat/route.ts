@@ -179,7 +179,7 @@ Respond in this exact JSON format:
 
     try {
       const { text } = await generateText({
-        model: openai("gpt-4o-mini"),
+        model: openai("gpt-4o"),
         prompt,
         temperature: jailbreak ? 0.8 : 0.7,
         maxTokens: jailbreak ? 150 : 150, // Limit to ensure under 500 chars
