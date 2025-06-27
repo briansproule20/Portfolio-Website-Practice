@@ -2,6 +2,7 @@ import Image from "next/image";
 import SwimmingFish from './components/SwimmingFish';
 import ParallaxRing from './components/ParallaxRing';
 import ChatWidget from './components/ChatWidget';
+import HelloThereQuote from './components/HelloThereQuote';
 import Link from 'next/link';
 import { getFeaturedPhotos, type Photo } from '../utils/photos';
 
@@ -51,7 +52,7 @@ export default async function Home() {
       <section className="flex-1 flex flex-col md:flex-row items-center justify-between px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
         <div className="flex-1">
           <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-2 object-cover" />
-          <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Hello there.</h1>
+          <HelloThereQuote />
           <p className="text-xl max-w-2xl mb-6 text-[var(--foreground)]">My name is Brian, I'm a digitial and traditional publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a cup of tea, a snack, get comfy, and stay a while. Please mind the fish.</p>
         </div>
         <ParallaxRing />
