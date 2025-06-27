@@ -41,18 +41,6 @@ const zines = [
     description: "Thoughts, comparisons, and a wishlist for the eternally awaited Elder Scrolls VI.",
     pdfUrl: "/pdfs/story-of-your-life.pdf"
   },
-  {
-    title: "The Sproule Family History",
-    category: "Genealogies",
-    description: "A genealogy of the family on my father's side.",
-    pdfUrl: "/pdfs/sproule-history.pdf"
-  },
-  {
-    title: "The Wallace Family History",
-    category: "Genealogies",
-    description: "A genealogy of the family on my mother's side.",
-    pdfUrl: "/pdfs/wallace-history.pdf"
-  }
 ];
 
 const categories = Array.from(new Set(zines.map(zine => zine.category)));

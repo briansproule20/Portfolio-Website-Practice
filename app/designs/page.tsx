@@ -23,6 +23,22 @@ const designs = [
     image: "/images/merit.png",
     href: "/designs/merit",
   },
+  {
+    id: 3,
+    title: "Sproule Family Genealogy",
+    category: "Information Design / Genealogy",
+    description: "Historical family tree design and ancestral documentation for the Sproule family.",
+    image: "/images/sproule-genealogy.png",
+    href: "/designs/sproule-genealogy",
+  },
+  {
+    id: 4,
+    title: "Wallace Family Genealogy",
+    category: "Information Design / Genealogy",
+    description: "Historical family tree design and ancestral documentation for the Wallace family line.",
+    image: "/images/wallace-genealogy.png",
+    href: "/designs/wallace-genealogy",
+  },
 ];
 
 const container = {
@@ -95,7 +111,11 @@ export default function Designs() {
                   src={design.image}
                   alt={design.title}
                   fill
-                  className="object-cover object-[center_0%] transition-transform duration-500 group-hover:scale-110"
+                  className={`object-cover transition-transform duration-500 group-hover:scale-110 ${
+                    design.id === 3 || design.id === 4
+                      ? 'object-center'
+                      : 'object-[center_0%]'
+                  }`}
                 />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
