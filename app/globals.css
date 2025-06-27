@@ -49,6 +49,14 @@
   --card: #3e372a;
 }
 
+.monochrome {
+  --background: #fafafa;   /* very light gray */
+  --foreground: #1a1a1a;  /* near black */
+  --accent: #6b7280;      /* medium gray */
+  --highlight: #4b5563;   /* lighter dark gray */
+  --card: #f3f4f6;        /* light gray */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
