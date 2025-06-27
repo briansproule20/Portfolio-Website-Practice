@@ -72,7 +72,7 @@ export default function AmbientSoundToggle() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 md:right-0 md:left-auto top-full mt-2 w-64 bg-[var(--card)] border-2 border-[var(--accent)] rounded-lg shadow-xl z-50 p-4"
+            className="fixed inset-4 md:absolute md:left-auto md:right-0 md:top-full md:inset-auto md:mt-2 w-auto md:w-64 bg-[var(--card)] border-2 border-[var(--accent)] rounded-lg shadow-xl z-50 p-4 max-h-[80vh] overflow-y-auto"
           >
             <div className="space-y-4">
               <div className="flex items-center justify-between">
