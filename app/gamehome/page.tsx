@@ -405,8 +405,7 @@ export default function GameHome() {
         {/* Left Floating Profile Picture Bubble */}
         {xboxProfile?.displayPicRaw || !isLoading ? (
           <motion.div
-            className="absolute z-20 hidden md:block"
-            initial={{ x: "5%", y: "20%" }}
+            className="absolute z-20 hidden md:block left-4 top-20"
             style={{
               willChange: "transform",
               filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
@@ -414,7 +413,7 @@ export default function GameHome() {
           >
             <motion.div
               animate={{
-                x: ["0%", "15%", "5%", "20%", "-2%", "0%"],
+                x: [0, 20, 10, 30, -5, 0],
               }}
               transition={{
                 duration: 18,
@@ -453,8 +452,7 @@ export default function GameHome() {
         {/* Right Floating Profile Picture Bubble */}
         {xboxProfile?.displayPicRaw || !isLoading ? (
           <motion.div
-            className="absolute z-20 hidden md:block"
-            initial={{ x: "85%", y: "30%" }}
+            className="absolute z-20 hidden md:block right-4 top-24"
             style={{
               willChange: "transform",
               filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
@@ -462,7 +460,7 @@ export default function GameHome() {
           >
             <motion.div
               animate={{
-                x: ["0%", "-18%", "-8%", "-25%", "2%", "0%"],
+                x: [0, -25, -10, -35, 5, 0],
               }}
               transition={{
                 duration: 22,
