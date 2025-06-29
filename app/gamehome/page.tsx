@@ -251,6 +251,9 @@ export default function GameHome() {
     gamertag: string;
     gamerscore: number;
     achievementCount: number;
+    displayPicRaw?: string;
+    realName?: string;
+    bio?: string;
   } | null>(null);
 
   // Fetch Xbox Live data on component mount
@@ -300,6 +303,9 @@ export default function GameHome() {
           gamertag: data.profile.gamertag,
           gamerscore: data.profile.gamerscore,
           achievementCount: data.profile.achievementCount,
+          displayPicRaw: data.profile.displayPicRaw,
+          realName: data.profile.realName,
+          bio: data.profile.bio,
         });
         
         console.log(`🎮 Loaded ${transformedGames.length} games for ${data.profile.gamertag}`);
@@ -413,48 +419,71 @@ export default function GameHome() {
             An exhibition games played, worlds explored.
           </motion.p>
           
-          {/* Xbox Stats */}
+          {/* Xbox Profile & Stats */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-[var(--foreground)]"
+            className="flex flex-col items-center justify-center gap-6 text-[var(--foreground)]"
           >
-            {/* Left Achievement Ticker */}
-            <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
-              <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
-                  {tickerContent}
+            {/* Profile Picture */}
+            <div className="mb-4">
+              {xboxProfile?.displayPicRaw ? (
+                <img
+                  src={xboxProfile.displayPicRaw}
+                  alt={`${xboxProfile.gamertag} profile picture`}
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-[var(--highlight)] shadow-lg"
+                />
+              ) : (
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-[var(--card)] border-4 border-[var(--highlight)] flex items-center justify-center text-4xl shadow-lg">
+                  🎮
                 </div>
+              )}
+            </div>
+
+            {/* Stats Row */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 mb-6">
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
+                  {isLoading ? '...' : (xboxProfile?.gamerscore.toLocaleString() || '127,500')}
+                </div>
+                <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamerscore</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
+              <div className="text-center max-w-xs">
+                <div className="text-xl md:text-2xl font-bold text-[var(--highlight)] break-words leading-tight">
+                  {isLoading ? '...' : (xboxProfile?.gamertag || 'fishmug')}
+                </div>
+                <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamertag</div>
+              </div>
+              <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
+                  {isLoading ? '...' : (xboxProfile?.achievementCount || '342')}
+                </div>
+                <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Achievements</div>
               </div>
             </div>
-            
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
-                {isLoading ? '...' : (xboxProfile?.gamerscore.toLocaleString() || '127,500')}
-              </div>
-              <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamerscore</div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
-                {isLoading ? '...' : (xboxProfile?.gamertag || 'fishmug')}
-              </div>
-              <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamertag</div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
-                {isLoading ? '...' : (xboxProfile?.achievementCount || '342')}
-              </div>
-              <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Achievements</div>
-            </div>
-            
-            {/* Right Achievement Ticker */}
-            <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
-              <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
-                  {tickerContent}
+
+            {/* Achievement Tickers */}
+            <div className="w-full max-w-6xl">
+              <div className="flex flex-col lg:flex-row gap-4">
+                {/* Left Achievement Ticker */}
+                <div className="flex-1 h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
+                  <div className="h-full flex items-center">
+                    <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                      {tickerContent}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Right Achievement Ticker */}
+                <div className="flex-1 h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
+                  <div className="h-full flex items-center">
+                    <div className={`animate-[scroll-left_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                      {tickerContent}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -468,7 +497,7 @@ export default function GameHome() {
       <motion.section 
         initial="hidden"
         animate="visible"
-        className="max-w-6xl mx-auto px-8 py-8"
+        className="max-w-6xl mx-auto px-8 py-8 mt-8"
       >
         <div className="grid gap-3 md:gap-4 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">
           {/* Display max 30 games on main page - full list available at /gamehome/full */}
