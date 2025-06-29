@@ -425,7 +425,7 @@ export default function GameHome() {
             >
               <motion.div
                 animate={{
-                  y: [0, -20, 180, -10, 160, 0],
+                  y: [0, -15, 40, -8, 35, 0],
                 }}
                 transition={{
                   duration: 16,
