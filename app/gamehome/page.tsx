@@ -401,6 +401,36 @@ export default function GameHome() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
+        
+        {/* Floating Profile Picture Bubble */}
+        {xboxProfile?.displayPicRaw || !isLoading ? (
+          <motion.div
+            className="absolute z-20 hidden md:block"
+            initial={{ x: 100, y: 100 }}
+            animate={{
+              x: [100, 200, 300, 150, 100],
+              y: [100, 50, 120, 180, 100],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            {xboxProfile?.displayPicRaw ? (
+              <img
+                src={xboxProfile.displayPicRaw}
+                alt={`${xboxProfile.gamertag} profile picture`}
+                className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-[var(--highlight)] shadow-2xl backdrop-blur-sm bg-white/10"
+              />
+            ) : (
+              <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[var(--card)]/80 backdrop-blur-sm border-2 border-[var(--highlight)] flex items-center justify-center text-2xl shadow-2xl">
+                🎮
+              </div>
+            )}
+          </motion.div>
+        ) : null}
+        
         <div className="relative z-10 text-center w-full mx-auto px-4">
           <motion.h1 
             initial={{ y: 20, opacity: 0 }}
@@ -478,23 +508,7 @@ export default function GameHome() {
         animate="visible"
         className="max-w-6xl mx-auto px-8 py-8"
       >
-        {/* Profile Picture - Left of Games */}
-        <div className="flex items-start gap-6 mb-6">
-          <div className="hidden md:block">
-            {xboxProfile?.displayPicRaw ? (
-              <img
-                src={xboxProfile.displayPicRaw}
-                alt={`${xboxProfile.gamertag} profile picture`}
-                className="w-20 h-20 lg:w-24 lg:h-24 rounded-full object-cover border-3 border-[var(--highlight)] shadow-lg"
-              />
-            ) : (
-              <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-[var(--card)] border-3 border-[var(--highlight)] flex items-center justify-center text-3xl shadow-lg">
-                🎮
-              </div>
-            )}
-          </div>
-          <div className="flex-1">
-            <div className="grid gap-3 md:gap-4 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 md:gap-4 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">
           {/* Display max 30 games on main page - full list available at /gamehome/full */}
           {games.slice(0, 30).map((game, index) => (
             <motion.div
@@ -549,25 +563,23 @@ export default function GameHome() {
                </div>
             </motion.div>
           ))}
-            </div>
-            
-            {/* Full List Link */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="text-center mt-16"
-            >
-              <a
-                href="/gamehome/full"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--card)] border border-[var(--accent)] rounded-2xl text-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--background)] transition-all duration-300 group"
-              >
-                <span className="font-semibold">View Full Game Library</span>
-                <span className="text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>
-              </a>
-            </motion.div>
-          </div>
         </div>
+        
+        {/* Full List Link */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+          className="text-center mt-16"
+        >
+          <a
+            href="/gamehome/full"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--card)] border border-[var(--accent)] rounded-2xl text-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--background)] transition-all duration-300 group"
+          >
+            <span className="font-semibold">View Full Game Library</span>
+            <span className="text-lg group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </a>
+        </motion.div>
       </motion.section>
 
       {/* Game Detail Modal */}
