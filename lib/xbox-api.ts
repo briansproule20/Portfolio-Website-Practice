@@ -151,10 +151,11 @@ class XboxAPI {
    */
   async getRecentAchievements(limit: number = 20, xuid?: string): Promise<XboxAchievement[]> {
     try {
-      // Try fewer endpoints to avoid rate limiting
+      // Try different endpoints without query parameters to avoid 400 errors
       const endpoints = [
         xuid ? `/achievements/player/${xuid}` : '/achievements',
-        '/achievements/recent'
+        '/achievements/player',
+        xuid ? `/achievements/player/${xuid}/titles` : '/achievements/player/titles'
       ];
 
       let achievements: any[] = [];
@@ -163,7 +164,10 @@ class XboxAPI {
       for (const endpoint of endpoints) {
         try {
           console.log(`🔍 Trying achievements endpoint: ${endpoint}`);
+          
           const response = await this.makeOpenXBLRequest(endpoint);
+          
+          console.log(`📊 Raw response from ${endpoint}:`, JSON.stringify(response, null, 2));
           
           // Check different possible response structures
           const possibleAchievements = response.achievements || response.data || response || [];
@@ -173,6 +177,8 @@ class XboxAPI {
             successfulEndpoint = endpoint;
             console.log(`✅ Found ${achievements.length} achievements from ${endpoint}`);
             break;
+          } else {
+            console.log(`📊 No achievements found in response from ${endpoint}, response keys:`, Object.keys(response));
           }
         } catch (error) {
           console.log(`❌ Endpoint ${endpoint} failed:`, error);
@@ -182,29 +188,50 @@ class XboxAPI {
       }
 
       if (achievements.length === 0) {
-        console.log('🔍 No achievements found from any endpoint, trying alternative approach...');
-        // Try to get achievements from games data instead
+        console.log('🔍 No achievements found from any endpoint, creating summaries from game data...');
+        
+        // Create achievement summaries from the actual game data we have
         try {
           const gamesResponse = await this.makeOpenXBLRequest('/player/titleHistory');
           const games = gamesResponse.titles || [];
           
-          // Generate achievements from games with achievements
-          const gamesWithAchievements = games.filter((game: any) => game.achievements && game.achievements > 0);
+          // Find games with achievements
+          const gamesWithAchievements = games.filter((game: any) => 
+            game.achievement && game.achievement.currentAchievements > 0
+          ).slice(0, 10); // Take top 10 games by achievement count
           
-          if (gamesWithAchievements.length > 0) {
-            achievements = gamesWithAchievements.slice(0, limit).map((game: any) => ({
-              id: `game-${game.titleId}`,
-              name: `${game.name} Achievement`,
-              description: `Achievement from ${game.name}`,
-              gamerscore: 0,
-              rarity: 'common',
-              dateEarned: game.lastUnlock || new Date().toISOString(),
+          console.log(`🎮 Found ${gamesWithAchievements.length} games with achievements to create summaries`);
+          
+          const achievementSummaries: XboxAchievement[] = [];
+          
+          for (const game of gamesWithAchievements) {
+            const earnedCount = game.achievement.currentAchievements;
+            const totalCount = game.achievement.totalAchievements;
+            const gamerscore = game.achievement.currentGamerscore;
+            
+            // Create a summary achievement for this game
+            achievementSummaries.push({
+              id: `summary-${game.titleId}`,
+              name: `${earnedCount} Achievements in ${game.name}`,
+              description: `${earnedCount} of ${totalCount} achievements (${Math.round((earnedCount / totalCount) * 100)}%)`,
+              gamerscore: gamerscore,
+              rarity: earnedCount >= totalCount * 0.8 ? 'rare' : earnedCount >= totalCount * 0.5 ? 'uncommon' : 'common',
+              dateEarned: new Date().toISOString(), // Use current date to avoid parsing issues
               gameName: game.name
-            }));
-            console.log(`✅ Generated ${achievements.length} achievements from games data`);
+            });
+          }
+          
+          if (achievementSummaries.length > 0) {
+            achievements = achievementSummaries;
+            console.log(`✅ Created ${achievements.length} achievement summaries from game data`);
           }
         } catch (error) {
-          console.log('❌ Failed to get games data for achievements:', error);
+          console.log('❌ Failed to create achievement summaries:', error);
+        }
+        
+        if (achievements.length === 0) {
+          console.log('🔍 No achievement summaries could be created');
+          return [];
         }
       }
 
@@ -269,7 +296,9 @@ class XboxAPI {
       const games = await this.getGames(xuid);
       await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
       
-      const achievements = await this.getRecentAchievements(20, xuid);
+      // Use the profile's XUID for achievements if we have it
+      const achievementsXuid = profile.xuid || xuid;
+      const achievements = await this.getRecentAchievements(20, achievementsXuid);
 
       // Calculate total achievements from games instead of using recent achievements length
       const totalAchievements = games.reduce((sum, game) => sum + (game.achievements || 0), 0);
@@ -286,56 +315,6 @@ class XboxAPI {
       console.error('Failed to fetch gamehome data:', error);
       throw error;
     }
-  }
-
-  /**
-   * Generate sample achievements from games data
-   */
-  private generateAchievementsFromGames(games: XboxGameData[]): XboxAchievement[] {
-    const gamesWithAchievements = games
-      .filter(game => game.achievements && game.achievements > 0)
-      .sort((a, b) => (b.achievements || 0) - (a.achievements || 0))
-      .slice(0, 10); // Take top 10 games by achievement count
-
-    const generatedAchievements: XboxAchievement[] = [];
-    
-    gamesWithAchievements.forEach((game, index) => {
-      const achievementCount = Math.min(game.achievements || 0, 3); // Max 3 per game
-      
-      for (let i = 0; i < achievementCount; i++) {
-        generatedAchievements.push({
-          id: `gen_${game.id}_${i}`,
-          name: `${game.title} Achievement ${i + 1}`,
-          description: `Achievement from ${game.title}`,
-          gamerscore: Math.floor(Math.random() * 50) + 10, // 10-60 gamerscore
-          rarity: this.getRandomRarity(),
-          dateEarned: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(), // Random date in last 30 days
-          gameName: game.title,
-        });
-      }
-    });
-
-    return generatedAchievements.slice(0, 20); // Return max 20 achievements
-  }
-
-  /**
-   * Get random rarity for generated achievements
-   */
-  private getRandomRarity(): 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' {
-    const rarities: ('common' | 'uncommon' | 'rare' | 'epic' | 'legendary')[] = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
-    const weights = [0.5, 0.3, 0.15, 0.04, 0.01]; // Probability weights
-    
-    const random = Math.random();
-    let cumulative = 0;
-    
-    for (let i = 0; i < weights.length; i++) {
-      cumulative += weights[i];
-      if (random <= cumulative) {
-        return rarities[i];
-      }
-    }
-    
-    return 'common';
   }
 
   /**

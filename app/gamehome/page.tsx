@@ -326,9 +326,19 @@ export default function GameHome() {
   const allRecentAchievements = recentAchievements.length > 0 ? 
     recentAchievements.slice(0, 12) : 
     games
-      .filter(game => game.recentAchievements)
+      .filter(game => game.recentAchievements && game.recentAchievements.length > 0)
       .flatMap(game => game.recentAchievements!)
       .slice(0, 12);
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('🎯 Achievement Debug:', {
+      recentAchievementsCount: recentAchievements.length,
+      gamesWithAchievements: games.filter(g => g.recentAchievements && g.recentAchievements.length > 0).length,
+      allRecentAchievementsCount: allRecentAchievements.length,
+      sampleAchievements: allRecentAchievements.slice(0, 3).map(a => a.name)
+    });
+  }, [recentAchievements, games, allRecentAchievements]);
   
   // Create ticker content based on state
   const getTickerContent = () => {
@@ -356,14 +366,16 @@ export default function GameHome() {
       return loadingMessages.join('    •    ') + '    •    ' + loadingMessages.join('    •    ') + '    •    ';
     }
     
-    // Use real achievements if available, otherwise fall back to sample
+    // Use real achievements if available
     const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name}`);
     
     if (realAchievements.length > 0) {
+      console.log('🎯 Using real achievements for ticker:', realAchievements.slice(0, 5));
       // Use real achievements - duplicate many times for seamless infinite loop
       const duplicatedAchievements = [...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements];
       return duplicatedAchievements.join('    •    ') + '    •    ';
     } else {
+      console.log('🎯 No real achievements available, using sample achievements');
       // Fall back to sample achievements if no real ones available
       const sampleAchievements = [
         '🏆 Dragon Slayer',
@@ -486,7 +498,7 @@ export default function GameHome() {
             {/* Left Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_600s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
@@ -516,7 +528,7 @@ export default function GameHome() {
             {/* Right Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_600s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
