@@ -402,101 +402,50 @@ export default function GameHome() {
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
         
-        {/* Left Floating Profile Picture Bubble */}
-        {xboxProfile?.displayPicRaw || !isLoading ? (
+        {/* Left Bubble - Simple Rectangle */}
+        {xboxProfile?.displayPicRaw ? (
           <motion.div
-            className="absolute z-20 hidden md:block"
-            initial={{ x: 20, y: 80 }}
-            style={{
-              willChange: "transform",
-              filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
+            className="absolute top-20 left-8 z-20 hidden md:block pointer-events-none"
+            animate={{
+              x: [0, 80, 20, 60, 10, 0],
+              y: [0, 60, 120, 40, 100, 0]
             }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{ filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))" }}
           >
-            <motion.div
-              animate={{
-                x: [20, 5, 50, 15, 2, 20], // Bounce off left edge (x=0) and move inward
-              }}
-              transition={{
-                duration: 18,
-                repeat: Infinity,
-                ease: [0.25, 0.46, 0.45, 0.94], // Bouncy physics
-                times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-              }}
-            >
-              <motion.div
-                animate={{
-                  y: [0, -15, 60, -5, 45, 0], // Bounce within hero section bounds
-                }}
-                transition={{
-                  duration: 18,
-                  repeat: Infinity,
-                  ease: [0.17, 0.67, 0.83, 0.67], // Custom bounce curve
-                  times: [0, 0.15, 0.35, 0.55, 0.8, 1]
-                }}
-              >
-                {xboxProfile?.displayPicRaw ? (
-                  <img
-                    src={xboxProfile.displayPicRaw}
-                    alt={`${xboxProfile.gamertag} profile picture left`}
-                    className="w-14 h-14 lg:w-18 lg:h-18 rounded-full object-cover border-2 border-[var(--highlight)] shadow-2xl backdrop-blur-sm bg-white/10"
-                  />
-                ) : (
-                  <div className="w-14 h-14 lg:w-18 lg:h-18 rounded-full bg-[var(--card)]/80 backdrop-blur-sm border-2 border-[var(--highlight)] flex items-center justify-center text-xl shadow-2xl">
-                    🎮
-                  </div>
-                )}
-              </motion.div>
-            </motion.div>
+            <img
+              src={xboxProfile.displayPicRaw}
+              alt={`${xboxProfile.gamertag} profile picture`}
+              className="w-16 h-16 rounded-full object-cover border-2 border-[var(--highlight)] shadow-2xl"
+            />
           </motion.div>
         ) : null}
         
-        {/* Right Floating Profile Picture Bubble */}
-        {xboxProfile?.displayPicRaw || !isLoading ? (
+        {/* Right Bubble - Simple Rectangle */}
+        {xboxProfile?.displayPicRaw ? (
           <motion.div
-            className="absolute z-20 hidden md:block"
-            initial={{ x: "calc(100vw - 80px)", y: 100 }}
-            style={{
-              willChange: "transform",
-              filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
+            className="absolute top-24 right-8 z-20 hidden md:block pointer-events-none"
+            animate={{
+              x: [0, -60, -20, -80, -10, 0],
+              y: [0, 80, 40, 110, 20, 0]
             }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3
+            }}
+            style={{ filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))" }}
           >
-            <motion.div
-              animate={{
-                x: ["calc(100vw - 80px)", "calc(100vw - 120px)", "calc(100vw - 60px)", "calc(100vw - 140px)", "calc(100vw - 75px)", "calc(100vw - 80px)"], // Bounce off right edge
-              }}
-              transition={{
-                duration: 22,
-                repeat: Infinity,
-                ease: [0.17, 0.67, 0.83, 0.67], // Bouncy physics
-                times: [0, 0.25, 0.45, 0.65, 0.85, 1],
-                delay: 5 // Start 5 seconds after left bubble
-              }}
-            >
-              <motion.div
-                animate={{
-                  y: [0, -20, 50, -8, 55, 0], // Bounce within hero section bounds
-                }}
-                transition={{
-                  duration: 22,
-                  repeat: Infinity,
-                  ease: [0.25, 0.46, 0.45, 0.94], // Different bounce curve
-                  times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-                  delay: 5 // Start 5 seconds after left bubble
-                }}
-              >
-                {xboxProfile?.displayPicRaw ? (
-                  <img
-                    src={xboxProfile.displayPicRaw}
-                    alt={`${xboxProfile.gamertag} profile picture right`}
-                    className="w-12 h-12 lg:w-16 lg:h-16 rounded-full object-cover border-2 border-[var(--accent)] shadow-2xl backdrop-blur-sm bg-white/10"
-                  />
-                ) : (
-                  <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-[var(--card)]/80 backdrop-blur-sm border-2 border-[var(--accent)] flex items-center justify-center text-lg shadow-2xl">
-                    🎮
-                  </div>
-                )}
-              </motion.div>
-            </motion.div>
+            <img
+              src={xboxProfile.displayPicRaw}
+              alt={`${xboxProfile.gamertag} profile picture`}
+              className="w-14 h-14 rounded-full object-cover border-2 border-[var(--accent)] shadow-2xl"
+            />
           </motion.div>
         ) : null}
         
