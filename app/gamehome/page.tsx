@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 interface Game {
@@ -245,11 +245,74 @@ const sampleGames: Game[] = [
 export default function GameHome() {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [apiError, setApiError] = useState<boolean>(false);
-  
-  // TODO: Replace with actual Xbox Live API call
-  // For now, we'll simulate API success with sample data
-  // When Xbox Live API fails, set setApiError(true)
-  const games = sampleGames;
+  const [games, setGames] = useState<Game[]>(sampleGames);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [xboxProfile, setXboxProfile] = useState<{
+    gamertag: string;
+    gamerscore: number;
+    achievementCount: number;
+  } | null>(null);
+
+  // Fetch Xbox Live data on component mount
+  useEffect(() => {
+    fetchXboxData();
+  }, []);
+
+  const fetchXboxData = async () => {
+    try {
+      setIsLoading(true);
+      setApiError(false);
+      
+      console.log('🎮 Attempting to fetch Xbox Live data...');
+      
+      const response = await fetch('/api/xbox');
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch Xbox data');
+      }
+      
+      if (data.success) {
+        console.log('✅ Xbox Live data fetched successfully');
+        
+        // Transform Xbox API data to our Game interface
+        const transformedGames: Game[] = data.games.map((xboxGame: any) => ({
+          id: xboxGame.id,
+          title: xboxGame.title,
+          genre: xboxGame.genre || 'Unknown',
+          platform: xboxGame.platform || 'Xbox Series S',
+          coverArt: xboxGame.coverArt || '/images/game-placeholder.jpg',
+          rating: xboxGame.rating || 0,
+          hoursPlayed: xboxGame.hoursPlayed || 0,
+          review: xboxGame.review,
+          achievements: xboxGame.achievements || 0,
+          totalAchievements: xboxGame.totalAchievements || 0,
+          lastPlayed: xboxGame.lastPlayed,
+          gameDescription: xboxGame.gameDescription,
+          developer: xboxGame.developer,
+          releaseDate: xboxGame.releaseDate,
+          recentAchievements: xboxGame.recentAchievements || [],
+          achievementRarity: xboxGame.achievementRarity,
+        }));
+        
+        setGames(transformedGames);
+        setXboxProfile({
+          gamertag: data.profile.gamertag,
+          gamerscore: data.profile.gamerscore,
+          achievementCount: data.profile.achievementCount,
+        });
+        
+        console.log(`🎮 Loaded ${transformedGames.length} games for ${data.profile.gamertag}`);
+      }
+    } catch (error) {
+      console.error('❌ Xbox Live API failed:', error);
+      setApiError(true);
+      // Keep using sample data when API fails
+      setGames(sampleGames);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   // Gather all recent achievements for ticker
   const allRecentAchievements = games
@@ -330,17 +393,23 @@ export default function GameHome() {
             </div>
             
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">127,500</div>
+              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
+                {isLoading ? '...' : (xboxProfile?.gamerscore.toLocaleString() || '127,500')}
+              </div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamerscore</div>
             </div>
             <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">fishmug</div>
+              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
+                {isLoading ? '...' : (xboxProfile?.gamertag || 'fishmug')}
+              </div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamertag</div>
             </div>
             <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">342</div>
+              <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">
+                {isLoading ? '...' : (xboxProfile?.achievementCount || '342')}
+              </div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Achievements</div>
             </div>
             
@@ -363,7 +432,24 @@ export default function GameHome() {
               className="mt-6 px-4 py-3 bg-red-900/20 border border-red-700/30 rounded-xl text-red-400 text-center max-w-md mx-auto"
             >
               <p className="text-sm">
-                ⚠️ Unable to connect to Xbox Live. Showing sample games below.
+                ⚠️ Xbox Live API unavailable. {!process.env.XBOX_API_ENABLED ? 'Enable in environment settings.' : 'Check credentials.'}
+              </p>
+              <p className="text-xs mt-1 text-red-300">
+                Showing sample games below.
+              </p>
+            </motion.div>
+          )}
+          
+          {/* Loading State */}
+          {isLoading && !apiError && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="mt-6 px-4 py-3 bg-blue-900/20 border border-blue-700/30 rounded-xl text-blue-400 text-center max-w-md mx-auto"
+            >
+              <p className="text-sm">
+                🎮 Connecting to Xbox Live...
               </p>
             </motion.div>
           )}
