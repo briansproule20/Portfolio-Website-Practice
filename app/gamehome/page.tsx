@@ -406,28 +406,47 @@ export default function GameHome() {
         {xboxProfile?.displayPicRaw || !isLoading ? (
           <motion.div
             className="absolute z-20 hidden md:block"
-            initial={{ x: 100, y: 100 }}
-            animate={{
-              x: [100, 200, 300, 150, 100],
-              y: [100, 50, 120, 180, 100],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut"
+            initial={{ x: "15%", y: "25%" }}
+            style={{
+              willChange: "transform",
+              filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
             }}
           >
-            {xboxProfile?.displayPicRaw ? (
-              <img
-                src={xboxProfile.displayPicRaw}
-                alt={`${xboxProfile.gamertag} profile picture`}
-                className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-[var(--highlight)] shadow-2xl backdrop-blur-sm bg-white/10"
-              />
-            ) : (
-              <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[var(--card)]/80 backdrop-blur-sm border-2 border-[var(--highlight)] flex items-center justify-center text-2xl shadow-2xl">
-                🎮
-              </div>
-            )}
+            <motion.div
+              animate={{
+                x: ["0%", "60%", "10%", "70%", "-5%", "0%"],
+              }}
+              transition={{
+                duration: 16,
+                repeat: Infinity,
+                ease: "easeInOut",
+                times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+              }}
+            >
+              <motion.div
+                animate={{
+                  y: [0, -20, 180, -10, 160, 0],
+                }}
+                transition={{
+                  duration: 16,
+                  repeat: Infinity,
+                  ease: [0.17, 0.67, 0.83, 0.67], // Custom bounce curve
+                  times: [0, 0.15, 0.35, 0.55, 0.8, 1]
+                }}
+              >
+                {xboxProfile?.displayPicRaw ? (
+                  <img
+                    src={xboxProfile.displayPicRaw}
+                    alt={`${xboxProfile.gamertag} profile picture`}
+                    className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-[var(--highlight)] shadow-2xl backdrop-blur-sm bg-white/10"
+                  />
+                ) : (
+                  <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[var(--card)]/80 backdrop-blur-sm border-2 border-[var(--highlight)] flex items-center justify-center text-2xl shadow-2xl">
+                    🎮
+                  </div>
+                )}
+              </motion.div>
+            </motion.div>
           </motion.div>
         ) : null}
         
