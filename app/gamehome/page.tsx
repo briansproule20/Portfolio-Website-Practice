@@ -485,9 +485,23 @@ export default function GameHome() {
               {/* Main Cover Art Card */}
               <div className="relative overflow-hidden rounded-3xl shadow-xl transform transition-all duration-700 hover:scale-[1.02] hover:-translate-y-2">
                 {/* Cover Art */}
-                <div className="relative bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)] flex items-center justify-center text-9xl text-[var(--background)] opacity-50 aspect-[3/4]">
+                <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)]">
+                  <img
+                    src={game.coverArt}
+                    alt={`${game.title} cover art`}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to placeholder if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.parentElement!.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center text-9xl text-[var(--background)] opacity-50">
+                          <span>🎮</span>
+                        </div>
+                      `;
+                    }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <span className="relative z-10">🎮</span>
                 </div>
 
                                  {/* Clean Title Area */}

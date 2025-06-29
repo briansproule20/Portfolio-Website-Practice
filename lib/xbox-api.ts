@@ -1,21 +1,3 @@
-import { authenticate } from '@xboxreplay/xboxlive-auth';
-
-export interface XboxAuthData {
-  xuid: string;
-  user_hash: string;
-  xsts_token: string;
-  display_claims: {
-    gtg: string; // Gamertag
-    xid: string;
-    uhs: string;
-    agg: string;
-    usr: string;
-    utr: string;
-    prv: string;
-  };
-  expires_on: string;
-}
-
 export interface XboxGameData {
   id: string;
   title: string;
@@ -41,6 +23,7 @@ export interface XboxAchievement {
   rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
   dateEarned: string;
   iconUrl?: string;
+  gameName?: string;
 }
 
 export interface XboxProfile {
@@ -48,71 +31,41 @@ export interface XboxProfile {
   gamerscore: number;
   achievementCount: number;
   xuid: string;
+  displayPicRaw?: string;
+  realName?: string;
+  bio?: string;
+  location?: string;
 }
 
 class XboxAPI {
-  private authData: XboxAuthData | null = null;
+  private readonly baseUrl = 'https://xbl.io/api/v2';
+  private readonly apiKey: string;
 
-  /**
-   * Authenticate with Xbox Live using email and password
-   */
-  async authenticate(email: string, password: string): Promise<XboxAuthData> {
-    try {
-      const authResponse = await authenticate(email as `${string}@${string}.${string}`, password);
-      
-      // Map the response to our interface
-      this.authData = {
-        xuid: authResponse.xuid || '',
-        user_hash: authResponse.user_hash,
-        xsts_token: authResponse.xsts_token,
-        display_claims: {
-          gtg: (authResponse.display_claims as any).gtg || '',
-          xid: (authResponse.display_claims as any).xid || authResponse.xuid || '',
-          uhs: authResponse.user_hash,
-          agg: (authResponse.display_claims as any).agg || '',
-          usr: (authResponse.display_claims as any).usr || '',
-          utr: (authResponse.display_claims as any).utr || '',
-          prv: (authResponse.display_claims as any).prv || '',
-        },
-        expires_on: authResponse.expires_on,
-      };
-      
-      return this.authData;
-    } catch (error) {
-      console.error('Xbox authentication failed:', error);
-      throw new Error('Failed to authenticate with Xbox Live');
+  constructor() {
+    this.apiKey = process.env.OPENXBL_API_KEY || '';
+    if (!this.apiKey) {
+      console.warn('OpenXBL API key not configured');
     }
   }
 
   /**
-   * Authenticate using refresh token (faster)
+   * Make authenticated request to OpenXBL API
    */
-  async authenticateWithRefreshToken(refreshToken: string): Promise<XboxAuthData> {
-    try {
-      // Note: You'll need to implement refresh token logic
-      // The library supports this but requires additional setup
-      throw new Error('Refresh token authentication not yet implemented');
-    } catch (error) {
-      console.error('Xbox refresh token authentication failed:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Make authenticated request to Xbox Live API
-   */
-  private async makeXboxRequest(url: string, options: RequestInit = {}): Promise<any> {
-    if (!this.authData) {
-      throw new Error('Not authenticated. Call authenticate() first.');
+  private async makeOpenXBLRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
+    if (!this.apiKey) {
+      throw new Error('OpenXBL API key not configured');
     }
 
+    const url = `${this.baseUrl}${endpoint}`;
     const headers = {
-      'Authorization': `XBL3.0 x=${this.authData.user_hash};${this.authData.xsts_token}`,
-      'X-XBL-Contract-Version': '2',
+      'X-Authorization': this.apiKey,
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Accept-Language': 'en-US',
       ...options.headers,
     };
+
+    console.log(`🔗 Making OpenXBL request to: ${endpoint}`);
 
     const response = await fetch(url, {
       ...options,
@@ -120,32 +73,42 @@ class XboxAPI {
     });
 
     if (!response.ok) {
-      throw new Error(`Xbox API request failed: ${response.status} ${response.statusText}`);
+      const errorText = await response.text();
+      console.error(`OpenXBL API request failed: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`OpenXBL API request failed: ${response.status} ${response.statusText}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log(`✅ OpenXBL request successful for: ${endpoint}`);
+    return data;
   }
 
   /**
    * Get user profile information
    */
-  async getProfile(): Promise<XboxProfile> {
-    if (!this.authData) {
-      throw new Error('Not authenticated');
-    }
-
+  async getProfile(xuid?: string): Promise<XboxProfile> {
     try {
-      const url = `https://profile.xboxlive.com/users/xuid(${this.authData.xuid})/profile/settings?settings=Gamerscore,Gamertag`;
-      const response = await this.makeXboxRequest(url);
+      const endpoint = xuid ? `/account/${xuid}` : '/account';
+      const response = await this.makeOpenXBLRequest(endpoint);
 
-      const profile = response.profileUsers[0];
-      const settings = profile.settings;
+      const profileUser = response.profileUsers?.[0];
+      if (!profileUser) {
+        throw new Error('No profile data found');
+      }
+
+      const settings = profileUser.settings || [];
+      const getSettingValue = (id: string) => 
+        settings.find((s: any) => s.id === id)?.value || '';
 
       return {
-        gamertag: settings.find((s: any) => s.id === 'Gamertag')?.value || 'Unknown',
-        gamerscore: parseInt(settings.find((s: any) => s.id === 'Gamerscore')?.value || '0'),
-        achievementCount: 0, // We'll get this from achievements API
-        xuid: this.authData.xuid,
+        gamertag: getSettingValue('Gamertag') || 'Unknown',
+        gamerscore: parseInt(getSettingValue('Gamerscore') || '0'),
+        achievementCount: 0, // Will be populated from achievements endpoint
+        xuid: profileUser.id || xuid || '',
+        displayPicRaw: getSettingValue('GameDisplayPicRaw'),
+        realName: getSettingValue('RealName'),
+        bio: getSettingValue('Bio'),
+        location: getSettingValue('Location'),
       };
     } catch (error) {
       console.error('Failed to fetch Xbox profile:', error);
@@ -156,27 +119,26 @@ class XboxAPI {
   /**
    * Get user's games/titles
    */
-  async getGames(): Promise<XboxGameData[]> {
-    if (!this.authData) {
-      throw new Error('Not authenticated');
-    }
-
+  async getGames(xuid?: string): Promise<XboxGameData[]> {
     try {
-      const url = `https://titlehub.xboxlive.com/users/xuid(${this.authData.xuid})/titles/titlehistory/decoration/detail`;
-      const response = await this.makeXboxRequest(url);
+      const endpoint = xuid ? `/player/titleHistory/${xuid}` : '/player/titleHistory';
+      const response = await this.makeOpenXBLRequest(endpoint);
 
-      return response.titles.map((title: any) => ({
-        id: title.titleId,
-        title: title.name,
-        platform: 'Xbox Series S', // Default, could be enhanced
-        lastPlayed: title.lastTimePlayed,
+      const titles = response.titles || [];
+      
+      return titles.map((title: any) => ({
+        id: title.titleId?.toString() || '',
+        title: title.name || 'Unknown Game',
+        platform: title.platforms?.join(', ') || 'Xbox',
+        lastPlayed: title.lastTimePlayed || '',
         achievements: title.achievement?.currentAchievements || 0,
         totalAchievements: title.achievement?.totalAchievements || 0,
         gamerscore: title.achievement?.currentGamerscore || 0,
-        gameDescription: title.description,
-        developer: title.publisher,
-        coverArt: title.displayImage,
-        rating: 0, // Xbox API doesn't provide user ratings
+        gameDescription: title.description || '',
+        developer: title.publisher || '',
+        coverArt: title.displayImage || title.imageUrl,
+        rating: 0,
+        hoursPlayed: 0, // Simplify this for now since stats structure varies
       }));
     } catch (error) {
       console.error('Failed to fetch Xbox games:', error);
@@ -187,24 +149,24 @@ class XboxAPI {
   /**
    * Get recent achievements
    */
-  async getRecentAchievements(limit: number = 20): Promise<XboxAchievement[]> {
-    if (!this.authData) {
-      throw new Error('Not authenticated');
-    }
-
+  async getRecentAchievements(limit: number = 20, xuid?: string): Promise<XboxAchievement[]> {
     try {
-      const url = `https://achievements.xboxlive.com/users/xuid(${this.authData.xuid})/achievements?maxItems=${limit}&orderBy=unlockTime`;
-      const response = await this.makeXboxRequest(url);
+      const endpoint = xuid ? `/achievements/player/${xuid}` : '/achievements';
+      const response = await this.makeOpenXBLRequest(endpoint);
 
-      return response.achievements.map((achievement: any) => ({
-        id: achievement.id,
-        name: achievement.name,
-        description: achievement.description,
-        gamerscore: achievement.rewards[0]?.value || 0,
-        rarity: this.mapRarity(achievement.rarity),
-        dateEarned: achievement.progression.timeUnlocked,
-        iconUrl: achievement.mediaAssets[0]?.url,
-      }));
+      const achievements = response.achievements || [];
+      
+      return achievements.slice(0, limit).map((achievement: any) => ({
+        id: achievement.id || '',
+        name: achievement.name || 'Unknown Achievement',
+        description: achievement.description || '',
+        gamerscore: achievement.rewards?.find((r: any) => r.name === 'Gamerscore')?.value || 0,
+        rarity: this.mapRarity(achievement.rarity?.currentPercentage),
+        dateEarned: achievement.progressState === 'Achieved' ? 
+          achievement.progression?.timeUnlocked || new Date().toISOString() : '',
+        iconUrl: achievement.mediaAssets?.find((m: any) => m.name === 'Icon')?.url,
+        gameName: achievement.titleAssociations?.[0]?.name || '',
+      })).filter((achievement: XboxAchievement) => achievement.dateEarned); // Only include earned achievements
     } catch (error) {
       console.error('Failed to fetch Xbox achievements:', error);
       throw error;
@@ -212,41 +174,74 @@ class XboxAPI {
   }
 
   /**
-   * Map Xbox rarity to our enum
+   * Map achievement rarity percentage to our enum
    */
-  private mapRarity(rarity: any): 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' {
-    if (!rarity || !rarity.currentPercentage) return 'common';
+  private mapRarity(percentage?: number): 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary' {
+    if (!percentage) return 'common';
     
-    const percentage = parseFloat(rarity.currentPercentage);
     if (percentage >= 50) return 'common';
     if (percentage >= 20) return 'uncommon';
-    if (percentage >= 5) return 'rare';
-    if (percentage >= 1) return 'epic';
+    if (percentage >= 10) return 'rare';
+    if (percentage >= 5) return 'epic';
     return 'legendary';
   }
 
   /**
-   * Get comprehensive profile data for gamehome page
+   * Get comprehensive gamehome data
    */
-  async getGamehomeData(): Promise<{
+  async getGamehomeData(xuid?: string): Promise<{
     profile: XboxProfile;
     games: XboxGameData[];
     recentAchievements: XboxAchievement[];
   }> {
-    const [profile, games, achievements] = await Promise.all([
-      this.getProfile(),
-      this.getGames(),
-      this.getRecentAchievements(15),
-    ]);
+    try {
+      console.log('🎮 Fetching comprehensive Xbox data from OpenXBL...');
 
-    // Update achievement count in profile
-    profile.achievementCount = achievements.length;
+      // Make parallel requests for better performance
+      const [profile, games, achievements] = await Promise.all([
+        this.getProfile(xuid),
+        this.getGames(xuid),
+        this.getRecentAchievements(20, xuid),
+      ]);
 
-    return {
-      profile,
-      games: games.slice(0, 30), // Limit for performance
-      recentAchievements: achievements,
-    };
+      // Update profile with achievement count
+      profile.achievementCount = achievements.length;
+
+      console.log(`✅ Successfully fetched ${games.length} games and ${achievements.length} achievements`);
+
+      return {
+        profile,
+        games: games.slice(0, 30), // Limit to last 30 games
+        recentAchievements: achievements,
+      };
+    } catch (error) {
+      console.error('Failed to fetch gamehome data:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Search for a user by gamertag
+   */
+  async searchUser(gamertag: string): Promise<XboxProfile[]> {
+    try {
+      const response = await this.makeOpenXBLRequest(`/search/${encodeURIComponent(gamertag)}`);
+      const people = response.people || [];
+
+      return people.map((person: any) => ({
+        gamertag: person.gamertag || person.modernGamertag || 'Unknown',
+        gamerscore: parseInt(person.gamerScore || '0'),
+        achievementCount: 0,
+        xuid: person.xuid || '',
+        displayPicRaw: person.displayPicRaw,
+        realName: person.realName,
+        bio: person.detail?.bio,
+        location: person.detail?.location,
+      }));
+    } catch (error) {
+      console.error('Failed to search for user:', error);
+      throw error;
+    }
   }
 }
 
