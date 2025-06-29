@@ -405,7 +405,8 @@ export default function GameHome() {
         {/* Left Floating Profile Picture Bubble */}
         {xboxProfile?.displayPicRaw || !isLoading ? (
           <motion.div
-            className="absolute z-20 hidden md:block left-4 top-20"
+            className="absolute z-20 hidden md:block"
+            initial={{ x: 20, y: 80 }}
             style={{
               willChange: "transform",
               filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
@@ -413,18 +414,18 @@ export default function GameHome() {
           >
             <motion.div
               animate={{
-                x: [0, 20, 10, 30, -5, 0],
+                x: [20, 5, 50, 15, 2, 20], // Bounce off left edge (x=0) and move inward
               }}
               transition={{
                 duration: 18,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: [0.25, 0.46, 0.45, 0.94], // Bouncy physics
                 times: [0, 0.2, 0.4, 0.6, 0.8, 1]
               }}
             >
               <motion.div
                 animate={{
-                  y: [0, -12, 45, -6, 38, 0],
+                  y: [0, -15, 60, -5, 45, 0], // Bounce within hero section bounds
                 }}
                 transition={{
                   duration: 18,
@@ -452,7 +453,8 @@ export default function GameHome() {
         {/* Right Floating Profile Picture Bubble */}
         {xboxProfile?.displayPicRaw || !isLoading ? (
           <motion.div
-            className="absolute z-20 hidden md:block right-4 top-24"
+            className="absolute z-20 hidden md:block"
+            initial={{ x: "calc(100vw - 80px)", y: 100 }}
             style={{
               willChange: "transform",
               filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))"
@@ -460,19 +462,19 @@ export default function GameHome() {
           >
             <motion.div
               animate={{
-                x: [0, -25, -10, -35, 5, 0],
+                x: ["calc(100vw - 80px)", "calc(100vw - 120px)", "calc(100vw - 60px)", "calc(100vw - 140px)", "calc(100vw - 75px)", "calc(100vw - 80px)"], // Bounce off right edge
               }}
               transition={{
                 duration: 22,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: [0.17, 0.67, 0.83, 0.67], // Bouncy physics
                 times: [0, 0.25, 0.45, 0.65, 0.85, 1],
                 delay: 5 // Start 5 seconds after left bubble
               }}
             >
               <motion.div
                 animate={{
-                  y: [0, -18, 35, -10, 42, 0],
+                  y: [0, -20, 50, -8, 55, 0], // Bounce within hero section bounds
                 }}
                 transition={{
                   duration: 22,
