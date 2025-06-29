@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { xboxAPI } from '../../../lib/xbox-api';
 
+// Simple in-memory cache (in production, use Redis or similar)
+const cache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export async function GET(request: NextRequest) {
   try {
+    // Check cache first
+    const cacheKey = 'xbox-data';
+    const cached = cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+      console.log('📦 Returning cached Xbox data');
+      return NextResponse.json(cached.data);
+    }
+
     // Check if Xbox API is enabled
     if (process.env.XBOX_API_ENABLED !== 'true') {
       return NextResponse.json(
@@ -31,6 +43,12 @@ export async function GET(request: NextRequest) {
     
     console.log(`✅ Fetched ${data.games.length} games and ${data.recentAchievements.length} achievements`);
     
+    // Cache the successful response
+    cache.set(cacheKey, {
+      data,
+      timestamp: Date.now()
+    });
+
     return NextResponse.json({
       success: true,
       profile: data.profile,
@@ -43,13 +61,33 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('OpenXBL API Error:', error);
     
-    // Return structured error response
+    // Check if it's a rate limit error
+    if (error instanceof Error && error.message.includes('Rate limit exceeded')) {
+      // Return cached data if available, even if expired
+      const cacheKey = 'xbox-data';
+      const cached = cache.get(cacheKey);
+      if (cached) {
+        console.log('📦 Returning expired cached data due to rate limit');
+        return NextResponse.json({
+          ...cached.data,
+          _cached: true,
+          _rateLimited: true
+        });
+      }
+      
+      // Return error response for rate limiting
+      return NextResponse.json(
+        { 
+          error: 'Rate limit exceeded. Please try again in a few minutes.',
+          _rateLimited: true 
+        },
+        { status: 429 }
+      );
+    }
+
+    // For other errors, return the error
     return NextResponse.json(
-      {
-        error: 'Failed to fetch Xbox Live data from OpenXBL',
-        message: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: new Date().toISOString(),
-      },
+      { error: 'Failed to fetch Xbox data' },
       { status: 500 }
     );
   }

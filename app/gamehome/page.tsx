@@ -255,6 +255,7 @@ export default function GameHome() {
     realName?: string;
     bio?: string;
   } | null>(null);
+  const [recentAchievements, setRecentAchievements] = useState<Achievement[]>([]);
 
   // Fetch Xbox Live data on component mount
   useEffect(() => {
@@ -307,6 +308,7 @@ export default function GameHome() {
           realName: data.profile.realName,
           bio: data.profile.bio,
         });
+        setRecentAchievements(data.recentAchievements || []);
         
         console.log(`🎮 Loaded ${transformedGames.length} games for ${data.profile.gamertag}`);
       }
@@ -321,10 +323,12 @@ export default function GameHome() {
   };
   
   // Gather all recent achievements for ticker
-  const allRecentAchievements = games
-    .filter(game => game.recentAchievements)
-    .flatMap(game => game.recentAchievements!)
-    .slice(0, 12);
+  const allRecentAchievements = recentAchievements.length > 0 ? 
+    recentAchievements.slice(0, 12) : 
+    games
+      .filter(game => game.recentAchievements)
+      .flatMap(game => game.recentAchievements!)
+      .slice(0, 12);
   
   // Create ticker content based on state
   const getTickerContent = () => {
@@ -352,28 +356,31 @@ export default function GameHome() {
       return loadingMessages.join('    •    ') + '    •    ' + loadingMessages.join('    •    ') + '    •    ';
     }
     
-    // Normal achievement content
-    const sampleAchievements = [
-      '🏆 Dragon Slayer (50G)',
-      '🏆 Master Explorer (30G)', 
-      '🏆 Legend of the Galaxy (100G)',
-      '🏆 Force Awakened (40G)',
-      '🏆 Witcher Contract Complete (25G)',
-      '🏆 Shout Mastered (20G)',
-      '🏆 Imperial Victory (60G)',
-      '🏆 Jedi Knight (75G)',
-      '🏆 Thu\'um Master (35G)',
-      '🏆 Constellation Member (45G)',
-      '🏆 Griffin School Graduate (55G)',
-      '🏆 Rebel Alliance Hero (80G)'
-    ];
+    // Use real achievements if available, otherwise fall back to sample
+    const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name}`);
     
-    // Combine real and sample achievements for always-populated ticker
-    const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name} (${a.gamerscore}G)`);
-    const allTickerContent = [...realAchievements, ...sampleAchievements];
-    
-    // Double the content for seamless infinite loop
-    return allTickerContent.join('    •    ') + '    •    ' + allTickerContent.join('    •    ') + '    •    ';
+    if (realAchievements.length > 0) {
+      // Use real achievements - duplicate for seamless infinite loop
+      const duplicatedAchievements = [...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements];
+      return duplicatedAchievements.join('    •    ') + '    •    ';
+    } else {
+      // Fall back to sample achievements if no real ones available
+      const sampleAchievements = [
+        '🏆 Dragon Slayer',
+        '🏆 Master Explorer', 
+        '🏆 Legend of the Galaxy',
+        '🏆 Force Awakened',
+        '🏆 Witcher Contract Complete',
+        '🏆 Shout Mastered',
+        '🏆 Imperial Victory',
+        '🏆 Jedi Knight',
+        '🏆 Thu\'um Master',
+        '🏆 Galactic Hero'
+      ];
+      // Duplicate sample achievements for seamless infinite loop
+      const duplicatedSamples = [...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements];
+      return duplicatedSamples.join('    •    ') + '    •    ';
+    }
   };
 
   const tickerContent = getTickerContent();
@@ -479,7 +486,7 @@ export default function GameHome() {
             {/* Left Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_60s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
@@ -509,7 +516,7 @@ export default function GameHome() {
             {/* Right Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_60s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
