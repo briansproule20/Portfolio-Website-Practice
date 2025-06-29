@@ -320,27 +320,49 @@ export default function GameHome() {
     .flatMap(game => game.recentAchievements!)
     .slice(0, 12);
   
-  // Additional sample achievements to always keep tickers populated
-  const sampleAchievements = [
-    '🏆 Dragon Slayer (50G)',
-    '🏆 Master Explorer (30G)', 
-    '🏆 Legend of the Galaxy (100G)',
-    '🏆 Force Awakened (40G)',
-    '🏆 Witcher Contract Complete (25G)',
-    '🏆 Shout Mastered (20G)',
-    '🏆 Imperial Victory (60G)',
-    '🏆 Jedi Knight (75G)',
-    '🏆 Thu\'um Master (35G)',
-    '🏆 Constellation Member (45G)',
-    '🏆 Griffin School Graduate (55G)',
-    '🏆 Rebel Alliance Hero (80G)'
-  ];
+  // Create ticker content based on state
+  const getTickerContent = () => {
+    if (apiError) {
+      // Show error messages in red
+      return '🚫 Xbox Live API unavailable - Enable in environment settings or check credentials    •    🚫 Displaying sample games below    •    🚫 Check console for detailed error information    •    ';
+    }
+    
+    if (isLoading) {
+      // Show loading messages in blue
+      return '🎮 Connecting to Xbox Live...    •    🔄 Authenticating with Xbox servers...    •    ⏳ Fetching your game library...    •    ';
+    }
+    
+    // Normal achievement content
+    const sampleAchievements = [
+      '🏆 Dragon Slayer (50G)',
+      '🏆 Master Explorer (30G)', 
+      '🏆 Legend of the Galaxy (100G)',
+      '🏆 Force Awakened (40G)',
+      '🏆 Witcher Contract Complete (25G)',
+      '🏆 Shout Mastered (20G)',
+      '🏆 Imperial Victory (60G)',
+      '🏆 Jedi Knight (75G)',
+      '🏆 Thu\'um Master (35G)',
+      '🏆 Constellation Member (45G)',
+      '🏆 Griffin School Graduate (55G)',
+      '🏆 Rebel Alliance Hero (80G)'
+    ];
+    
+    // Combine real and sample achievements for always-populated ticker
+    const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name} (${a.gamerscore}G)`);
+    const allTickerContent = [...realAchievements, ...sampleAchievements];
+    
+    return allTickerContent.join('    •    ') + '    •    ';
+  };
+
+  const tickerContent = getTickerContent();
   
-  // Combine real and sample achievements for always-populated ticker
-  const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name} (${a.gamerscore}G)`);
-  const allTickerContent = [...realAchievements, ...sampleAchievements];
-  
-  const tickerContent = allTickerContent.join('    •    ') + '    •    ';
+  // Get ticker text color based on state
+  const getTickerTextColor = () => {
+    if (apiError) return 'text-red-400';
+    if (isLoading) return 'text-blue-400';
+    return 'text-[var(--accent)]';
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -386,7 +408,7 @@ export default function GameHome() {
             {/* Left Achievement Ticker */}
             <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className="animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs text-[var(--accent)]">
+                <div className={`animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
@@ -416,43 +438,14 @@ export default function GameHome() {
             {/* Right Achievement Ticker */}
             <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className="animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs text-[var(--accent)]">
+                <div className={`animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
             </div>
           </motion.div>
           
-          {/* API Error Message */}
-          {apiError && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mt-6 px-4 py-3 bg-red-900/20 border border-red-700/30 rounded-xl text-red-400 text-center max-w-md mx-auto"
-            >
-              <p className="text-sm">
-                ⚠️ Xbox Live API unavailable. {!process.env.XBOX_API_ENABLED ? 'Enable in environment settings.' : 'Check credentials.'}
-              </p>
-              <p className="text-xs mt-1 text-red-300">
-                Showing sample games below.
-              </p>
-            </motion.div>
-          )}
-          
-          {/* Loading State */}
-          {isLoading && !apiError && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="mt-6 px-4 py-3 bg-blue-900/20 border border-blue-700/30 rounded-xl text-blue-400 text-center max-w-md mx-auto"
-            >
-              <p className="text-sm">
-                🎮 Connecting to Xbox Live...
-              </p>
-            </motion.div>
-          )}
+
         </div>
       </motion.section>
 
