@@ -486,7 +486,7 @@ export default function GameHome() {
             {/* Left Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_60s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
@@ -516,7 +516,7 @@ export default function GameHome() {
             {/* Right Achievement Ticker */}
             <div className="hidden lg:block w-[20rem] xl:w-[30rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_60s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
