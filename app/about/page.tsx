@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import SwimmingFish from '../components/SwimmingFish';
 
 export default function About() {
@@ -63,9 +64,34 @@ export default function About() {
                   You may be able to find me:
                 </p>
                 <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-lg text-[var(--foreground)]">
+                    <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>
+                    Exploring South Florida's waterways
+                  </li>
+                  <li className="flex items-center gap-3 text-lg">
+                    <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>
+                    <Link 
+                      href="/gamehome"
+                      className="group relative text-[var(--foreground)] hover:text-[var(--highlight)] transition-all duration-300 cursor-pointer"
+                    >
+                      <motion.span
+                        whileHover={{ scale: 1.05 }}
+                        className="relative z-10"
+                      >
+                        Playing the latest Sci-Fi/Fantasy RPG
+                      </motion.span>
+                      <motion.div
+                        className="absolute inset-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-10 rounded-md -mx-2 -my-1"
+                        whileHover={{ opacity: 0.1 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                      <motion.div
+                        className="absolute bottom-0 left-0 h-0.5 bg-[var(--highlight)] w-0 group-hover:w-full transition-all duration-300"
+                        whileHover={{ width: "100%" }}
+                      />
+                    </Link>
+                  </li>
                   {[
-                    'Exploring South Florida\'s waterways',
-                    'Playing the latest Sci-Fi/Fantasy RPG',
                     'Struggling through a run',
                     'Trying new recipes in the kitchen',
                     'Caring for and talking to my houseplants',
@@ -73,7 +99,7 @@ export default function About() {
                     'Acting like an amateur naturalist',
                     'Outdoors in the sun, drink in hand',
                   ].map((activity, index) => (
-                    <li key={index} className="flex items-center gap-3 text-lg text-[var(--foreground)]">
+                    <li key={index + 2} className="flex items-center gap-3 text-lg text-[var(--foreground)]">
                       <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>
                       {activity}
                     </li>

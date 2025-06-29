@@ -86,7 +86,27 @@ const sampleGames: Game[] = [
     review: 'The perfect blend of classic Elder Scrolls gameplay and refined mechanics. The Dark Brotherhood questline remains unmatched.',
     achievements: 42,
     totalAchievements: 50,
-    lastPlayed: '2023-11-15'
+    lastPlayed: '2023-11-15',
+    gameDescription: 'The fourth installment in The Elder Scrolls series, featuring an epic fantasy RPG experience in the province of Cyrodiil with groundbreaking AI and immersive gameplay.',
+    developer: 'Bethesda Game Studios',
+    releaseDate: '2006-03-20',
+    recentAchievements: [
+      {
+        id: 'ach_2',
+        name: 'Listener',
+        description: 'Become Listener of the Dark Brotherhood',
+        gamerscore: 30,
+        rarity: 'rare',
+        dateEarned: '2023-11-15'
+      }
+    ],
+    achievementRarity: {
+      common: 18,
+      uncommon: 15,
+      rare: 8,
+      epic: 1,
+      legendary: 0
+    }
   },
   {
     id: '3',
@@ -99,7 +119,27 @@ const sampleGames: Game[] = [
     review: 'An expansive space exploration RPG with incredible depth. The ship building mechanics are addictive, and the main story keeps you engaged for hours.',
     achievements: 34,
     totalAchievements: 50,
-    lastPlayed: '2024-01-15'
+    lastPlayed: '2024-01-15',
+    gameDescription: 'The first new universe in 25 years from Bethesda Game Studios. In this next generation role-playing game set amongst the stars, create any character you want and explore with unparalleled freedom.',
+    developer: 'Bethesda Game Studios',
+    releaseDate: '2023-09-06',
+    recentAchievements: [
+      {
+        id: 'ach_3',
+        name: 'Into the Unknown',
+        description: 'Complete "Into the Unknown"',
+        gamerscore: 40,
+        rarity: 'uncommon',
+        dateEarned: '2024-01-15'
+      }
+    ],
+    achievementRarity: {
+      common: 12,
+      uncommon: 15,
+      rare: 6,
+      epic: 1,
+      legendary: 0
+    }
   },
   {
     id: '4',
@@ -112,7 +152,27 @@ const sampleGames: Game[] = [
     review: 'The gold standard for RPGs. Incredible world-building, memorable characters, and side quests that rival the main story.',
     achievements: 51,
     totalAchievements: 53,
-    lastPlayed: '2023-10-15'
+    lastPlayed: '2023-10-15',
+    gameDescription: 'As war rages on throughout the Northern Realms, you take on the greatest contract of your life — tracking down the Child of Prophecy, a living weapon that can alter the shape of the world.',
+    developer: 'CD PROJEKT RED',
+    releaseDate: '2015-05-19',
+    recentAchievements: [
+      {
+        id: 'ach_4',
+        name: 'Lilac and Gooseberries',
+        description: 'Find Yennefer of Vengerberg',
+        gamerscore: 40,
+        rarity: 'common',
+        dateEarned: '2023-10-15'
+      }
+    ],
+    achievementRarity: {
+      common: 22,
+      uncommon: 20,
+      rare: 8,
+      epic: 2,
+      legendary: 1
+    }
   },
   {
     id: '5',
@@ -125,7 +185,27 @@ const sampleGames: Game[] = [
     review: 'Incredible Star Wars atmosphere with epic large-scale battles. The single-player campaign tells a compelling Imperial story.',
     achievements: 28,
     totalAchievements: 35,
-    lastPlayed: '2023-12-05'
+    lastPlayed: '2023-12-05',
+    gameDescription: 'Embark on an endless Star Wars action experience from the bestselling Star Wars HD videogame franchise of all time. Experience rich multiplayer battlegrounds across all 3 eras.',
+    developer: 'DICE',
+    releaseDate: '2017-11-17',
+    recentAchievements: [
+      {
+        id: 'ach_5',
+        name: 'Imperial Commander',
+        description: 'Complete the Campaign',
+        gamerscore: 50,
+        rarity: 'uncommon',
+        dateEarned: '2023-12-05'
+      }
+    ],
+    achievementRarity: {
+      common: 15,
+      uncommon: 10,
+      rare: 2,
+      epic: 1,
+      legendary: 0
+    }
   },
   {
     id: '6',
@@ -138,7 +218,27 @@ const sampleGames: Game[] = [
     review: 'A fantastic return to single-player Star Wars gaming. Great combat, exploration, and an engaging story about rebuilding the Jedi Order.',
     achievements: 29,
     totalAchievements: 40,
-    lastPlayed: '2024-01-08'
+    lastPlayed: '2024-01-08',
+    gameDescription: 'A galaxy-spanning adventure awaits in Star Wars Jedi: Fallen Order, a new third-person action-adventure title from Respawn Entertainment.',
+    developer: 'Respawn Entertainment',
+    releaseDate: '2019-11-15',
+    recentAchievements: [
+      {
+        id: 'ach_6',
+        name: 'Trust Only in the Force',
+        description: 'Complete the story',
+        gamerscore: 90,
+        rarity: 'epic',
+        dateEarned: '2024-01-08'
+      }
+    ],
+    achievementRarity: {
+      common: 12,
+      uncommon: 10,
+      rare: 5,
+      epic: 2,
+      legendary: 0
+    }
   }
 ];
 
@@ -150,6 +250,34 @@ export default function GameHome() {
   // For now, we'll simulate API success with sample data
   // When Xbox Live API fails, set setApiError(true)
   const games = sampleGames;
+  
+  // Gather all recent achievements for ticker
+  const allRecentAchievements = games
+    .filter(game => game.recentAchievements)
+    .flatMap(game => game.recentAchievements!)
+    .slice(0, 12);
+  
+  // Additional sample achievements to always keep tickers populated
+  const sampleAchievements = [
+    '🏆 Dragon Slayer (50G)',
+    '🏆 Master Explorer (30G)', 
+    '🏆 Legend of the Galaxy (100G)',
+    '🏆 Force Awakened (40G)',
+    '🏆 Witcher Contract Complete (25G)',
+    '🏆 Shout Mastered (20G)',
+    '🏆 Imperial Victory (60G)',
+    '🏆 Jedi Knight (75G)',
+    '🏆 Thu\'um Master (35G)',
+    '🏆 Constellation Member (45G)',
+    '🏆 Griffin School Graduate (55G)',
+    '🏆 Rebel Alliance Hero (80G)'
+  ];
+  
+  // Combine real and sample achievements for always-populated ticker
+  const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name} (${a.gamerscore}G)`);
+  const allTickerContent = [...realAchievements, ...sampleAchievements];
+  
+  const tickerContent = allTickerContent.join('    •    ') + '    •    ';
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
@@ -167,7 +295,7 @@ export default function GameHome() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+        <div className="relative z-10 text-center w-full mx-auto px-4">
           <motion.h1 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -190,8 +318,17 @@ export default function GameHome() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-[var(--foreground)]"
+            className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-[var(--foreground)]"
           >
+            {/* Left Achievement Ticker */}
+            <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
+              <div className="h-full flex items-center">
+                <div className="animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs text-[var(--accent)]">
+                  {tickerContent}
+                </div>
+              </div>
+            </div>
+            
             <div className="text-center">
               <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">127,500</div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamerscore</div>
@@ -205,6 +342,15 @@ export default function GameHome() {
             <div className="text-center">
               <div className="text-2xl md:text-3xl font-bold text-[var(--highlight)]">342</div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Achievements</div>
+            </div>
+            
+            {/* Right Achievement Ticker */}
+            <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
+              <div className="h-full flex items-center">
+                <div className="animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs text-[var(--accent)]">
+                  {tickerContent}
+                </div>
+              </div>
             </div>
           </motion.div>
           
