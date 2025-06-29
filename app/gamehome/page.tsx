@@ -360,8 +360,8 @@ export default function GameHome() {
     const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name}`);
     
     if (realAchievements.length > 0) {
-      // Use real achievements - duplicate for seamless infinite loop
-      const duplicatedAchievements = [...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements];
+      // Use real achievements - duplicate many times for seamless infinite loop
+      const duplicatedAchievements = [...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements, ...realAchievements];
       return duplicatedAchievements.join('    •    ') + '    •    ';
     } else {
       // Fall back to sample achievements if no real ones available
@@ -377,8 +377,8 @@ export default function GameHome() {
         '🏆 Thu\'um Master',
         '🏆 Galactic Hero'
       ];
-      // Duplicate sample achievements for seamless infinite loop
-      const duplicatedSamples = [...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements];
+      // Duplicate sample achievements many times for seamless infinite loop
+      const duplicatedSamples = [...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements, ...sampleAchievements];
       return duplicatedSamples.join('    •    ') + '    •    ';
     }
   };
