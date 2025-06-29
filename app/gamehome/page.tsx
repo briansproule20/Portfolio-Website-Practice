@@ -323,13 +323,27 @@ export default function GameHome() {
   // Create ticker content based on state
   const getTickerContent = () => {
     if (apiError) {
-      // Show error messages in red
-      return '🚫 Xbox Live API unavailable - Enable in environment settings or check credentials    •    🚫 Displaying sample games below    •    🚫 Check console for detailed error information    •    ';
+      // Show error messages in red - repeat for seamless loop
+      const errorMessages = [
+        '🚫 Xbox Live API unavailable - Enable in environment settings or check credentials',
+        '🚫 Displaying sample games below',
+        '🚫 Check console for detailed error information',
+        '🚫 Restart server after updating .env.local',
+        '🚫 Verify Xbox credentials are correct'
+      ];
+      return errorMessages.join('    •    ') + '    •    ' + errorMessages.join('    •    ') + '    •    ';
     }
     
     if (isLoading) {
-      // Show loading messages in blue
-      return '🎮 Connecting to Xbox Live...    •    🔄 Authenticating with Xbox servers...    •    ⏳ Fetching your game library...    •    ';
+      // Show loading messages in blue - repeat for seamless loop
+      const loadingMessages = [
+        '🎮 Connecting to Xbox Live...',
+        '🔄 Authenticating with Xbox servers...',
+        '⏳ Fetching your game library...',
+        '🎯 Loading achievement data...',
+        '🔗 Syncing with Xbox Network...'
+      ];
+      return loadingMessages.join('    •    ') + '    •    ' + loadingMessages.join('    •    ') + '    •    ';
     }
     
     // Normal achievement content
@@ -352,7 +366,8 @@ export default function GameHome() {
     const realAchievements = allRecentAchievements.map(a => `🏆 ${a.name} (${a.gamerscore}G)`);
     const allTickerContent = [...realAchievements, ...sampleAchievements];
     
-    return allTickerContent.join('    •    ') + '    •    ';
+    // Double the content for seamless infinite loop
+    return allTickerContent.join('    •    ') + '    •    ' + allTickerContent.join('    •    ') + '    •    ';
   };
 
   const tickerContent = getTickerContent();
@@ -408,7 +423,7 @@ export default function GameHome() {
             {/* Left Achievement Ticker */}
             <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
@@ -438,7 +453,7 @@ export default function GameHome() {
             {/* Right Achievement Ticker */}
             <div className="hidden lg:block w-[80rem] h-12 overflow-hidden bg-[var(--card)] border border-[var(--accent)]/20 rounded-lg">
               <div className="h-full flex items-center">
-                <div className={`animate-[scroll-right_150s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
+                <div className={`animate-[scroll-right_120s_linear_infinite] whitespace-nowrap text-xs ${getTickerTextColor()}`}>
                   {tickerContent}
                 </div>
               </div>
