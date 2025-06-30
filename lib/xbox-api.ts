@@ -1,3 +1,5 @@
+import { getGameMetadata } from './game-metadata';
+
 export interface XboxGameData {
   id: string;
   title: string;
@@ -121,25 +123,62 @@ class XboxAPI {
    */
   async getGames(xuid?: string): Promise<XboxGameData[]> {
     try {
+      console.log('🚀 STARTING getGames() function');
+      console.log('🚀 XUID parameter:', xuid);
+      
       const endpoint = xuid ? `/player/titleHistory/${xuid}` : '/player/titleHistory';
+      console.log('🚀 Using endpoint:', endpoint);
+      
       const response = await this.makeOpenXBLRequest(endpoint);
+      console.log('🚀 Raw API response keys:', Object.keys(response));
+      console.log('🚀 Response.titles exists:', !!response.titles);
+      console.log('🚀 Response.titles length:', response.titles?.length || 0);
 
       const titles = response.titles || [];
+      console.log('🚀 About to map', titles.length, 'titles');
       
-      return titles.map((title: any) => ({
-        id: title.titleId?.toString() || '',
-        title: title.name || 'Unknown Game',
-        platform: title.platforms?.join(', ') || 'Xbox',
-        lastPlayed: title.lastTimePlayed || '',
-        achievements: title.achievement?.currentAchievements || 0,
-        totalAchievements: title.achievement?.totalAchievements || 0,
-        gamerscore: title.achievement?.currentGamerscore || 0,
-        gameDescription: title.description || '',
-        developer: title.publisher || '',
-        coverArt: title.displayImage || title.imageUrl,
-        rating: 0,
-        hoursPlayed: 0, // Simplify this for now since stats structure varies
-      }));
+      return titles.map((title: any, index: number) => {
+        // Debug: Log complete structure for first few games
+        if (index < 3) {
+          console.log(`🎮 Game "${title.name}" COMPLETE STRUCTURE:`, title);
+          console.log(`🔍 Available keys:`, Object.keys(title));
+          console.log(`📋 Publisher field:`, title.publisher);
+          console.log(`👨‍💻 Developer field:`, title.developer);
+          console.log(`📝 Description field:`, title.description);
+          console.log(`📅 Release field:`, title.releaseDate);
+          console.log(`🏷️ Category field:`, title.category);
+          console.log(`🎯 Detail object:`, title.detail);
+        }
+
+        // Try multiple fields for developer information from API
+        const apiDeveloperInfo = title.publisher || 
+                                title.developer || 
+                                title.detail?.publisher || 
+                                title.detail?.developer ||
+                                title.titleRecord?.developer ||
+                                title.category ||
+                                null;
+
+        // Use fallback metadata if API doesn't provide enhanced data
+        const fallbackData = getGameMetadata(title.name);
+
+        return {
+          id: title.titleId?.toString() || '',
+          title: title.name || 'Unknown Game',
+          platform: title.platforms?.join(', ') || 'Xbox',
+          lastPlayed: title.lastTimePlayed || '',
+          achievements: title.achievement?.currentAchievements || 0,
+          totalAchievements: title.achievement?.totalAchievements || 0,
+          gamerscore: title.achievement?.currentGamerscore || 0,
+          gameDescription: title.description || fallbackData?.description || '',
+          developer: apiDeveloperInfo || fallbackData?.developer || null,
+          releaseDate: title.releaseDate || fallbackData?.releaseYear || undefined,
+          genre: title.genre || fallbackData?.genre || undefined,
+          coverArt: title.displayImage || title.imageUrl,
+          rating: 0,
+          hoursPlayed: 0, // Simplify this for now since stats structure varies
+        };
+      });
     } catch (error) {
       console.error('Failed to fetch Xbox games:', error);
       throw error;
@@ -306,9 +345,13 @@ class XboxAPI {
 
       console.log(`✅ Successfully fetched ${games.length} games and ${achievements.length} recent achievements (${totalAchievements} total)`);
 
+      // Filter games using configurable system
+      const { filterGames } = await import('./game-filters');
+      const filteredGames = filterGames(games);
+
       return {
         profile,
-        games: games.slice(0, 30), // Limit to last 30 games
+        games: filteredGames.slice(0, 30), // Limit to filtered 30 games
         recentAchievements: achievements,
       };
     } catch (error) {

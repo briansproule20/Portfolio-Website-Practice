@@ -269,7 +269,9 @@ export default function GameHome() {
       
       console.log('🎮 Attempting to fetch Xbox Live data...');
       
-      const response = await fetch('/api/xbox');
+      // Force fresh data with cache busting to see Title Access data
+      const cacheBuster = `?bust=${Date.now()}`;
+      const response = await fetch(`/api/xbox${cacheBuster}`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -278,6 +280,15 @@ export default function GameHome() {
       
       if (data.success) {
         console.log('✅ Xbox Live data fetched successfully');
+        
+        // Debug: Show first few games' complete structure from API
+        console.log('🎮 RAW API RESPONSE - First 3 games:', data.games.slice(0, 3));
+        data.games.slice(0, 3).forEach((game: any, index: number) => {
+          console.log(`🎮 Game ${index + 1} "${game.title}" Structure:`, game);
+          console.log(`🎮 Game ${index + 1} Developer:`, game.developer);
+          console.log(`🎮 Game ${index + 1} Description:`, game.gameDescription);
+          console.log(`🎮 Game ${index + 1} Release Date:`, game.releaseDate);
+        });
         
         // Transform Xbox API data to our Game interface
         const transformedGames: Game[] = data.games.map((xboxGame: any) => ({
@@ -293,7 +304,7 @@ export default function GameHome() {
           totalAchievements: xboxGame.totalAchievements || 0,
           lastPlayed: xboxGame.lastPlayed,
           gameDescription: xboxGame.gameDescription,
-          developer: xboxGame.developer,
+          developer: xboxGame.developer || undefined, // Don't set to empty string
           releaseDate: xboxGame.releaseDate,
           recentAchievements: xboxGame.recentAchievements || [],
           achievementRarity: xboxGame.achievementRarity,
@@ -511,8 +522,8 @@ export default function GameHome() {
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamerscore</div>
             </div>
             <div className="hidden md:block w-px h-12 bg-[var(--accent)] opacity-30"></div>
-            <div className="text-center">
-              <div className="text-xl md:text-2xl font-bold text-[var(--highlight)]">
+            <div className="text-center min-w-0 flex-shrink-0">
+              <div className="text-lg md:text-xl font-bold text-[var(--highlight)] whitespace-nowrap">
                 {isLoading ? '...' : (xboxProfile?.gamertag || 'fishmug')}
               </div>
               <div className="text-sm md:text-base text-[var(--accent)] uppercase tracking-wide">Gamertag</div>
@@ -539,26 +550,26 @@ export default function GameHome() {
         </div>
       </motion.section>
 
-      {/* Clean Game Gallery */}
+      {/* Compact Game Gallery - 5 Across */}
       <motion.section 
         initial="hidden"
         animate="visible"
-        className="max-w-6xl mx-auto px-8 py-8"
+        className="max-w-7xl mx-auto px-4 py-6"
       >
-        <div className="grid gap-3 md:gap-4 lg:gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {/* Display max 30 games on main page - full list available at /gamehome/full */}
+        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
+          {/* Display max 30 games on main page */}
           {games.slice(0, 30).map((game, index) => (
             <motion.div
               key={game.id}
               variants={fadeIn}
               initial="hidden"
               animate="visible"
-              transition={{ delay: index * 0.2 }}
+              transition={{ delay: index * 0.05 }}
               className="group relative cursor-pointer"
               onClick={() => setSelectedGame(game)}
             >
-              {/* Main Cover Art Card */}
-              <div className="relative overflow-hidden rounded-3xl shadow-xl transform transition-all duration-700 hover:scale-[1.02] hover:-translate-y-2">
+              {/* Compact Cover Art Card */}
+              <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1">
                 {/* Cover Art */}
                 <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)]">
                   <img
@@ -570,34 +581,63 @@ export default function GameHome() {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       target.parentElement!.innerHTML = `
-                        <div class="w-full h-full flex items-center justify-center text-9xl text-[var(--background)] opacity-50">
+                        <div class="w-full h-full flex items-center justify-center text-4xl text-[var(--background)] opacity-50">
                           <span>🎮</span>
                         </div>
                       `;
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
 
-                                 {/* Clean Title Area */}
-                 <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
-                   <h3 className="text-white font-bold text-2xl mb-2 group-hover:text-[var(--highlight)] transition-colors duration-300">
-                     {game.title}
-                   </h3>
-                   <p className="text-white/70 text-base">{game.genre}</p>
-                 </div>
+                {/* Enhanced Title Area with Description */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent">
+                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-[var(--highlight)] transition-colors duration-300 line-clamp-2 leading-tight">
+                    {game.title}
+                  </h3>
+                  
+                  {/* Description - Only show on hover for space efficiency */}
+                  {game.gameDescription && (
+                    <p className="text-white/80 text-xs mb-2 line-clamp-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                      {game.gameDescription}
+                    </p>
+                  )}
+                  
+                  <div className="flex items-center justify-between">
+                    <p className="text-white/60 text-xs truncate">{game.genre}</p>
+                    {game.releaseDate && (
+                      <p className="text-white/50 text-xs font-medium">
+                        {new Date(game.releaseDate).getFullYear()}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* Developer name - subtle and small */}
+                  {game.developer && game.developer !== 'Unknown' && (
+                    <p className="text-white/40 text-xs mt-1 truncate opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      by {game.developer}
+                    </p>
+                  )}
+                </div>
 
-                 {/* Hover Rating */}
-                 <div className="absolute top-6 left-6 bg-black/70 backdrop-blur-sm rounded-2xl px-4 py-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                   <div className="flex items-center gap-2 text-white">
-                     <span className="text-yellow-400 text-lg">★</span>
-                     <span className="font-semibold">{game.rating}</span>
-                   </div>
-                 </div>
+                {/* Achievement Badge */}
+                {game.achievements && game.achievements > 0 && (
+                  <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold">
+                    {game.achievements}
+                  </div>
+                )}
 
-                 {/* Subtle Hover Glow */}
-                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 shadow-[0_20px_60px_rgba(183,191,163,0.2)]" />
-               </div>
+                {/* Hover Rating */}
+                <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-1 group-hover:translate-y-0">
+                  <div className="flex items-center gap-1 text-white text-xs">
+                    <span className="text-yellow-400">★</span>
+                    <span className="font-semibold">{game.rating || 'N/A'}</span>
+                  </div>
+                </div>
+
+                {/* Subtle Hover Glow */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 shadow-[0_10px_30px_rgba(183,191,163,0.3)]" />
+              </div>
             </motion.div>
           ))}
         </div>
@@ -645,26 +685,40 @@ export default function GameHome() {
               </button>
             </div>
             
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <span className="text-[var(--accent)]">{selectedGame.genre} • {selectedGame.platform}</span>
-                {selectedGame.developer && (
-                  <span className="text-[var(--accent)]">• {selectedGame.developer}</span>
+            <div className="space-y-6">
+              {/* Game Info Header */}
+              <div className="border-b border-[var(--accent)]/20 pb-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[var(--accent)] text-sm font-medium">{selectedGame.genre}</span>
+                  <span className="text-[var(--accent)]/40">•</span>
+                  <span className="text-[var(--accent)] text-sm">{selectedGame.platform}</span>
+                  {selectedGame.releaseDate && (
+                    <>
+                      <span className="text-[var(--accent)]/40">•</span>
+                      <span className="text-[var(--accent)] text-sm">
+                        {new Date(selectedGame.releaseDate).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </span>
+                    </>
+                  )}
+                </div>
+                {selectedGame.developer && selectedGame.developer !== 'Unknown' && (
+                  <p className="text-[var(--foreground)]/70 text-sm">
+                    Developed by <span className="text-[var(--highlight)] font-medium">{selectedGame.developer}</span>
+                  </p>
                 )}
               </div>
               
+              {/* Game Description */}
               {selectedGame.gameDescription && (
-                <div>
-                  <p className="text-[var(--foreground)] text-sm leading-relaxed">{selectedGame.gameDescription}</p>
-                </div>
-              )}
-              
-              {selectedGame.releaseDate && (
-                <div>
-                  <span className="text-[var(--accent)]">Released: </span>
-                  <span className="text-[var(--foreground)] font-semibold">
-                    {new Date(selectedGame.releaseDate).toLocaleDateString()}
-                  </span>
+                <div className="bg-[var(--background)]/30 rounded-lg p-4 border border-[var(--accent)]/10">
+                  <h3 className="text-[var(--foreground)] font-semibold mb-2">About</h3>
+                  <p className="text-[var(--foreground)]/80 text-sm leading-relaxed">
+                    {selectedGame.gameDescription}
+                  </p>
                 </div>
               )}
               

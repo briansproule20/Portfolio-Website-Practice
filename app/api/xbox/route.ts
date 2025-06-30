@@ -7,12 +7,24 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export async function GET(request: NextRequest) {
   try {
-    // Check cache first
+    // Get query parameters for cache busting
+    const { searchParams } = new URL(request.url);
+    const bustCache = searchParams.get('bust');
+    
+    // Check cache first (but skip if cache busting)
     const cacheKey = 'xbox-data';
     const cached = cache.get(cacheKey);
-    if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    if (!bustCache && cached && Date.now() - cached.timestamp < CACHE_DURATION) {
       console.log('📦 Returning cached Xbox data');
       return NextResponse.json(cached.data);
+    }
+    
+    // Clear cache completely for testing
+    console.log('🗑️ Clearing all cache for fresh Title Access test');
+    cache.clear();
+    
+    if (bustCache) {
+      console.log('🗑️ Cache busting requested - forcing fresh data');
     }
 
     // Check if Xbox API is enabled
@@ -34,8 +46,7 @@ export async function GET(request: NextRequest) {
 
     console.log('🎮 Fetching Xbox data from OpenXBL...');
     
-    // Get optional XUID parameter for specific user data
-    const { searchParams } = new URL(request.url);
+    // Get optional XUID parameter for specific user data (reusing searchParams from above)
     const xuid = searchParams.get('xuid') || undefined;
     
     // Get comprehensive game data from OpenXBL
