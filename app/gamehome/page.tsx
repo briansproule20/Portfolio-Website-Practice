@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { gameFilterConfig } from '../../lib/game-filters';
+import { enrichGameWithLibraryData } from '../../lib/game-library';
 
 interface Game {
   id: string;
@@ -29,6 +30,18 @@ interface Game {
     epic: number;
     legendary: number;
   };
+  // Library-specific fields
+  personalComment?: string;
+  favoriteQuote?: string;
+  playthroughNotes?: string;
+  favoriteMoment?: string;
+  completed?: boolean;
+  completionDate?: string;
+  difficulty?: 'Easy' | 'Medium' | 'Hard' | 'Very Hard';
+  replayability?: 'Low' | 'Medium' | 'High';
+  tags?: string[];
+  lastUpdated?: string;
+  hasLibraryData?: boolean;
 }
 
 interface Achievement {
@@ -291,25 +304,31 @@ export default function GameHome() {
           console.log(`🎮 Game ${index + 1} Release Date:`, game.releaseDate);
         });
         
-        // Transform Xbox API data to our Game interface
-        const transformedGames: Game[] = data.games.map((xboxGame: any) => ({
-          id: xboxGame.id,
-          title: xboxGame.title,
-          genre: xboxGame.genre || 'Unknown',
-          platform: xboxGame.platform || 'Xbox Series S',
-          coverArt: xboxGame.coverArt || '/images/game-placeholder.jpg',
-          rating: xboxGame.rating || 0,
-          hoursPlayed: xboxGame.hoursPlayed || 0,
-          review: xboxGame.review,
-          achievements: xboxGame.achievements || 0,
-          totalAchievements: xboxGame.totalAchievements || 0,
-          lastPlayed: xboxGame.lastPlayed,
-          gameDescription: xboxGame.gameDescription,
-          developer: xboxGame.developer || undefined, // Don't set to empty string
-          releaseDate: xboxGame.releaseDate,
-          recentAchievements: xboxGame.recentAchievements || [],
-          achievementRarity: xboxGame.achievementRarity,
-        }));
+        // Transform Xbox API data to our Game interface and enrich with library data
+        const transformedGames: Game[] = data.games.map((xboxGame: any) => {
+          // First create basic game object
+          const basicGame = {
+            id: xboxGame.id,
+            title: xboxGame.title,
+            genre: xboxGame.genre || 'Unknown',
+            platform: xboxGame.platform || 'Xbox Series S',
+            coverArt: xboxGame.coverArt || '/images/game-placeholder.jpg',
+            rating: xboxGame.rating || 0,
+            hoursPlayed: xboxGame.hoursPlayed || 0,
+            review: xboxGame.review,
+            achievements: xboxGame.achievements || 0,
+            totalAchievements: xboxGame.totalAchievements || 0,
+            lastPlayed: xboxGame.lastPlayed,
+            gameDescription: xboxGame.gameDescription,
+            developer: xboxGame.developer || undefined, // Don't set to empty string
+            releaseDate: xboxGame.releaseDate,
+            recentAchievements: xboxGame.recentAchievements || [],
+            achievementRarity: xboxGame.achievementRarity,
+          };
+          
+          // Enrich with library data if available
+          return enrichGameWithLibraryData(basicGame);
+        });
         
         setGames(transformedGames);
         setXboxProfile({
@@ -588,7 +607,7 @@ export default function GameHome() {
                 onClick={() => setSelectedGame(game)}
               >
                 {/* Compact Cover Art Card */}
-                <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
+                <div className="relative overflow-hidden rounded-2xl shadow transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
                   {/* Cover Art */}
                   <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)] w-full flex-shrink-0">
                     <img
@@ -617,18 +636,31 @@ export default function GameHome() {
                     </h3>
                     {/* Genre and Year - Always visible at bottom */}
                     <div className="flex items-center justify-between">
-                      <p className="text-white/60 text-xs truncate line-clamp-1">{game.genre}</p>
+                      <p className="text-white/70 text-xs truncate line-clamp-1">{game.genre}</p>
                       {game.releaseDate && (
-                        <p className="text-white/50 text-xs font-medium line-clamp-1">
+                        <p className="text-white/60 text-xs font-medium line-clamp-1">
                           {new Date(game.releaseDate).getFullYear()}
                         </p>
                       )}
                     </div>
                     {/* Developer name - subtle and small */}
                     {game.developer && game.developer !== 'Unknown' && (
-                      <p className="text-white/40 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      <p className="text-white/50 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
                         by {game.developer}
                       </p>
+                    )}
+                    {/* Library Data - Show completion status and tags */}
+                    {game.hasLibraryData && (
+                      <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                        {game.completed && (
+                          <span className="text-green-400 text-xs font-medium">✓ Completed</span>
+                        )}
+                        {game.tags && game.tags.length > 0 && (
+                          <span className="text-blue-400 text-xs font-medium">
+                            {game.tags[0]}
+                          </span>
+                        )}
+                      </div>
                     )}
                     {/* Description - Absolutely positioned, slides up from below */}
                     {game.gameDescription && (
@@ -638,11 +670,21 @@ export default function GameHome() {
                         </p>
                       </div>
                     )}
+                    {/* Favorite Quote - Show on hover for library games */}
+                    {game.hasLibraryData && game.favoriteQuote && (
+                      <div className="absolute bottom-full left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+                        <div className="bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg p-2 mb-2">
+                          <p className="text-white/90 text-xs italic line-clamp-2 leading-relaxed">
+                            "{game.favoriteQuote}"
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Achievement Badge */}
                   {game.achievements && game.achievements > 0 && (
-                    <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold">
+                    <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500">
                       {game.achievements}
                     </div>
                   )}
@@ -652,6 +694,9 @@ export default function GameHome() {
                     <div className="flex items-center gap-1 text-white text-xs">
                       <span className="text-yellow-400">★</span>
                       <span className="font-semibold">{game.rating || 'N/A'}</span>
+                      {game.hasLibraryData && game.rating && (
+                        <span className="text-[var(--highlight)] text-xs">★</span>
+                      )}
                     </div>
                   </div>
 
@@ -682,7 +727,7 @@ export default function GameHome() {
               onClick={() => setSelectedGame(game)}
             >
               {/* Compact Cover Art Card */}
-              <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
+              <div className="relative overflow-hidden rounded-2xl shadow transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
                 {/* Cover Art */}
                 <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)] w-full flex-shrink-0">
                   <img
@@ -711,18 +756,31 @@ export default function GameHome() {
                   </h3>
                   {/* Genre and Year - Always visible at bottom */}
                   <div className="flex items-center justify-between">
-                    <p className="text-white/60 text-xs truncate line-clamp-1">{game.genre}</p>
+                    <p className="text-white/70 text-xs truncate line-clamp-1">{game.genre}</p>
                     {game.releaseDate && (
-                      <p className="text-white/50 text-xs font-medium line-clamp-1">
+                      <p className="text-white/60 text-xs font-medium line-clamp-1">
                         {new Date(game.releaseDate).getFullYear()}
                       </p>
                     )}
                   </div>
                   {/* Developer name - subtle and small */}
                   {game.developer && game.developer !== 'Unknown' && (
-                    <p className="text-white/40 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <p className="text-white/50 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
                       by {game.developer}
                     </p>
+                  )}
+                  {/* Library Data - Show completion status and tags */}
+                  {game.hasLibraryData && (
+                    <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      {game.completed && (
+                        <span className="text-green-400 text-xs font-medium">✓ Completed</span>
+                      )}
+                      {game.tags && game.tags.length > 0 && (
+                        <span className="text-blue-400 text-xs font-medium">
+                          {game.tags[0]}
+                        </span>
+                      )}
+                    </div>
                   )}
                   {/* Description - Absolutely positioned, slides up from below */}
                   {game.gameDescription && (
@@ -732,11 +790,21 @@ export default function GameHome() {
                       </p>
                     </div>
                   )}
+                  {/* Favorite Quote - Show on hover for library games */}
+                  {game.hasLibraryData && game.favoriteQuote && (
+                    <div className="absolute bottom-full left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+                      <div className="bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg p-2 mb-2">
+                        <p className="text-white/90 text-xs italic line-clamp-2 leading-relaxed">
+                          "{game.favoriteQuote}"
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Achievement Badge */}
                 {game.achievements && game.achievements > 0 && (
-                  <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold">
+                  <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500">
                     {game.achievements}
                   </div>
                 )}
@@ -746,6 +814,9 @@ export default function GameHome() {
                   <div className="flex items-center gap-1 text-white text-xs">
                     <span className="text-yellow-400">★</span>
                     <span className="font-semibold">{game.rating || 'N/A'}</span>
+                    {game.hasLibraryData && game.rating && (
+                      <span className="text-[var(--highlight)] text-xs">★</span>
+                    )}
                   </div>
                 </div>
 
@@ -824,7 +895,97 @@ export default function GameHome() {
                     Developed by <span className="text-[var(--highlight)] font-medium">{selectedGame.developer}</span>
                   </p>
                 )}
+                {/* Library Tags */}
+                {selectedGame.hasLibraryData && selectedGame.tags && selectedGame.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {selectedGame.tags.map((tag, index) => (
+                      <span key={index} className="bg-[var(--highlight)]/20 text-[var(--highlight)] text-xs px-2 py-1 rounded-full">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
+              
+              {/* Library Data Section */}
+              {selectedGame.hasLibraryData && (
+                <div className="bg-[var(--highlight)]/5 border border-[var(--highlight)]/20 rounded-lg p-4">
+                  <h3 className="text-[var(--highlight)] font-semibold mb-3 flex items-center gap-2">
+                    <span>📚</span>
+                    Personal Library Entry
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    {/* Personal Rating */}
+                    {selectedGame.rating && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[var(--accent)] text-sm font-medium">Rating:</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-yellow-400 text-lg">★</span>
+                          <span className="text-[var(--foreground)] font-semibold">{selectedGame.rating}/10</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Completion Status */}
+                    {selectedGame.completed !== undefined && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[var(--accent)] text-sm font-medium">Status:</span>
+                        <span className={`text-sm font-medium ${selectedGame.completed ? 'text-green-400' : 'text-orange-400'}`}>
+                          {selectedGame.completed ? '✓ Completed' : '🔄 In Progress'}
+                        </span>
+                        {selectedGame.completionDate && (
+                          <span className="text-[var(--foreground)]/60 text-xs">
+                            ({new Date(selectedGame.completionDate).toLocaleDateString()})
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Difficulty & Replayability */}
+                    <div className="flex gap-4">
+                      {selectedGame.difficulty && (
+                        <div>
+                          <span className="text-[var(--accent)] text-sm font-medium">Difficulty:</span>
+                          <span className="text-[var(--foreground)] text-sm ml-1">{selectedGame.difficulty}</span>
+                        </div>
+                      )}
+                      {selectedGame.replayability && (
+                        <div>
+                          <span className="text-[var(--accent)] text-sm font-medium">Replayability:</span>
+                          <span className="text-[var(--foreground)] text-sm ml-1">{selectedGame.replayability}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Favorite Quote */}
+              {selectedGame.hasLibraryData && selectedGame.favoriteQuote && (
+                <div className="bg-[var(--highlight)]/10 border-l-4 border-[var(--highlight)] rounded-lg p-4">
+                  <h3 className="text-[var(--highlight)] font-semibold mb-2 flex items-center gap-2">
+                    <span>💬</span>
+                    Favorite Quote
+                  </h3>
+                  <p className="text-[var(--foreground)]/90 text-sm italic leading-relaxed">
+                    "{selectedGame.favoriteQuote}"
+                  </p>
+                </div>
+              )}
+              
+              {/* Personal Comment */}
+              {selectedGame.hasLibraryData && selectedGame.personalComment && (
+                <div className="bg-[var(--background)]/30 rounded-lg p-4 border border-[var(--accent)]/10">
+                  <h3 className="text-[var(--foreground)] font-semibold mb-2 flex items-center gap-2">
+                    <span>💭</span>
+                    My Thoughts
+                  </h3>
+                  <p className="text-[var(--foreground)]/80 text-sm leading-relaxed">
+                    {selectedGame.personalComment}
+                  </p>
+                </div>
+              )}
               
               {/* Game Description */}
               {selectedGame.gameDescription && (
@@ -836,25 +997,53 @@ export default function GameHome() {
                 </div>
               )}
               
+              {/* Playthrough Notes */}
+              {selectedGame.hasLibraryData && selectedGame.playthroughNotes && (
+                <div className="bg-[var(--background)]/30 rounded-lg p-4 border border-[var(--accent)]/10">
+                  <h3 className="text-[var(--foreground)] font-semibold mb-2 flex items-center gap-2">
+                    <span>📝</span>
+                    Playthrough Notes
+                  </h3>
+                  <p className="text-[var(--foreground)]/80 text-sm leading-relaxed">
+                    {selectedGame.playthroughNotes}
+                  </p>
+                </div>
+              )}
+              
+              {/* Favorite Moment */}
+              {selectedGame.hasLibraryData && selectedGame.favoriteMoment && (
+                <div className="bg-[var(--highlight)]/5 border border-[var(--highlight)]/20 rounded-lg p-4">
+                  <h3 className="text-[var(--highlight)] font-semibold mb-2 flex items-center gap-2">
+                    <span>⭐</span>
+                    Favorite Moment
+                  </h3>
+                  <p className="text-[var(--foreground)]/80 text-sm leading-relaxed">
+                    {selectedGame.favoriteMoment}
+                  </p>
+                </div>
+              )}
+              
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="text-[var(--accent)]">Rating: </span>
                   <span className="text-[var(--foreground)] font-semibold">★ {selectedGame.rating}</span>
                 </div>
-                {selectedGame.achievements && (
+                {selectedGame.achievements && selectedGame.achievements > 0 && (
                   <>
                     <div>
                       <span className="text-[var(--accent)]">Achievements: </span>
                       <span className="text-[var(--foreground)] font-semibold">
-                        {selectedGame.achievements}/{selectedGame.totalAchievements}
+                        {selectedGame.achievements}
                       </span>
                     </div>
-                    <div>
-                      <span className="text-[var(--accent)]">Completion: </span>
-                      <span className="text-[var(--foreground)] font-semibold">
-                        {Math.round((selectedGame.achievements / selectedGame.totalAchievements!) * 100)}%
-                      </span>
-                    </div>
+                    {selectedGame.totalAchievements && selectedGame.totalAchievements > 0 && (
+                      <div>
+                        <span className="text-[var(--accent)]">Completion: </span>
+                        <span className="text-[var(--foreground)] font-semibold">
+                          {Math.round((selectedGame.achievements / selectedGame.totalAchievements) * 100)}%
+                        </span>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -869,6 +1058,13 @@ export default function GameHome() {
               {selectedGame.lastPlayed && (
                 <div className="text-sm text-[var(--accent)]">
                   Last played: {new Date(selectedGame.lastPlayed).toLocaleDateString()}
+                </div>
+              )}
+              
+              {/* Last Updated */}
+              {selectedGame.hasLibraryData && selectedGame.lastUpdated && (
+                <div className="text-xs text-[var(--accent)]/60 text-center pt-4 border-t border-[var(--accent)]/10">
+                  Library entry updated: {new Date(selectedGame.lastUpdated).toLocaleDateString()}
                 </div>
               )}
             </div>

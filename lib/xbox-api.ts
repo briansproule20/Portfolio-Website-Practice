@@ -351,7 +351,7 @@ class XboxAPI {
 
       return {
         profile,
-        games: filteredGames.slice(0, 30), // Limit to filtered 30 games
+        games: filteredGames, // Return ALL filtered games - no more 30 limit
         recentAchievements: achievements,
       };
     } catch (error) {
