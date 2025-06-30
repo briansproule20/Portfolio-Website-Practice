@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { gameFilterConfig } from '../../lib/game-filters';
 
 interface Game {
   id: string;
@@ -420,6 +421,23 @@ export default function GameHome() {
     visible: { opacity: 1, y: 0 }
   };
 
+  // Get favorites from config
+  const favoriteTitles = gameFilterConfig.favoriteGames || [];
+  // Find favorite games in order, skip if not found
+  const favoriteGames = favoriteTitles
+    .map((title: string) => games.find(g => g.title.toLowerCase() === title.toLowerCase()))
+    .filter(Boolean) as Game[];
+  // All other games, sorted by lastPlayed (descending), excluding favorites
+  const favoriteIds = new Set(favoriteGames.map(g => g.id));
+  const otherGames = games
+    .filter(g => !favoriteIds.has(g.id))
+    .sort((a, b) => {
+      if (!a.lastPlayed && !b.lastPlayed) return 0;
+      if (!a.lastPlayed) return 1;
+      if (!b.lastPlayed) return -1;
+      return new Date(b.lastPlayed).getTime() - new Date(a.lastPlayed).getTime();
+    });
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
       {/* Hero Section */}
@@ -550,15 +568,110 @@ export default function GameHome() {
         </div>
       </motion.section>
 
-      {/* Compact Game Gallery - 5 Across */}
+      {/* Favorites Section */}
+      {favoriteGames.length > 0 && (
+        <motion.section 
+          initial="hidden"
+          animate="visible"
+          className="max-w-7xl mx-auto px-4 pt-8 pb-2"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-[var(--highlight)] mb-4">Favorites</h2>
+          <div className="grid gap-2 md:gap-3 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {favoriteGames.map((game, index) => (
+              <motion.div
+                key={game.id}
+                variants={fadeIn}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: index * 0.05 }}
+                className="group relative cursor-pointer"
+                onClick={() => setSelectedGame(game)}
+              >
+                {/* Compact Cover Art Card */}
+                <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
+                  {/* Cover Art */}
+                  <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)] w-full flex-shrink-0">
+                    <img
+                      src={game.coverArt}
+                      alt={`${game.title} cover art`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Fallback to placeholder if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.parentElement!.innerHTML = `
+                          <div class='w-full h-full flex items-center justify-center text-4xl text-[var(--background)] opacity-50'>
+                            <span>🎮</span>
+                          </div>
+                        `;
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  </div>
+
+                  {/* Overlay: Title, genre, etc. */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent h-[110px] flex flex-col justify-end overflow-hidden">
+                    {/* Title - Always at bottom */}
+                    <h3 className="text-white font-bold text-sm mb-1 transition-all duration-300 line-clamp-1 leading-tight group-hover:text-[var(--highlight)]">
+                      {game.title}
+                    </h3>
+                    {/* Genre and Year - Always visible at bottom */}
+                    <div className="flex items-center justify-between">
+                      <p className="text-white/60 text-xs truncate line-clamp-1">{game.genre}</p>
+                      {game.releaseDate && (
+                        <p className="text-white/50 text-xs font-medium line-clamp-1">
+                          {new Date(game.releaseDate).getFullYear()}
+                        </p>
+                      )}
+                    </div>
+                    {/* Developer name - subtle and small */}
+                    {game.developer && game.developer !== 'Unknown' && (
+                      <p className="text-white/40 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                        by {game.developer}
+                      </p>
+                    )}
+                    {/* Description - Absolutely positioned, slides up from below */}
+                    {game.gameDescription && (
+                      <div className="absolute bottom-full left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+                        <p className="text-white/80 text-xs line-clamp-2 leading-relaxed">
+                          {game.gameDescription}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Achievement Badge */}
+                  {game.achievements && game.achievements > 0 && (
+                    <div className="absolute top-2 right-2 bg-[var(--highlight)]/90 backdrop-blur-sm rounded-lg px-2 py-1 text-white text-xs font-semibold">
+                      {game.achievements}
+                    </div>
+                  )}
+
+                  {/* Hover Rating */}
+                  <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-1 group-hover:translate-y-0">
+                    <div className="flex items-center gap-1 text-white text-xs">
+                      <span className="text-yellow-400">★</span>
+                      <span className="font-semibold">{game.rating || 'N/A'}</span>
+                    </div>
+                  </div>
+
+                  {/* Subtle Hover Glow */}
+                  <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 shadow-[0_10px_30px_rgba(183,191,163,0.3)]" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+      )}
+      {/* All Games Section */}
       <motion.section 
         initial="hidden"
         animate="visible"
         className="max-w-7xl mx-auto px-4 py-6"
       >
-        <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
-          {/* Display max 30 games on main page */}
-          {games.slice(0, 30).map((game, index) => (
+        <h2 className="text-2xl md:text-3xl font-bold text-[var(--highlight)] mb-4">All Games</h2>
+        <div className="grid gap-2 md:gap-3 lg:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {otherGames.map((game, index) => (
             <motion.div
               key={game.id}
               variants={fadeIn}
@@ -569,9 +682,9 @@ export default function GameHome() {
               onClick={() => setSelectedGame(game)}
             >
               {/* Compact Cover Art Card */}
-              <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1">
+              <div className="relative overflow-hidden rounded-2xl shadow-lg transform transition-all duration-500 hover:scale-[1.05] hover:-translate-y-1 h-[340px] md:h-[340px] sm:h-[260px] flex flex-col">
                 {/* Cover Art */}
-                <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)]">
+                <div className="relative aspect-[3/4] bg-gradient-to-br from-[var(--highlight)] to-[var(--accent)] w-full flex-shrink-0">
                   <img
                     src={game.coverArt}
                     alt={`${game.title} cover art`}
@@ -581,7 +694,7 @@ export default function GameHome() {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       target.parentElement!.innerHTML = `
-                        <div class="w-full h-full flex items-center justify-center text-4xl text-[var(--background)] opacity-50">
+                        <div class='w-full h-full flex items-center justify-center text-4xl text-[var(--background)] opacity-50'>
                           <span>🎮</span>
                         </div>
                       `;
@@ -590,33 +703,34 @@ export default function GameHome() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
 
-                {/* Enhanced Title Area with Description */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent">
-                  <h3 className="text-white font-bold text-sm mb-1 group-hover:text-[var(--highlight)] transition-colors duration-300 line-clamp-2 leading-tight">
+                {/* Overlay: Title, genre, etc. */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent h-[110px] flex flex-col justify-end overflow-hidden">
+                  {/* Title - Always at bottom */}
+                  <h3 className="text-white font-bold text-sm mb-1 transition-all duration-300 line-clamp-1 leading-tight group-hover:text-[var(--highlight)]">
                     {game.title}
                   </h3>
-                  
-                  {/* Description - Only show on hover for space efficiency */}
-                  {game.gameDescription && (
-                    <p className="text-white/80 text-xs mb-2 line-clamp-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                      {game.gameDescription}
-                    </p>
-                  )}
-                  
+                  {/* Genre and Year - Always visible at bottom */}
                   <div className="flex items-center justify-between">
-                    <p className="text-white/60 text-xs truncate">{game.genre}</p>
+                    <p className="text-white/60 text-xs truncate line-clamp-1">{game.genre}</p>
                     {game.releaseDate && (
-                      <p className="text-white/50 text-xs font-medium">
+                      <p className="text-white/50 text-xs font-medium line-clamp-1">
                         {new Date(game.releaseDate).getFullYear()}
                       </p>
                     )}
                   </div>
-                  
                   {/* Developer name - subtle and small */}
                   {game.developer && game.developer !== 'Unknown' && (
-                    <p className="text-white/40 text-xs mt-1 truncate opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <p className="text-white/40 text-xs mt-1 truncate line-clamp-1 opacity-0 group-hover:opacity-100 transition-all duration-500">
                       by {game.developer}
                     </p>
+                  )}
+                  {/* Description - Absolutely positioned, slides up from below */}
+                  {game.gameDescription && (
+                    <div className="absolute bottom-full left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0 pointer-events-none">
+                      <p className="text-white/80 text-xs line-clamp-2 leading-relaxed">
+                        {game.gameDescription}
+                      </p>
+                    </div>
                   )}
                 </div>
 

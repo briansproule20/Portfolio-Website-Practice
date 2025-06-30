@@ -9,11 +9,13 @@ export interface GameFilterConfig {
   alwaysShowGames?: string[];
   // Minimum gamerscore to show
   minGamerscore?: number;
+  // Add favorites array for the favorites section
+  favoriteGames?: string[];
 }
 
 // Easy to modify configuration
 export const gameFilterConfig: GameFilterConfig = {
-  minAchievements: 1, // Only show games with at least 1 achievement
+  minAchievements: 0, // Show ALL games regardless of achievements
   // maxDaysSinceLastPlayed: removed - no time-based filtering
   hideGames: [
     // Games to always hide (case-insensitive matching)
@@ -29,12 +31,38 @@ export const gameFilterConfig: GameFilterConfig = {
     "EA SPORTS WRC", // All caps version
     "WRC", // Just in case it's shortened
     "theHunter", // Alternative name without space
+    
+    // Minecraft variants to hide (but keep Minecraft Dungeons)
+    "Minecraft",
+    "Minecraft Launcher",
+    "Minecraft: Xbox 360 Edition",
+    "Minecraft: Xbox One Edition",
+    "Minecraft Bedrock",
+    "Minecraft: Story Mode",
+    "Minecraft: Story Mode - Episode 1: The Order of the Stone",
+    "Minecraft Story Mode",
+    "Minecraft Xbox 360",
+    "Minecraft Xbox One",
+    "Minecraft Bedrock Edition",
+    
+    // Additional games to hide
+    "One Lonely Outpost",
+    "Farming Simulator 22",
+    "Space Engineers",
+    "Frostpunk",
   ],
   alwaysShowGames: [
     // Add any game titles you always want to show regardless of other filters
     "Plants vs. Zombies",
+    "Minecraft Dungeons", // Keep this visible even if it contains "Minecraft"
   ],
   minGamerscore: 0, // Minimum total gamerscore earned in the game
+  // Add favorites array for the favorites section
+  favoriteGames: [
+    "The Elder Scrolls V: Skyrim Special Edition",
+    "Starfield",
+    "Fallout 4"
+  ],
 };
 
 export function filterGames(games: any[], config: GameFilterConfig = gameFilterConfig): any[] {
