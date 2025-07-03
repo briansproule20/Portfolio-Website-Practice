@@ -88,7 +88,11 @@ export const gameFilterConfig: GameFilterConfig = {
     "Starfield",
     "Fallout 4",
     "Tom Clancy's Rainbow Six Siege X",
-    "Call of Duty: Zombies"
+    "Call of Duty: Zombies",
+    "Red Dead Redemption 2",
+    "The Witcher 3: Wild Hunt – Complete Edition",
+    "The Elder Scrolls IV: Oblivion Remastered",
+    "Indiana Jones and the Great Circle"
   ],
 };
 
