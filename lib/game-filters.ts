@@ -7,6 +7,8 @@ export interface GameFilterConfig {
   hideGames?: string[];
   // Specific games to always show (by title) 
   alwaysShowGames?: string[];
+  // Specific games to always hide (exact matches)
+  alwaysHideGames?: string[];
   // Minimum gamerscore to show
   minGamerscore?: number;
   // Add favorites array for the favorites section
@@ -50,11 +52,34 @@ export const gameFilterConfig: GameFilterConfig = {
     "Farming Simulator 22",
     "Space Engineers",
     "Frostpunk",
+    
+    // Call of Duty games to hide (keeping custom Zombies card in favorites)
+    "Call of Duty",
+    "Call of Duty®",
+    "Call of Duty: Modern Warfare",
+    "Call of Duty: Black Ops",
+    "Call of Duty: WWII",
+    "Call of Duty: Ghosts",
+    "Call of Duty: Advanced Warfare",
+    "Call of Duty 3",
+    "Modern Warfare",
+    "Modern Warfare®",
+    "Modern Warfare 2",
+    "Modern Warfare 3",
+    "Black Ops",
+    "Black Ops®",
+    
+
   ],
   alwaysShowGames: [
     // Add any game titles you always want to show regardless of other filters
     "Plants vs. Zombies",
     "Minecraft Dungeons", // Keep this visible even if it contains "Minecraft"
+  ],
+  // Specific games to always hide (exact matches)
+  alwaysHideGames: [
+    // Hide the original Xbox 360 Oblivion specifically
+    "Oblivion", // Original Xbox 360 version only
   ],
   minGamerscore: 0, // Minimum total gamerscore earned in the game
   // Add favorites array for the favorites section
@@ -100,6 +125,16 @@ export function filterGames(games: any[], config: GameFilterConfig = gameFilterC
     
     if (shouldHide) {
       console.log(`🚫 Hiding game: "${title}"`);
+      return false;
+    }
+    
+    // Always hide games in the alwaysHide list (exact matches)
+    const shouldAlwaysHide = config.alwaysHideGames?.some(hiddenGame => 
+      title === hiddenGame
+    );
+    
+    if (shouldAlwaysHide) {
+      console.log(`🚫 Always hiding game: "${title}"`);
       return false;
     }
     

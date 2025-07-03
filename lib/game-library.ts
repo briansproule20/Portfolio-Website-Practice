@@ -22,51 +22,51 @@ export const gameLibrary: Record<string, GameLibraryEntry> = {
   // The Elder Scrolls V: Skyrim Special Edition
   'The Elder Scrolls V: Skyrim Special Edition': {
     title: 'The Elder Scrolls V: Skyrim Special Edition',
-    rating: 9.5,
+    rating: 9.9,
     comment: 'A timeless masterpiece that continues to captivate with its vast world and endless possibilities. Every playthrough feels different, and the modding community keeps it fresh.',
-    quote: '"Fus Ro Dah!" - The iconic shout that launched a thousand memes and defined a generation of gaming.',
+    quote: 'I used to be an adventurer like you, then I took an arrow in the knee. - The most iconic quote from the game.',
     description: 'The definitive fantasy RPG experience. From the moment you step out of Helgen, the world feels alive and full of stories waiting to be discovered.',
-    playthroughNotes: 'Completed main quest, Dragonborn DLC, and most side quests. Still discovering new locations after hundreds of hours.',
+    playthroughNotes: 'Completed main quest, Dragonborn DLC, Dawnguard DLC, built three houses, and completedmost side quests. Still discovering new locations after hundreds of hours.',
     favoriteMoment: 'First time seeing a dragon in the wild and realizing the scale of the world. The moment at High Hrothgar when the Greybeards call you Dragonborn.',
     completed: true,
     completionDate: '2023-12-15',
-    difficulty: 'Medium',
+    difficulty: 'Easy',
     replayability: 'High',
     tags: ['RPG', 'Open World', 'Fantasy', 'Moddable', 'Classic'],
-    lastUpdated: '2024-01-20'
+    lastUpdated: '2025-07-03'
   },
 
   // Starfield
   'Starfield': {
     title: 'Starfield',
-    rating: 8.2,
-    comment: 'An expansive space exploration RPG with incredible depth. The ship building mechanics are addictive, and the main story keeps you engaged for hours.',
-    quote: '"The stars are calling, and we must answer." - A perfect encapsulation of the game\'s exploration theme.',
-    description: 'Bethesda\'s first new universe in 25 years delivers on the promise of space exploration with deep RPG mechanics and a compelling narrative.',
-    playthroughNotes: 'Completed main story and several faction quests. Ship building became an obsession - spent more time designing ships than playing missions.',
-    favoriteMoment: 'First time landing on a new planet and stepping out to see an alien landscape. The moment when you realize the scale of the universe.',
+    rating: 9.5,
+    comment: 'An expansive space exploration RPG with incredible depth. The ship building mechanics are addictive, and the main story keeps you engaged endlessly. Once more through the Unity.',
+    quote: '"By Vectera by Vectera by Vecteraaaaa!" -The Return of the Adoring Fan',
+    description: 'Bethesda\'s first new universe in 25 years delivers on the promise of space exploration with deep RPG mechanics and a compelling narrative. I only wish there was more unique loot to find.',
+    playthroughNotes: 'Completed main story five times and all faction quests. Ship building became an obsession - spent more time designing ships than playing missions.',
+    favoriteMoment: 'First time landing on a new planet and stepping out to see an alien landscape. The moment when you realize the scale of the universe and each planet.',
     completed: false,
     difficulty: 'Medium',
     replayability: 'High',
     tags: ['RPG', 'Space', 'Exploration', 'Ship Building', 'Sci-Fi'],
-    lastUpdated: '2024-01-15'
+    lastUpdated: '2025-07-03'
   },
 
   // Fallout 4
   'Fallout 4': {
     title: 'Fallout 4',
-    rating: 8.8,
-    comment: 'A fantastic post-apocalyptic RPG that balances story, exploration, and base building perfectly. The Commonwealth feels alive with danger and opportunity.',
+    rating: 9.2,
+    comment: 'A fantastic post-apocalyptic RPG that balances story, exploration, and base building. The Commonwealth feels alive with danger and opportunity.',
     quote: '"War. War never changes." - The iconic opening that sets the tone for the entire series.',
     description: 'Step into the shoes of the Sole Survivor and navigate the harsh wasteland of post-nuclear Boston. Build settlements, fight mutants, and uncover the truth about your past.',
-    playthroughNotes: 'Completed main story and all DLC. Settlement building became a major focus - created a network of thriving communities across the Commonwealth.',
-    favoriteMoment: 'First time discovering Diamond City and realizing the scale of civilization in the wasteland. The moment when you first meet Nick Valentine.',
+    playthroughNotes: 'Completed main story and all DLCs as Argenteuil, one of my favorite custom protagonists ever. Settlement building became a major focus - created a network of thriving communities across the Commonwealth.',
+    favoriteMoment: 'When the bombs drop... you realize the world is ending, and everyone is running for the Vault.',
     completed: true,
     completionDate: '2023-11-20',
     difficulty: 'Medium',
     replayability: 'High',
     tags: ['RPG', 'Post-Apocalyptic', 'Base Building', 'Open World', 'Sci-Fi'],
-    lastUpdated: '2024-01-10'
+    lastUpdated: '2025-07-03'
   },
 
   // The Witcher 3: Wild Hunt
