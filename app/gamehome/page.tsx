@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { gameFilterConfig } from '../../lib/game-filters';
-import { enrichGameWithLibraryData } from '../../lib/game-library';
+import { enrichGameWithLibraryData, getGameLibraryEntry } from '../../lib/game-library';
 
 interface Game {
   id: string;
@@ -442,10 +442,50 @@ export default function GameHome() {
 
   // Get favorites from config
   const favoriteTitles = gameFilterConfig.favoriteGames || [];
-  // Find favorite games in order, skip if not found
-  const favoriteGames = favoriteTitles
-    .map((title: string) => games.find(g => g.title.toLowerCase() === title.toLowerCase()))
-    .filter(Boolean) as Game[];
+  
+  // Create favorite games array with both Xbox games and custom library games
+  const favoriteGames: Game[] = favoriteTitles.map((title: string) => {
+    // First try to find in Xbox games
+    const xboxGame = games.find(g => g.title.toLowerCase() === title.toLowerCase());
+    if (xboxGame) {
+      return xboxGame;
+    }
+    
+    // If not found in Xbox games, create a custom game object from library data
+    const libraryEntry = getGameLibraryEntry(title);
+    if (libraryEntry) {
+      return {
+        id: `custom-${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        title: libraryEntry.title,
+        genre: libraryEntry.tags?.[0] || 'Custom',
+        platform: 'Custom',
+        coverArt: libraryEntry.coverArt || '/elderscroll.png', // Use library coverArt if available
+        rating: libraryEntry.rating || 0,
+        hoursPlayed: libraryEntry.playtime || 0,
+        review: libraryEntry.comment,
+        achievements: 0,
+        totalAchievements: 0,
+        lastPlayed: libraryEntry.lastUpdated,
+        gameDescription: libraryEntry.description,
+        developer: 'Custom Entry',
+        releaseDate: libraryEntry.lastUpdated,
+        // Library-specific fields
+        personalComment: libraryEntry.comment,
+        favoriteQuote: libraryEntry.quote,
+        playthroughNotes: libraryEntry.playthroughNotes,
+        favoriteMoment: libraryEntry.favoriteMoment,
+        completed: libraryEntry.completed,
+        completionDate: libraryEntry.completionDate,
+        difficulty: libraryEntry.difficulty,
+        replayability: libraryEntry.replayability,
+        tags: libraryEntry.tags,
+        lastUpdated: libraryEntry.lastUpdated,
+        hasLibraryData: true
+      };
+    }
+    
+    return null;
+  }).filter(Boolean) as Game[];
   // All other games, sorted by lastPlayed (descending), excluding favorites
   const favoriteIds = new Set(favoriteGames.map(g => g.id));
   const otherGames = games
@@ -694,9 +734,6 @@ export default function GameHome() {
                     <div className="flex items-center gap-1 text-white text-xs">
                       <span className="text-yellow-400">★</span>
                       <span className="font-semibold">{game.rating || 'N/A'}</span>
-                      {game.hasLibraryData && game.rating && (
-                        <span className="text-[var(--highlight)] text-xs">★</span>
-                      )}
                     </div>
                   </div>
 
@@ -814,9 +851,6 @@ export default function GameHome() {
                   <div className="flex items-center gap-1 text-white text-xs">
                     <span className="text-yellow-400">★</span>
                     <span className="font-semibold">{game.rating || 'N/A'}</span>
-                    {game.hasLibraryData && game.rating && (
-                      <span className="text-[var(--highlight)] text-xs">★</span>
-                    )}
                   </div>
                 </div>
 

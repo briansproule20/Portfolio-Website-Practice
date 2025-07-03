@@ -14,6 +14,7 @@ export interface GameLibraryEntry {
   replayability?: 'Low' | 'Medium' | 'High'; // How likely to replay
   tags?: string[]; // Custom tags for categorization
   lastUpdated?: string; // When this entry was last modified
+  coverArt?: string; // Cover art URL
 }
 
 // Game Library Database
@@ -149,6 +150,39 @@ export const gameLibrary: Record<string, GameLibraryEntry> = {
     replayability: 'Medium',
     tags: ['Action', 'Viking', 'Open World', 'Historical', 'RPG'],
     lastUpdated: '2023-11-30'
+  },
+
+  // Call of Duty: Zombies (Custom Card)
+  'Call of Duty: Zombies': {
+    title: 'Call of Duty: Zombies',
+    rating: 9.1,
+    comment: 'The ultimate cooperative survival experience. From the simple beginnings in Nacht der Untoten to the complex storylines of later maps, Zombies has defined a generation of gaming.',
+    quote: '"I am that duck!" - The absurd humor that makes Zombies so memorable.',
+    description: 'A cooperative survival mode that has evolved from a simple bonus mode to one of gaming\'s most beloved experiences. Fight endless waves of zombies while uncovering deep lore and Easter eggs.',
+    playthroughNotes: 'Played across multiple Call of Duty titles. From World at War to Black Ops Cold War, each iteration brings new mechanics and storylines. The Easter egg hunts are some of the most rewarding gaming experiences.',
+    favoriteMoment: 'Completing the Moon Easter egg for the first time - the moment when you realize the scope of the story and the connection to all previous maps.',
+    completed: false,
+    difficulty: 'Hard',
+    replayability: 'High',
+    tags: ['Zombies', 'Cooperative', 'Survival', 'Easter Eggs', 'Multiplayer'],
+    lastUpdated: '2024-01-25',
+    coverArt: '/images/zombies-blackops.jpg'
+  },
+
+  // Tom Clancy's Rainbow Six Siege X
+  'Tom Clancy\'s Rainbow Six Siege X': {
+    title: 'Tom Clancy\'s Rainbow Six Siege X',
+    rating: 8.7,
+    comment: 'The definitive tactical shooter that redefined competitive multiplayer. The destructible environments and operator system create endless strategic possibilities.',
+    quote: '"Time to breach and clear!" - The iconic call that signals the start of intense tactical operations.',
+    description: 'A tactical first-person shooter where players take on the role of either attackers or defenders in intense close-quarters combat scenarios.',
+    playthroughNotes: 'Played extensively across multiple seasons. The learning curve is steep but incredibly rewarding. Each operator brings unique abilities that change the meta.',
+    favoriteMoment: 'First successful 1v5 clutch as a defender - the adrenaline rush of outsmarting the entire attacking team.',
+    completed: false,
+    difficulty: 'Hard',
+    replayability: 'High',
+    tags: ['Tactical Shooter', 'Multiplayer', 'Competitive', 'Strategy', 'FPS'],
+    lastUpdated: '2024-01-25'
   }
 };
 

@@ -61,7 +61,9 @@ export const gameFilterConfig: GameFilterConfig = {
   favoriteGames: [
     "The Elder Scrolls V: Skyrim Special Edition",
     "Starfield",
-    "Fallout 4"
+    "Fallout 4",
+    "Tom Clancy's Rainbow Six Siege X",
+    "Call of Duty: Zombies"
   ],
 };
 

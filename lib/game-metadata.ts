@@ -124,7 +124,7 @@ export const gameMetadata: Record<string, {
   },
   'Tom Clancy\'s Rainbow Six Siege': {
     developer: 'Ubisoft Montreal',
-    description: 'Intense tactical multiplayer shooter with destructible environments.',
+    description: 'The definitive tactical shooter that redefined competitive multiplayer. The destructible environments and operator system create endless strategic possibilities.',
     releaseYear: '2015',
     genre: 'Tactical Shooter'
   },
