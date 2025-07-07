@@ -104,6 +104,29 @@ export default function About() {
                       {activity}
                     </li>
                   ))}
+                  <li className="flex items-center gap-3 text-lg">
+                    <span className="w-2 h-2 bg-[var(--highlight)] rounded-full"></span>
+                    <Link 
+                      href="/movies"
+                      className="group relative text-[var(--foreground)] hover:text-[var(--highlight)] transition-all duration-300 cursor-pointer"
+                    >
+                      <motion.span
+                        whileHover={{ scale: 1.05 }}
+                        className="relative z-10"
+                      >
+                        Watching my favorite movies and shows
+                      </motion.span>
+                      <motion.div
+                        className="absolute inset-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-10 rounded-md -mx-2 -my-1"
+                        whileHover={{ opacity: 0.1 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                      <motion.div
+                        className="absolute bottom-0 left-0 h-0.5 bg-[var(--highlight)] w-0 group-hover:w-full transition-all duration-300"
+                        whileHover={{ width: "100%" }}
+                      />
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
