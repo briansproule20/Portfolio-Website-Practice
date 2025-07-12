@@ -4,6 +4,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Header from "./components/Header";
 import ClientLayout from "./ClientLayout";
+import GetColorfulButton from "./components/GetColorfulButton";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,6 +52,7 @@ export default function RootLayout({
           <ClientLayout>
             {children}
           </ClientLayout>
+          <GetColorfulButton />
         </Providers>
       </body>
     </html>

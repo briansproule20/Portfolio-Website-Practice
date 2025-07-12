@@ -3,8 +3,10 @@
 import { useTheme, ThemeMode } from '../context/ThemeContext';
 
 export default function ThemeToggle() {
-  const { currentTheme, cycleTheme } = useTheme();
+  const { currentTheme, cycleTheme, setTheme, returnToLight } = useTheme();
   
+  console.log('ThemeToggle rendering, currentTheme:', currentTheme);
+
   const getThemeIcon = (theme: ThemeMode) => {
     switch (theme) {
       case 'light':
@@ -25,23 +27,56 @@ export default function ThemeToggle() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.611L5 14.5" />
           </svg>
         );
-    }
-  };
-  
-  const getThemeLabel = (theme: ThemeMode) => {
-    switch (theme) {
-      case 'light': return 'Switch to Dark Mode';
-      case 'dark': return 'Switch to Monochrome Mode';
-      case 'monochrome': return 'Switch to Light Mode';
+      case 'random':
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+          </svg>
+        );
     }
   };
 
+  const getThemeLabel = (theme: ThemeMode) => {
+    switch (theme) {
+      case 'light': return 'Light';
+      case 'dark': return 'Dark';
+      case 'monochrome': return 'Monochrome';
+      case 'random': return 'Random';
+    }
+  };
+
+  const handleClick = () => {
+    if (currentTheme === 'random') {
+      // If currently on random theme, return to light
+      returnToLight();
+    } else {
+      // Otherwise cycle through static themes
+      cycleTheme();
+    }
+  };
+
+  // Fallback if theme context fails
+  if (!currentTheme) {
+    return (
+      <button
+        onClick={() => console.log('Theme toggle clicked but no context')}
+        className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
+        aria-label="Theme Toggle"
+        title="Theme Toggle"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+      </button>
+    );
+  }
+
   return (
     <button
-      onClick={cycleTheme}
+      onClick={handleClick}
       className="p-2 rounded-lg hover:bg-[var(--accent)] transition-colors"
-      aria-label={getThemeLabel(currentTheme)}
-      title={`Current: ${currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1)} Theme`}
+      aria-label={`Current: ${getThemeLabel(currentTheme)} Theme`}
+      title={`Current: ${getThemeLabel(currentTheme)} Theme`}
     >
       {getThemeIcon(currentTheme)}
     </button>
