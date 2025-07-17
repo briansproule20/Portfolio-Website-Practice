@@ -244,6 +244,42 @@ const photos: Photo[] = [
     width: 3024,
     height: 4032,
   },
+  {
+    id: 27,
+    title: "Uncle Louis",
+    category: "Memoriam", // or whatever category fits
+    description: "Uncle Lou and Mum hanging on the coach at the Old Beach House.",
+    image: "/photos/louis.jpeg",
+    width: 3024, // Replace with actual width
+    height: 4032 // Replace with actual height
+  },
+  {
+    id: 28,
+    title: "River Reach", 
+    category: "Family", // or whatever category fits
+    description: "Mum and Sam visiting our little place in South Florida.",
+    image: "/photos/riverreach.jpeg",
+    width: 3024, // Replace with actual width
+    height: 4032 // Replace with actual height
+  },
+  {
+    id: 29,
+    title: "Boat Day",
+    category: "Family", // or whatever category fits  
+    description: "Out on Matt's Grady White with Sammy.",
+    image: "/photos/boatday.jpeg",
+    width: 3024, // Replace with actual width
+    height: 4032 // Replace with actual height
+  },
+  {
+    id: 30,
+    title: "Grandparents",
+    category: "Family", // or whatever category fits  
+    description: "Grandma DD and Grandpap at Sammy's soccer game, somewhere in the North Hills of Pittsburgh.",
+    image: "/photos/grandparents.jpeg",
+    width: 4032, // Replace with actual width
+    height: 3024 // Replace with actual height
+  }
 ];
 
 export function getFeaturedPhotos(): Photo[] {
