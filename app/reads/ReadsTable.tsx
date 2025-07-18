@@ -68,7 +68,6 @@ export default function ReadsTable({ books }: { books: Book[] }) {
 
   return (
     <div>
-      <p className="text-base italic text-[var(--foreground)] text-center mb-8">Asterisk indicates book was read before the creation of the spreadsheet and was grandfathered in.</p>
       <div className="mb-6 flex justify-end">
         <div className="flex items-center gap-4">
           <label htmlFor="sort" className="font-medium text-[var(--foreground)]">Sort by:</label>
