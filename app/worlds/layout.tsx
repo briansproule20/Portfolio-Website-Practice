@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "https://briansproule.com/elderscroll.png",
+        url: "https://www.briansproule.com/elderscroll.png",
         width: 1200,
         height: 630,
         alt: "Worldbuilding - Creative Universe Design",

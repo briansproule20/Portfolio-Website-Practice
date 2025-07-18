@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://briansproule.com'),
+  metadataBase: new URL('https://www.briansproule.com'),
   title: {
     default: "Brian Sproule | Writer, Publisher, Designer",
     template: "%s | Brian Sproule"
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://briansproule.com",
+    url: "https://www.briansproule.com",
     siteName: "Brian Sproule Portfolio",
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://briansproule.com/fish.png",
+        url: "https://www.briansproule.com/fish.png",
         width: 1200,
         height: 630,
         alt: "Brian Sproule - Digital Publisher & Developer",
@@ -63,10 +63,10 @@ export const metadata: Metadata = {
     creator: "@briansproule",
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    images: ["https://briansproule.com/fish.png"],
+    images: ["https://www.briansproule.com/fish.png"],
   },
   alternates: {
-    canonical: "https://briansproule.com",
+    canonical: "https://www.briansproule.com",
   },
   verification: {
     google: "your-google-verification-code",

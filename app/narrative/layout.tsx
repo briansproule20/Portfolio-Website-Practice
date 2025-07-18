@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "https://briansproule.com/onering.png",
+        url: "https://www.briansproule.com/onering.png",
         width: 1200,
         height: 630,
         alt: "Narrative Theory - Literary Analysis Framework",
