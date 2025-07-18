@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const SHEET_ID = '1c6zdCUsDR_oMYe1ZJBxDujmSjtYXUMRKROyUkr72z0Q';
-const RANGE = 'A2:L1000'; // Adjust range as needed
+const RANGE = 'A2:V1000'; // Adjust range as needed - now includes column V (nationality)
 
 export async function GET(req: NextRequest) {
   try {
@@ -78,7 +78,8 @@ export async function GET(req: NextRequest) {
         pages: row[11] || '',
         year: row[4] || '',
         rating: row[5] || '',
-        description: row[4] || '', // Comments column (adjust if needed)
+        description: row[6] || '', // Comments column (index 6)
+        nationality: row[21] || '', // Column V (index 21) - nationality
       }));
     } else {
       const lastThreeBooks = validRows.slice(-3).reverse(); // Get last 3 and reverse for chronological order
@@ -88,7 +89,8 @@ export async function GET(req: NextRequest) {
         pages: row[11] || '',
         year: row[4] || '',
         rating: row[5] || '',
-        description: row[4] || '', // Comments column (adjust if needed)
+        description: row[6] || '', // Comments column (index 6)
+        nationality: row[21] || '', // Column V (index 21) - nationality
       }));
     }
 
