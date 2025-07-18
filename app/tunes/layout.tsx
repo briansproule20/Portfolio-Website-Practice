@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "https://briansproule.com/elderscroll.png",
+        url: "https://briansproule.com/fish.png",
         width: 1200,
         height: 630,
         alt: "Music Collection - Spotify Integration",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Tunes | Brian Sproule",
     description: "Music collection and Spotify integration. Discover my musical taste and favorite tracks.",
-    images: ["https://briansproule.com/elderscroll.png"],
+    images: ["https://briansproule.com/fish.png"],
   },
   alternates: {
     canonical: "https://briansproule.com/tunes",
