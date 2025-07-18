@@ -2,6 +2,163 @@
 
 import { motion } from 'framer-motion';
 
+const dictionaryAC = [
+  { term: 'Ad Hominem', def: 'Attacking the person rather than the argument' },
+  { term: 'Adage', def: 'Traditional saying expressing a general truth' },
+  { term: 'Allegory', def: 'Story with symbolic meaning beyond literal' },
+  { term: 'Alliteration', def: 'Repetition of initial consonant sounds' },
+  { term: 'Allusion', def: 'Reference to another work or event' },
+  { term: 'Ambiguity', def: 'Uncertainty or multiple possible meanings' },
+  { term: 'Anachronism', def: 'Chronological inconsistency' },
+  { term: 'Analogy', def: 'Comparison between two things for explanation' },
+  { term: 'Anaphora', def: 'Repetition of words at beginning of phrases' },
+  { term: 'Anecdote', def: 'Short amusing or interesting story' },
+  { term: 'Antagonist', def: 'Character who opposes the protagonist' },
+  { term: 'Anthimeria', def: 'Using one part of speech as another' },
+  { term: 'Anthropomorphism', def: 'Giving human characteristics to animals/objects' },
+  { term: 'Antihero', def: 'Protagonist lacking conventional heroic qualities' },
+  { term: 'Antithesis', def: 'Direct contrast of ideas' },
+  { term: 'Aphorism', def: 'Concise statement of principle or truth' },
+  { term: 'Apologia', def: 'Formal defense or justification' },
+  { term: 'Aporia', def: 'Expression of doubt or uncertainty' },
+  { term: 'Aposiopesis', def: 'Breaking off speech mid-sentence' },
+  { term: 'Appositive', def: 'Noun or phrase that renames another noun' },
+  { term: 'Apostrophe', def: 'Addressing absent person or abstract concept' },
+  { term: 'Archaism', def: 'Outdated word or expression' },
+  { term: 'Archetype', def: 'Universal character or situation pattern' },
+  { term: 'Assonance', def: 'Repetition of vowel sounds' },
+  { term: 'Asyndeton', def: 'Omission of conjunctions between words' },
+  { term: 'Atmosphere', def: 'Mood or feeling created by setting' },
+  { term: 'Ballad', def: 'Narrative poem meant to be sung' },
+  { term: 'Bathos', def: 'Sudden shift from serious to trivial' },
+  { term: 'Bildungsroman', def: 'Coming-of-age novel' },
+  { term: 'Caesura', def: 'Pause or break in poetry' },
+  { term: 'Catharsis', def: 'Emotional release through art' },
+  { term: 'Characterization', def: 'How author reveals character traits' },
+  { term: 'Chiasmus', def: 'Reversal of grammatical structures' },
+  { term: 'Chronology', def: 'Order of events in time' },
+  { term: 'Cliché', def: 'Overused expression or idea' },
+  { term: 'Cliffhanger', def: 'Suspenseful ending leaving resolution uncertain' },
+  { term: 'Climax', def: 'Turning point of highest tension' },
+  { term: 'Consonance', def: 'Repetition of consonant sounds' },
+  { term: 'Connotation', def: 'Emotional associations of words' },
+  { term: 'Conundrum', def: 'Difficult problem or question' },
+  { term: 'Cynicism', def: 'Distrustful attitude toward motives' },
+  { term: 'Denotation', def: 'Literal dictionary meaning' },
+  { term: 'Deus ex machina', def: 'Unexpected solution to resolve plot' },
+  { term: 'Denouement', def: 'Resolution of plot conflicts' },
+  { term: 'Deuteragonist', def: 'Secondary main character' },
+  { term: 'Dialect', def: 'Regional variety of language' },
+  { term: 'Dialogue', def: 'Conversation between characters' },
+  { term: 'Diction', def: "Author's word choice" },
+  { term: 'Double Entendre', def: 'Word or phrase with two meanings' },
+  { term: 'Dystopia', def: 'Imagined oppressive society' },
+];
+
+const dictionaryDH = [
+  { term: 'Elegy', def: 'Poem mourning the dead' },
+  { term: 'Ellipsis', def: 'Omission of words or phrases' },
+  { term: 'Enjambment', def: 'Continuation of sentence across line breaks' },
+  { term: 'Epigram', def: 'Brief witty statement or poem' },
+  { term: 'Epigraph', def: 'Quotation at beginning of work' },
+  { term: 'Epilogue', def: 'Concluding section of work' },
+  { term: 'Epiphany', def: 'Sudden realization or insight' },
+  { term: 'Epitaph', def: 'Inscription on tombstone' },
+  { term: 'Epithet', def: 'Descriptive word or phrase' },
+  { term: 'Exposition', def: 'Background information provided' },
+  { term: 'Extended Metaphor', def: 'Metaphor developed throughout work' },
+  { term: 'Farce', def: 'Comedy with exaggerated situations' },
+  { term: 'Flashback', def: 'Scene from the past' },
+  { term: 'Flashforward', def: 'Scene from the future' },
+  { term: 'Foreshadowing', def: 'Hints about future events' },
+  { term: 'Genre', def: 'Category of literature' },
+  { term: 'Haiku', def: 'Three-line Japanese poem' },
+  { term: 'Hamartia', def: 'Tragic flaw in protagonist' },
+  { term: 'Homage', def: 'Respectful tribute to another work' },
+  { term: 'Hubris', def: 'Excessive pride or arrogance' },
+  { term: 'Hyperbole', def: 'Deliberate exaggeration' },
+  { term: 'Idiom', def: 'Expression with figurative meaning' },
+  { term: 'Imagery', def: 'Vivid descriptive language' },
+  { term: 'Inference', def: 'Logical conclusion from evidence' },
+  { term: 'Innuendo', def: 'Indirect suggestion or hint' },
+  { term: 'Intersectionality', def: 'Overlapping social identities' },
+  { term: 'Intertextuality', def: 'Relationship between texts' },
+  { term: 'Invective', def: 'Abusive or insulting language' },
+  { term: 'Irony', def: 'Contrast between expectation and reality' },
+];
+const dictionaryIP = [
+  { term: 'Jargon', def: 'Specialized vocabulary of a group' },
+  { term: 'Juxtaposition', def: 'Placing contrasting elements side by side' },
+  { term: 'Lingo', def: 'Informal language or slang' },
+  { term: 'Literary Device', def: 'Technique used in writing' },
+  { term: 'Melodrama', def: 'Drama with exaggerated emotions' },
+  { term: 'Memoir', def: 'Personal account of experiences' },
+  { term: 'Metaphor', def: 'Direct comparison without "like" or "as"' },
+  { term: 'Meter', def: 'Rhythmic pattern in poetry' },
+  { term: 'Metonymy', def: 'Substitution of related term' },
+  { term: 'Mnemonic', def: 'Memory aid or device' },
+  { term: 'Monologue', def: 'Long speech by one character' },
+  { term: 'Montage', def: 'Series of images or scenes' },
+  { term: 'Motif', def: 'Recurring theme or element' },
+  { term: 'Narrative', def: 'Story or account of events' },
+  { term: 'Narrator', def: 'Person telling the story' },
+  { term: 'Nostalgia', def: 'Sentimental longing for the past' },
+  { term: 'Onomatopoeia', def: 'Words that imitate sounds' },
+  { term: 'Oxymoron', def: 'Contradictory terms combined' },
+  { term: 'Palindrome', def: 'Word or phrase that reads the same backward' },
+  { term: 'Parable', def: 'Simple story with a moral lesson' },
+  { term: 'Paradox', def: 'Seemingly contradictory but true statement' },
+  { term: 'Parallelism', def: 'Use of similar grammatical structures' },
+  { term: 'Paraphrase', def: 'Restatement of text in different words' },
+  { term: 'Parody', def: 'Humorous imitation of a work' },
+  { term: 'Peripeteia', def: 'Sudden reversal of fortune or circumstances' },
+  { term: 'Personification', def: 'Giving human traits to non-human things' },
+  { term: 'Plagiarism', def: 'Using another\'s work without credit' },
+  { term: 'Platitude', def: 'Overused statement lacking originality' },
+  { term: 'Plot', def: 'Sequence of events in a story' },
+  { term: 'Point of View (Focalization)', def: 'Perspective from which the story is told' },
+  { term: 'Polemic', def: 'Controversial argument or debate' },
+  { term: 'Polysyndeton', def: 'Repetition of conjunctions in close succession' },
+  { term: 'Prologue', def: 'Introductory section of a literary work' },
+  { term: 'Propaganda', def: 'Biased information to promote a cause' },
+  { term: 'Prose', def: 'Written language without metrical structure' },
+  { term: 'Protagonist', def: 'Main character of the story' },
+  { term: 'Pseudonym', def: 'Fictitious name used by an author' },
+  { term: 'Pun', def: 'Play on words with multiple meanings' },
+];
+const dictionaryRZ = [
+  { term: 'Red Herring', def: 'Misleading clue or distraction' },
+  { term: 'Rhetorical Device', def: 'Technique used to persuade or impact' },
+  { term: 'Rhyme', def: 'Repetition of similar sounds' },
+  { term: 'Romanticize', def: 'To make something seem better or more appealing than it is' },
+  { term: 'Sardonic', def: 'Grimly mocking or cynical' },
+  { term: 'Satire', def: 'Ridicule to expose flaws' },
+  { term: 'Science Fiction', def: 'Fiction based on imagined future science or technology' },
+  { term: 'Self-Fulfilling Prophecy', def: 'Prediction that causes itself to become true' },
+  { term: 'Setting', def: 'Time and place of story' },
+  { term: 'Simile', def: 'Comparison using "like" or "as"' },
+  { term: 'Soliloquy', def: 'Speech by a character alone on stage' },
+  { term: 'Sonnet', def: '14-line poem with specific rhyme scheme' },
+  { term: 'Stanza', def: 'Grouped set of lines in a poem' },
+  { term: 'Style', def: "Author's unique way of writing" },
+  { term: 'Subtext', def: 'Underlying meaning not stated directly' },
+  { term: 'Surrealism', def: 'Art or writing with dreamlike, illogical scenes' },
+  { term: 'Symbol', def: 'Object representing abstract idea' },
+  { term: 'Synecdoche', def: 'Part representing the whole' },
+  { term: 'Synesthesia', def: 'Describing one sense in terms of another' },
+  { term: 'Theme', def: 'Central message or meaning' },
+  { term: 'Thesis', def: 'Main argument or claim' },
+  { term: 'Tone', def: "Author's attitude toward subject" },
+  { term: 'Trope', def: 'Common literary device or convention' },
+  { term: 'Truism', def: 'Statement that is obviously true' },
+  { term: 'Utopia', def: 'Imagined perfect society' },
+  { term: 'Verisimilitude', def: 'Appearance of being true or real' },
+  { term: 'Vernacular', def: 'Everyday language of ordinary people' },
+  { term: 'Vignette', def: 'Short, descriptive literary sketch' },
+  { term: 'Voice', def: "Author's distinctive style or perspective" },
+  { term: 'Volta', def: 'Dramatic shift or turn in a poem' },
+];
+
 export default function NarrativeTheory() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
@@ -43,6 +200,16 @@ export default function NarrativeTheory() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.8 }}
+            className="text-center mb-3"
+          >
+            <h3 className="text-sm text-[var(--accent)] font-serif">
+              For Primary Source Info on Narrative Theory, Checkout these Links
+            </h3>
+          </motion.div>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.9 }}
             className="flex flex-wrap justify-center gap-6 text-sm"
           >
             <a 
@@ -539,41 +706,161 @@ export default function NarrativeTheory() {
               </div>
             </div>
 
-            {/* Critical Race Narratology */}
+            {/* Proppian Fairytale Analysis */}
             <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
-              <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">Critical Race Narratology</h3>
-              <div className="grid md:grid-cols-2 gap-8">
+              <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">Proppian Fairytale Analysis</h3>
+              <div className="mb-6 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <p className="text-sm text-[var(--foreground)] leading-relaxed">
+                  <strong>Vladimir Propp</strong> (1895-1970) was a Russian folklorist and structuralist who revolutionized narrative theory with his 1928 work <em>Morphology of the Folktale</em>. By analyzing 100 Russian fairy tales, Propp discovered that despite surface differences, these stories shared a common underlying structure. He identified 31 narrative functions and 7 character types that could be combined in various ways to create the infinite variety of fairy tales. This structuralist approach revealed that stories, like language, follow predictable patterns and can be broken down into fundamental units. Propp's work influenced later structuralists like Claude Lévi-Strauss and remains foundational in narrative theory, demonstrating how seemingly diverse stories can be analyzed through systematic structural principles.
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Narrative Justice</h4>
+                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Character Functions</h4>
                   <div className="space-y-3">
                     <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Counter-storytelling</div>
-                      <div className="text-sm text-[var(--accent)]">Challenging dominant narratives</div>
+                      <div className="font-semibold text-[var(--foreground)]">Hero</div>
+                      <div className="text-sm text-[var(--accent)]">Protagonist who embarks on quest</div>
                     </div>
                     <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Narrative Identity</div>
-                      <div className="text-sm text-[var(--accent)]">Race and storytelling</div>
+                      <div className="font-semibold text-[var(--foreground)]">Villain</div>
+                      <div className="text-sm text-[var(--accent)]">Antagonist who opposes hero</div>
                     </div>
                     <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Structural Racism</div>
-                      <div className="text-sm text-[var(--accent)]">Narrative as systemic critique</div>
+                      <div className="font-semibold text-[var(--foreground)]">Donor</div>
+                      <div className="text-sm text-[var(--accent)]">Provides magical aid or object</div>
+                    </div>
+                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">Helper</div>
+                      <div className="text-sm text-[var(--accent)]">Assists hero in quest</div>
+                    </div>
+                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">Princess</div>
+                      <div className="text-sm text-[var(--accent)]">Sought-after reward or goal</div>
+                    </div>
+                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">Dispatcher</div>
+                      <div className="text-sm text-[var(--accent)]">Sends hero on mission</div>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Postcolonial Narratology</h4>
+                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Narrative Functions</h4>
                   <div className="space-y-2 text-sm">
-                    <div className="text-[var(--foreground)]">• Subaltern Voices</div>
-                    <div className="text-[var(--foreground)]">• Colonial Discourse</div>
-                    <div className="text-[var(--foreground)]">• Hybridity</div>
-                    <div className="text-[var(--foreground)]">• Mimicry</div>
-                    <div className="text-[var(--foreground)]">• Orientalism</div>
-                    <div className="text-[var(--foreground)]">• Decolonization</div>
+                    <div className="text-[var(--foreground)]">• Absentation (Hero leaves home)</div>
+                    <div className="text-[var(--foreground)]">• Interdiction (Warning given)</div>
+                    <div className="text-[var(--foreground)]">• Violation (Warning ignored)</div>
+                    <div className="text-[var(--foreground)]">• Reconnaissance (Villain seeks info)</div>
+                    <div className="text-[var(--foreground)]">• Trickery (Villain deceives)</div>
+                    <div className="text-[var(--foreground)]">• Complicity (Victim deceived)</div>
+                    <div className="text-[var(--foreground)]">• Villainy (Harm done)</div>
+                    <div className="text-[var(--foreground)]">• Lack (Something needed)</div>
+                    <div className="text-[var(--foreground)]">• Departure (Hero leaves)</div>
+                    <div className="text-[var(--foreground)]">• Test (Hero challenged)</div>
+                    <div className="text-[var(--foreground)]">• Receipt (Magical aid given)</div>
+                    <div className="text-[var(--foreground)]">• Struggle (Hero vs. Villain)</div>
+                    <div className="text-[var(--foreground)]">• Victory (Hero triumphs)</div>
+                    <div className="text-[var(--foreground)]">• Return (Hero comes home)</div>
+                    <div className="text-[var(--foreground)]">• Wedding (Happy ending)</div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Literary Terms Dictionary */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0 }}
+              className="space-y-8"
+            >
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h2 className="text-3xl font-bold mb-6 text-[var(--foreground)] text-center">Dictionary of Literary Terms</h2>
+                <p className="text-lg text-[var(--foreground)] leading-relaxed mb-8 text-center">
+                  Essential literary terms for AICE, AP, & IB students. Understanding these terms is crucial for narrative analysis and sound literary criticism on exams.
+                </p>
+              </div>
+
+              {/* A-C Terms */}
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">A - C</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {dictionaryAC.map(({ term, def }) => (
+                    <div key={term} className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">{term}</div>
+                      <div className="text-sm text-[var(--accent)]">{def}</div>
+                    </div>
+                  ))}
+                  {Array((3 - (dictionaryAC.length % 3)) % 3).fill(0).map((_, i) => (
+                    <div key={`pad-ac-${i}`} className="invisible" />
+                  ))}
+                </div>
+              </div>
+
+              {/* D-H Terms */}
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">D - H</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {dictionaryDH.map(({ term, def }) => (
+                    <div key={term} className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">{term}</div>
+                      <div className="text-sm text-[var(--accent)]">{def}</div>
+                    </div>
+                  ))}
+                  {Array((3 - (dictionaryDH.length % 3)) % 3).fill(0).map((_, i) => (
+                    <div key={`pad-dh-${i}`} className="invisible" />
+                  ))}
+                </div>
+              </div>
+
+              {/* I-P Terms */}
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">I - P</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {dictionaryIP.map(({ term, def }) => (
+                    <div key={term} className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">{term}</div>
+                      <div className="text-sm text-[var(--accent)]">{def}</div>
+                    </div>
+                  ))}
+                  {Array((3 - (dictionaryIP.length % 3)) % 3).fill(0).map((_, i) => (
+                    <div key={`pad-ip-${i}`} className="invisible" />
+                  ))}
+                </div>
+              </div>
+
+              {/* R-Z Terms */}
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">R - Z</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {dictionaryRZ.map(({ term, def }) => (
+                    <div key={term} className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
+                      <div className="font-semibold text-[var(--foreground)]">{term}</div>
+                      <div className="text-sm text-[var(--accent)]">{def}</div>
+                    </div>
+                  ))}
+                  {Array((3 - (dictionaryRZ.length % 3)) % 3).fill(0).map((_, i) => (
+                    <div key={`pad-rz-${i}`} className="invisible" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Reference Link */}
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)] text-center">
+                <p className="text-[var(--foreground)] mb-4">
+                  For more detailed definitions and examples, visit:
+                </p>
+                <a 
+                  href="https://literaryterms.net" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block bg-[var(--highlight)] text-[var(--background)] px-6 py-3 rounded-lg font-semibold transition-all hover:scale-105 hover:shadow-lg"
+                >
+                  LiteraryTerms.net
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </section>

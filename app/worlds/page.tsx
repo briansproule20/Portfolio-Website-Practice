@@ -53,6 +53,7 @@ export default function Worldbuilding() {
             className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
           >
             Exploring the art of creating worlds and universes.
+            Dedicated to Professors Brian McHale and Jared Gardner, The Ohio State University.
           </motion.p>
         </div>
       </motion.section>
