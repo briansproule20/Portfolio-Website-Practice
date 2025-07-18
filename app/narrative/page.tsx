@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const dictionaryAC = [
   { term: 'Ad Hominem', def: 'Attacking the person rather than the argument' },
@@ -2011,6 +2011,7 @@ const detailedTerms: DetailedTerms = {
 
 export default function NarrativeTheory() {
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
+  const [showNav, setShowNav] = useState(false);
 
   const handleTermClick = (term: string) => {
     setSelectedTerm(term);
@@ -2020,8 +2021,86 @@ export default function NarrativeTheory() {
     setSelectedTerm(null);
   };
 
+  // Show navigation bar after scrolling down
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowNav(window.scrollY > 200);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Smooth scroll to section with offset for navigation bar
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 120; // Offset to account for navigation bar and some padding
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
+      {/* Floating Navigation Bar */}
+      <AnimatePresence>
+        {showNav && (
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -100, opacity: 0 }}
+            className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40"
+          >
+            <div className="bg-[var(--card)]/95 backdrop-blur-md border-2 border-[var(--accent)] rounded-full px-4 py-6 shadow-2xl">
+              <div className="flex flex-col items-center space-y-4">
+                <button
+                  onClick={scrollToTop}
+                  className="flex flex-col items-center space-y-1 text-[var(--foreground)] hover:text-[var(--highlight)] transition-colors duration-200 group"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                  </svg>
+                  <span className="text-xs font-medium">Top</span>
+                </button>
+                
+                <div className="w-8 h-px bg-[var(--accent)]/30"></div>
+                
+                <button
+                  onClick={() => scrollToSection('narrative-toolbox')}
+                  className="flex flex-col items-center space-y-1 text-[var(--foreground)] hover:text-[var(--highlight)] transition-colors duration-200 group"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  <span className="text-xs font-medium">Toolbox</span>
+                </button>
+                
+                <div className="w-8 h-px bg-[var(--accent)]/30"></div>
+                
+                <button
+                  onClick={() => scrollToSection('dictionary')}
+                  className="flex flex-col items-center space-y-1 text-[var(--foreground)] hover:text-[var(--highlight)] transition-colors duration-200 group"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  <span className="text-xs font-medium">Dictionary</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0 }}
@@ -2164,15 +2243,16 @@ export default function NarrativeTheory() {
             </div>
           </div>
 
-          {/* Narrative Toolbox */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="space-y-8"
-          >
-            <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
-              <h2 className="text-3xl font-bold mb-6 text-[var(--foreground)] text-center">Narrative Toolbox</h2>
+                      {/* Narrative Toolbox */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="space-y-8"
+              id="narrative-toolbox"
+            >
+              <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
+                <h2 className="text-3xl font-bold mb-6 text-[var(--foreground)] text-center">Narrative Toolbox</h2>
               <p className="text-lg text-[var(--foreground)] leading-relaxed mb-8 text-center">
                 Practical tools and frameworks for crafting compelling narratives across all mediums.
               </p>
@@ -3349,6 +3429,7 @@ export default function NarrativeTheory() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0 }}
               className="space-y-8"
+              id="dictionary"
             >
               <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
                 <h2 className="text-3xl font-bold mb-6 text-[var(--foreground)] text-center">Dictionary of Literary Terms</h2>
