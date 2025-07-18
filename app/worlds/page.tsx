@@ -5,10 +5,15 @@ import { useEffect, useState } from 'react';
 
 export default function Worldbuilding() {
   const [mounted, setMounted] = useState(false);
+  const [selectedPlanet, setSelectedPlanet] = useState<number | string | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handlePlanetClick = (planetId: number | string) => {
+    setSelectedPlanet(selectedPlanet === planetId ? null : planetId);
+  };
 
   const planets = [
     { id: 1, name: "Meridian", size: 0.8, distance: 90, color: "#8B4513", orbitSpeed: 35 },
@@ -60,11 +65,95 @@ export default function Worldbuilding() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="absolute z-10 w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full shadow-2xl shadow-red-500/50"
+            className="absolute z-[9999] w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full shadow-2xl shadow-red-500/50 cursor-pointer group hover:scale-125 hover:shadow-2xl hover:shadow-red-500/80 transition-all duration-300"
             style={{
               boxShadow: '0 0 50px rgba(239, 68, 68, 0.6), 0 0 100px rgba(239, 68, 68, 0.3)'
             }}
+            onClick={() => handlePlanetClick('sun')}
           />
+
+          {/* Sun Information Card */}
+          {selectedPlanet === 'sun' && (
+            <motion.div
+              initial={{ opacity: 0, x: 20, y: -20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, x: 20, y: -20 }}
+              className="fixed top-20 right-8 z-50 w-80 bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)] shadow-xl"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-red-500 to-red-700" />
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Sol Nova</h3>
+                <button
+                  onClick={() => setSelectedPlanet(null)}
+                  className="ml-auto text-[var(--accent)] hover:text-[var(--foreground)] transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Type:</span>
+                  <span className="text-[var(--foreground)]">Red Dwarf</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Age:</span>
+                  <span className="text-[var(--foreground)]">~4.6 billion years</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Temperature:</span>
+                  <span className="text-[var(--foreground)]">3,500°K</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Planets:</span>
+                  <span className="text-[var(--foreground)]">8</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Planet Information Card - Upper Right Corner */}
+          {selectedPlanet && selectedPlanet !== 'sun' && typeof selectedPlanet === 'number' && (
+            <motion.div
+              initial={{ opacity: 0, x: 20, y: -20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              exit={{ opacity: 0, x: 20, y: -20 }}
+              className="fixed top-20 right-8 z-50 w-80 bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)] shadow-xl"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-6 h-6 rounded-full"
+                  style={{ backgroundColor: planets.find(p => p.id === selectedPlanet)?.color }}
+                />
+                <h3 className="text-xl font-bold text-[var(--foreground)]">
+                  {planets.find(p => p.id === selectedPlanet)?.name}
+                </h3>
+                <button
+                  onClick={() => setSelectedPlanet(null)}
+                  className="ml-auto text-[var(--accent)] hover:text-[var(--foreground)] transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Distance:</span>
+                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.distance} AU</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Size:</span>
+                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.size}x Earth</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Orbit Speed:</span>
+                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.orbitSpeed}s</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--accent)]">Color:</span>
+                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.color}</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
           {/* Planet Orbits and Planets */}
           {mounted && planets.map((planet, index) => (
@@ -77,18 +166,20 @@ export default function Worldbuilding() {
               style={{
                 width: planet.distance * 2,
                 height: planet.distance * 2,
-                animation: `orbit ${planet.orbitSpeed}s linear infinite`
+                animation: `orbit ${planet.orbitSpeed}s linear infinite`,
+                zIndex: 100 - index // Inner planets have higher z-index
               }}
             >
               {/* Orbit Ring */}
               <div 
-                className="absolute inset-0 border border-[var(--accent)]/20 rounded-full"
+                className="absolute inset-0 border border-[var(--accent)]/20 rounded-full cursor-pointer hover:border-[var(--highlight)] hover:border-2 transition-all duration-300"
                 style={{ width: '100%', height: '100%' }}
+                onClick={() => handlePlanetClick(planet.id)}
               />
               
               {/* Planet */}
               <motion.div
-                className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                 style={{
                   width: planet.size * 20,
                   height: planet.size * 20,
@@ -101,6 +192,7 @@ export default function Worldbuilding() {
                   boxShadow: `0 0 30px ${planet.color}60, inset 0 0 20px rgba(0,0,0,0.3)`
                 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => handlePlanetClick(planet.id)}
               >
                 {/* Planet Label */}
                 <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
