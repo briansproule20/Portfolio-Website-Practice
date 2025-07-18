@@ -487,177 +487,203 @@ export default function Worldbuilding() {
           </div>
 
           {/* Legend */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8 p-4 bg-[var(--background)] rounded-lg">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-white border border-gray-300 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">General</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-8 p-6 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-white border-2 border-gray-400 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">General</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Ecological</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-blue-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Ecological</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Cultural</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-green-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Cultural</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-orange-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Organizational</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-orange-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Organizational</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-cyan-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Historical</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-cyan-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Historical</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-blue-300 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Linguistic</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-blue-400 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Linguistic</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-indigo-300 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Technological</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-indigo-400 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Technological</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-red-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Geopolitical</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-red-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Geopolitical</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-yellow-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Economic</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-yellow-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Economic</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-purple-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Infrastructural</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-purple-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Infrastructural</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-pink-200 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Religious</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-pink-300 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Religious</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-purple-400 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Fantastic</span>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-purple-500 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Fantastic</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-red-600 rounded"></div>
-              <span className="text-xs text-[var(--foreground)]">Nefarious</span>
-            </div>
-          </div>
-
-          {/* Main Grid */}
-          <div className="grid grid-cols-5 md:grid-cols-10 lg:grid-cols-20 gap-1">
-            {/* Row 1 */}
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Genre</div>
-            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Flora</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Art</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Architecture</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Etiquette</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Body Adornment</div>
-            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Guilds</div>
-            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Timekeeping</div>
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Fossils</div>
-            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Figures of Speech</div>
-            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Alphabets</div>
-            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Tools</div>
-            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Political Events</div>
-            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Governments</div>
-            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Currencies</div>
-            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Water Systems</div>
-            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Gods</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Magical Creatures</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Spells</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Unique Abilities</div>
-
-            {/* Row 2 */}
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Tone</div>
-            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Behavior</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Music</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Fashion</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Taboos</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Morals</div>
-            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Hierarchies</div>
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Histories</div>
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Artifacts</div>
-            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Slang</div>
-            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Communication</div>
-            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Arms & Armor</div>
-            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">War</div>
-            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Businesses</div>
-            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Power Systems</div>
-            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Religions</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Alien Life</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">AI</div>
-            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Waste Systems</div>
-
-            {/* Row 3 */}
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">World Era</div>
-            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Ecosystems</div>
-            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Predation</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Poetry</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Sports</div>
-            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Rituals</div>
-            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Heraldry</div>
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Legends</div>
-            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Ruins</div>
-            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Propaganda</div>
-            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Future Tech</div>
-            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Medicine</div>
-            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Law</div>
-            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Resources</div>
-            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Transport</div>
-            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Schools</div>
-            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Sacred Texts</div>
-            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Mutations</div>
-            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Rare Goods</div>
-            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Agriculture</div>
-
-            {/* Row 4 - Environmental Elements */}
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Deserts</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Badlands</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Forests</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Rivers</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Mountains</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Fields</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Oceans</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Arctic</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Jungles</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Islands</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Aquatic</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Subterranean</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Volcanic</div>
-            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Swamps</div>
-            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Galaxies</div>
-            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Solar Systems</div>
-            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Stars</div>
-            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Planets</div>
-            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Moons</div>
-          </div>
-
-          {/* Narrative Components Box */}
-          <div className="mt-8 p-4 bg-gray-700 rounded-lg">
-            <h4 className="text-lg font-bold text-white mb-3">Narrative Components</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Plot</div>
-              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Characters</div>
-              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Conflict</div>
-              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Conceit</div>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-red-600 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Nefarious</span>
             </div>
           </div>
 
-          {/* Left Column - Core Elements */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
-            <div className="md:col-span-1 space-y-2">
-              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Maps</div>
-              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Timelines</div>
-              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Peoples</div>
-              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Lineages</div>
-              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Creatures</div>
+          {/* Main Grid - Organized by Category Like Periodic Table */}
+          <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2 mb-8">
+            {/* Row 1 - Cultural Elements (Green) */}
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Genre</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Art</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Architecture</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Etiquette</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Body Adornment</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Tone</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Music</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Fashion</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Taboos</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Morals</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Poetry</div>
+            <div className="bg-green-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Sports</div>
+
+            {/* Row 2 - Ecological Elements (Blue) */}
+            <div className="bg-blue-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Flora</div>
+            <div className="bg-blue-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Behavior</div>
+            <div className="bg-blue-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Ecosystems</div>
+            <div className="bg-blue-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Predation</div>
+            <div className="bg-blue-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Agriculture</div>
+            <div className="bg-blue-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Figures of Speech</div>
+            <div className="bg-blue-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Alphabets</div>
+            <div className="bg-blue-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Slang</div>
+            <div className="bg-blue-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Propaganda</div>
+            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Tools</div>
+            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Comms</div>
+            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Arms & Armor</div>
+
+            {/* Row 3 - Organizational Elements (Orange) */}
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Guilds</div>
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Timekeeping</div>
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Hierarchies</div>
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Heraldry</div>
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Schools</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Fossils</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Histories</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Artifacts</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Legends</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Ruins</div>
+            <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">World Era</div>
+            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Future Tech</div>
+
+            {/* Row 4 - Geopolitical Elements (Red) */}
+            <div className="bg-red-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Political Events</div>
+            <div className="bg-red-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Governments</div>
+            <div className="bg-red-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">War</div>
+            <div className="bg-red-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Law</div>
+            <div className="bg-yellow-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Currencies</div>
+            <div className="bg-yellow-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Businesses</div>
+            <div className="bg-yellow-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Resources</div>
+            <div className="bg-yellow-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Rare Goods</div>
+            <div className="bg-purple-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Water Systems</div>
+            <div className="bg-purple-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Power Systems</div>
+            <div className="bg-purple-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Transport</div>
+            <div className="bg-purple-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Waste Systems</div>
+
+            {/* Row 5 - Religious Elements (Pink) */}
+            <div className="bg-pink-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Gods</div>
+            <div className="bg-pink-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Religions</div>
+            <div className="bg-pink-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Sacred Texts</div>
+            <div className="bg-pink-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Rituals</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Magical Creatures</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Spells</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Unique Abilities</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Alien Life</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">AI</div>
+            <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Mutations</div>
+            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Medicine</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Deserts</div>
+
+            {/* Row 6 - Environmental Elements (Gray) */}
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Badlands</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Forests</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Rivers</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Mountains</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Fields</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Oceans</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Arctic</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Jungles</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Islands</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Aquatic</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Subterranean</div>
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Volcanic</div>
+
+            {/* Row 7 - Cosmic & Nefarious Elements */}
+            <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Swamps</div>
+            <div className="bg-gray-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Galaxies</div>
+            <div className="bg-gray-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Solar Systems</div>
+            <div className="bg-gray-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Stars</div>
+            <div className="bg-gray-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Planets</div>
+            <div className="bg-gray-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Moons</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Crime</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Cults</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Forbidden Magic</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Illicit Goods</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">System Failures</div>
+            <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Disease</div>
+          </div>
+
+          {/* Special Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Narrative Components Box */}
+            <div className="p-6 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border border-gray-600">
+              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl">📖</span>
+                Narrative Components
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Plot</div>
+                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Characters</div>
+                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Conflict</div>
+                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Conceit</div>
+              </div>
             </div>
-            <div className="md:col-span-5">
-              <p className="text-[var(--foreground)] leading-relaxed">
-                This table represents the fundamental building blocks of worldbuilding. Each element can be 
-                developed in detail to create rich, immersive fictional worlds. The color coding helps 
-                organize elements by category, making it easier to ensure comprehensive world development.
-              </p>
+
+            {/* Core Elements */}
+            <div className="p-6 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl border border-gray-500">
+              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-2xl">🗺️</span>
+                Core Elements
+              </h4>
+              <div className="grid grid-cols-1 gap-3">
+                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Maps</div>
+                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Timelines</div>
+                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Peoples</div>
+                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Lineages</div>
+                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Creatures</div>
+              </div>
             </div>
+          </div>
+
+          {/* Description */}
+          <div className="mt-8 p-6 bg-gradient-to-r from-[var(--accent)]/10 to-[var(--highlight)]/10 rounded-xl border border-[var(--accent)]/20">
+            <p className="text-[var(--foreground)] leading-relaxed text-center">
+              This table represents the fundamental building blocks of worldbuilding. Each element can be 
+              developed in detail to create rich, immersive fictional worlds. The color coding helps 
+              organize elements by category, making it easier to ensure comprehensive world development.
+              <br /><br />
+              <span className="font-semibold text-[var(--accent)]">Hover over elements to see them highlighted!</span>
+            </p>
           </div>
         </motion.div>
       </section>
