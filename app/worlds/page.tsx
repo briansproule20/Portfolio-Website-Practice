@@ -33,7 +33,7 @@ export default function Worldbuilding() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative h-[30vh] md:h-[35vh] flex items-center justify-center overflow-hidden pt-24"
+        className="relative h-[25vh] md:h-[30vh] flex items-center justify-center overflow-hidden pt-24"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--highlight)] to-[var(--background)] opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent opacity-70" />
@@ -52,14 +52,14 @@ export default function Worldbuilding() {
             transition={{ delay: 0.4 }}
             className="text-lg md:text-xl text-[var(--accent)] font-serif italic px-4"
           >
-            Exploring the art of creating entire worlds and universes.
+            Exploring the art of creating worlds and universes.
           </motion.p>
         </div>
       </motion.section>
 
       {/* Solar System Model */}
-      <section className="max-w-6xl mx-auto px-4 -mt-8">
-        <div className="relative w-full h-[1200px] md:h-[1400px] flex items-center justify-center overflow-hidden">
+      <section className="max-w-6xl mx-auto px-4 -mt-0">
+        <div className="relative w-full h-[800px] md:h-[900px] flex items-center justify-center overflow-hidden">
           {/* Central Red Star */}
           <motion.div
             initial={{ scale: 0 }}
