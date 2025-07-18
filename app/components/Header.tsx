@@ -52,6 +52,9 @@ export default function Header() {
               <Link href="/narrative" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Narrative
               </Link>
+              <Link href="/worlds" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Worlds
+              </Link>
               <Link href="/photos" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Photos
               </Link>
@@ -105,6 +108,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Narrative
+            </Link>
+            <Link
+              href="/worlds"
+              className="text-foreground hover:text-accent transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Worlds
             </Link>
             <Link
               href="/photos"
