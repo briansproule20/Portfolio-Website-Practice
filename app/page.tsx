@@ -9,7 +9,7 @@ import { getFeaturedPhotos, type Photo } from '../utils/photos';
 async function getRecentBooks() {
   try {
     // Use absolute URL for server-side fetches
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002';
     const fetchUrl = `${baseUrl}/api/reading`;
     console.log('FETCHING:', fetchUrl);
     const res = await fetch(fetchUrl, { cache: 'no-store' });

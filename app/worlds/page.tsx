@@ -333,6 +333,335 @@ export default function Worldbuilding() {
         </motion.div>
       </section>
 
+      {/* History of Worldbuilding Section */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.0 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl font-bold mb-4 text-[var(--foreground)]">A Brief History of Worldbuilding</h2>
+          <p className="text-lg text-[var(--accent)] max-w-3xl mx-auto">
+            From ancient myths to modern epics, worldbuilding has evolved through the work of visionary creators 
+            who dared to imagine entire universes from scratch.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* J.R.R. Tolkien */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 2.2 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">T</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">J.R.R. Tolkien</h3>
+                <p className="text-sm text-[var(--accent)]">The Father of Modern Fantasy</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Tolkien's Middle-earth set the gold standard for worldbuilding. He created complete languages (Elvish, Dwarvish), 
+              detailed maps, extensive genealogies, and a mythology spanning thousands of years. His work demonstrated that 
+              worldbuilding could be as complex and layered as real-world history.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> The Lord of the Rings trilogy showed how deep worldbuilding could create 
+              immersive experiences that felt authentic and lived-in.
+            </p>
+          </motion.div>
+
+          {/* C.S. Lewis */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 2.4 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">L</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">C.S. Lewis</h3>
+                <p className="text-sm text-[var(--accent)]">The Allegorical Worldbuilder</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Lewis's Narnia combined Christian allegory with rich fantasy elements. He created a world where 
+              talking animals, mythical creatures, and magical portals coexisted with deeper philosophical themes. 
+              His worldbuilding served both story and meaning.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> The Chronicles of Narnia proved that worldbuilding could carry profound 
+              themes while remaining accessible to all ages.
+            </p>
+          </motion.div>
+
+          {/* Frank Herbert */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 2.6 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-orange-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">H</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Frank Herbert</h3>
+                <p className="text-sm text-[var(--accent)]">The Ecological Worldbuilder</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Herbert's Dune universe revolutionized science fiction worldbuilding by focusing on ecology, 
+              politics, and religion. He created Arrakis as a fully realized desert planet with its own 
+              ecosystem, culture, and complex political systems.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> Dune showed how worldbuilding could explore real-world issues like 
+              environmentalism, resource scarcity, and political power through fictional worlds.
+            </p>
+          </motion.div>
+
+          {/* George Lucas */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 2.8 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">L</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">George Lucas</h3>
+                <p className="text-sm text-[var(--accent)]">The Cinematic Worldbuilder</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Lucas's Star Wars universe brought worldbuilding to the masses through film. He created a 
+              galaxy far, far away with diverse planets, species, cultures, and a rich mythology that 
+              expanded far beyond the original films.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> Star Wars demonstrated how worldbuilding could create cultural 
+              phenomena and inspire generations of creators across multiple media.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Worldbuilding Table of Elements */}
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.0 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl font-bold mb-4 text-[var(--foreground)]">Worldbuilding Table of Elements</h2>
+          <p className="text-lg text-[var(--accent)] max-w-3xl mx-auto">
+            A comprehensive guide to the fundamental elements that make up any fictional world, 
+            organized like a periodic table of worldbuilding components.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 3.2 }}
+          className="bg-[var(--card)] rounded-xl p-8 border-2 border-[var(--accent)] shadow-xl"
+        >
+          {/* Table Header */}
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-[var(--foreground)] mb-2">WORLDBUILDING TABLE OF ELEMENTS</h3>
+            <p className="text-[var(--accent)]">Essential components for creating immersive fictional worlds</p>
+          </div>
+
+          {/* Legend */}
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8 p-4 bg-[var(--background)] rounded-lg">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-white border border-gray-300 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">General</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-blue-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Ecological</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-green-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Cultural</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-orange-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Organizational</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-cyan-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Historical</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-blue-300 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Linguistic</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-indigo-300 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Technological</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-red-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Geopolitical</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-yellow-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Economic</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-purple-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Infrastructural</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-pink-200 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Religious</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-purple-400 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Fantastic</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-red-600 rounded"></div>
+              <span className="text-xs text-[var(--foreground)]">Nefarious</span>
+            </div>
+          </div>
+
+          {/* Main Grid */}
+          <div className="grid grid-cols-5 md:grid-cols-10 lg:grid-cols-20 gap-1">
+            {/* Row 1 */}
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Genre</div>
+            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Flora</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Art</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Architecture</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Etiquette</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Body Adornment</div>
+            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Guilds</div>
+            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Timekeeping</div>
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Fossils</div>
+            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Figures of Speech</div>
+            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Alphabets</div>
+            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Tools</div>
+            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Political Events</div>
+            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Governments</div>
+            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Currencies</div>
+            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Water Systems</div>
+            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Gods</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Magical Creatures</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Spells</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Unique Abilities</div>
+
+            {/* Row 2 */}
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Tone</div>
+            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Behavior</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Music</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Fashion</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Taboos</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Morals</div>
+            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Hierarchies</div>
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Histories</div>
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Artifacts</div>
+            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Slang</div>
+            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Communication</div>
+            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Arms & Armor</div>
+            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">War</div>
+            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Businesses</div>
+            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Power Systems</div>
+            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Religions</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Alien Life</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">AI</div>
+            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Waste Systems</div>
+
+            {/* Row 3 */}
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">World Era</div>
+            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Ecosystems</div>
+            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Predation</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Poetry</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Sports</div>
+            <div className="bg-green-200 p-2 rounded text-center text-xs font-semibold">Rituals</div>
+            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Heraldry</div>
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Legends</div>
+            <div className="bg-cyan-200 p-2 rounded text-center text-xs font-semibold">Ruins</div>
+            <div className="bg-blue-300 p-2 rounded text-center text-xs font-semibold">Propaganda</div>
+            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Future Tech</div>
+            <div className="bg-indigo-300 p-2 rounded text-center text-xs font-semibold">Medicine</div>
+            <div className="bg-red-200 p-2 rounded text-center text-xs font-semibold">Law</div>
+            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Resources</div>
+            <div className="bg-purple-200 p-2 rounded text-center text-xs font-semibold">Transport</div>
+            <div className="bg-orange-200 p-2 rounded text-center text-xs font-semibold">Schools</div>
+            <div className="bg-pink-200 p-2 rounded text-center text-xs font-semibold">Sacred Texts</div>
+            <div className="bg-purple-400 p-2 rounded text-center text-xs font-semibold">Mutations</div>
+            <div className="bg-yellow-200 p-2 rounded text-center text-xs font-semibold">Rare Goods</div>
+            <div className="bg-blue-200 p-2 rounded text-center text-xs font-semibold">Agriculture</div>
+
+            {/* Row 4 - Environmental Elements */}
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Deserts</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Badlands</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Forests</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Rivers</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Mountains</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Fields</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Oceans</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Arctic</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Jungles</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Islands</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Aquatic</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Subterranean</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Volcanic</div>
+            <div className="bg-gray-300 p-2 rounded text-center text-xs font-semibold">Swamps</div>
+            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Galaxies</div>
+            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Solar Systems</div>
+            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Stars</div>
+            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Planets</div>
+            <div className="bg-gray-600 p-2 rounded text-center text-xs font-semibold text-white">Moons</div>
+          </div>
+
+          {/* Narrative Components Box */}
+          <div className="mt-8 p-4 bg-gray-700 rounded-lg">
+            <h4 className="text-lg font-bold text-white mb-3">Narrative Components</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Plot</div>
+              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Characters</div>
+              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Conflict</div>
+              <div className="bg-gray-600 p-3 rounded text-center text-white text-sm font-semibold">Conceit</div>
+            </div>
+          </div>
+
+          {/* Left Column - Core Elements */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
+            <div className="md:col-span-1 space-y-2">
+              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Maps</div>
+              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Timelines</div>
+              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Peoples</div>
+              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Lineages</div>
+              <div className="bg-gray-400 p-3 rounded text-center text-white text-sm font-semibold">Creatures</div>
+            </div>
+            <div className="md:col-span-5">
+              <p className="text-[var(--foreground)] leading-relaxed">
+                This table represents the fundamental building blocks of worldbuilding. Each element can be 
+                developed in detail to create rich, immersive fictional worlds. The color coding helps 
+                organize elements by category, making it easier to ensure comprehensive world development.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       <style jsx>{`
         @keyframes orbit {
           from {

@@ -863,18 +863,6 @@ const detailedTerms: DetailedTerms = {
       { title: 'Poetic Rhythm', url: 'https://www.poetryfoundation.org/learn/glossary-terms/caesura' }
     ]
   },
-  'Characterization': {
-    definition: 'The way an author reveals and develops a character\'s personality, traits, and qualities through description, dialogue, actions, and thoughts.',
-    examples: [
-      'Direct characterization: "John was a tall, nervous man who always fidgeted."',
-      'Indirect characterization: John\'s actions show he\'s generous when he gives his lunch to a homeless person.',
-      'Through dialogue: "I can\'t stand being late!" reveals a character\'s punctuality obsession.'
-    ],
-    resources: [
-      { title: 'Character Development', url: 'https://literarydevices.net/characterization/' },
-      { title: 'Writing Characters', url: 'https://www.writersdigest.com/write-better-fiction' }
-    ]
-  },
   'Chronology': {
     definition: 'The arrangement of events in the order they occurred in time, or the study of time order in narrative structure.',
     examples: [
@@ -1029,18 +1017,6 @@ const detailedTerms: DetailedTerms = {
     resources: [
       { title: 'Dystopian Literature', url: 'https://literarydevices.net/dystopia/' },
       { title: 'Utopia vs Dystopia', url: 'https://www.britannica.com/art/dystopia' }
-    ]
-  },
-  'Elegy': {
-    definition: 'A mournful, melancholic poem, especially a funeral song or a lament for the dead.',
-    examples: [
-      '"Elegy Written in a Country Churchyard" by Thomas Gray',
-      '"In Memory of W.B. Yeats" by W.H. Auden',
-      '"When Lilacs Last in the Dooryard Bloom\'d" by Walt Whitman'
-    ],
-    resources: [
-      { title: 'Elegy Examples', url: 'https://www.poetryfoundation.org/learn/glossary-terms/elegy' },
-      { title: 'Poetry Forms', url: 'https://www.poets.org/poetsorg/glossary' }
     ]
   },
   'Epigram': {
