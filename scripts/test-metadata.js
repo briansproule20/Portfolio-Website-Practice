@@ -4,14 +4,14 @@ const https = require('https');
 const http = require('http');
 
 const urls = [
-  'http://localhost:3000',
-  'http://localhost:3000/narrative',
-  'http://localhost:3000/worlds',
-  'http://localhost:3000/about',
-  'http://localhost:3000/photos',
-  'http://localhost:3000/writing',
-  'http://localhost:3000/tunes',
-  'http://localhost:3000/movies'
+  'http://localhost:3002',
+  'http://localhost:3002/narrative',
+  'http://localhost:3002/worlds',
+  'http://localhost:3002/about',
+  'http://localhost:3002/photos',
+  'http://localhost:3002/writing',
+  'http://localhost:3002/tunes',
+  'http://localhost:3002/movies'
 ];
 
 function extractMetaTags(html) {

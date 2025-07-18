@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/onering.png",
+        url: "https://briansproule.com/onering.png",
         width: 1200,
         height: 630,
         alt: "Narrative Theory - Literary Analysis Framework",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Narrative Theory | Brian Sproule",
     description: "Comprehensive guide to narrative theory featuring advanced concepts from Genette, Bakhtin, Booth, Barthes, Greimas, Todorov, and cognitive narratology.",
-    images: ["/onering.png"],
+    images: ["https://briansproule.com/onering.png"],
   },
   alternates: {
     canonical: "https://briansproule.com/narrative",

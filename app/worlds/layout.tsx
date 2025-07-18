@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/elderscroll.png",
+        url: "https://briansproule.com/elderscroll.png",
         width: 1200,
         height: 630,
         alt: "Worldbuilding - Creative Universe Design",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Worldbuilding | Brian Sproule",
     description: "Interactive worldbuilding toolkit featuring planetary systems, elemental magic, and creative universe design.",
-    images: ["/elderscroll.png"],
+    images: ["https://briansproule.com/elderscroll.png"],
   },
   alternates: {
     canonical: "https://briansproule.com/worlds",

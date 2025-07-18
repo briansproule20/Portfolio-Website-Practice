@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/fish.png",
+        url: "https://briansproule.com/fish.png",
         width: 1200,
         height: 630,
         alt: "About Brian Sproule - Digital Publisher & Developer",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About | Brian Sproule",
     description: "Learn about Brian Sproule - digital publisher, web developer, and creative technologist.",
-    images: ["/fish.png"],
+    images: ["https://briansproule.com/fish.png"],
   },
   alternates: {
     canonical: "https://briansproule.com/about",

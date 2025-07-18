@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/images/zombies-blackops.jpg",
+        url: "https://briansproule.com/images/zombies-blackops.jpg",
         width: 1200,
         height: 630,
         alt: "Film Collection - Movie Recommendations",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Movies | Brian Sproule",
     description: "Film collection and movie recommendations. Explore my favorite films and cinematic experiences.",
-    images: ["/images/zombies-blackops.jpg"],
+    images: ["https://briansproule.com/images/zombies-blackops.jpg"],
   },
   alternates: {
     canonical: "https://briansproule.com/movies",

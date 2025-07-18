@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/elderscroll.png",
+        url: "https://briansproule.com/elderscroll.png",
         width: 1200,
         height: 630,
         alt: "Brian Sproule - Digital Publisher & Developer",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     creator: "@briansproule",
-    images: ["/elderscroll.png"],
+    images: ["https://briansproule.com/elderscroll.png"],
   },
   alternates: {
     canonical: "https://briansproule.com",

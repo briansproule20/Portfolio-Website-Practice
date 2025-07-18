@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     siteName: "Brian Sproule Portfolio",
     images: [
       {
-        url: "/writing/dusk.png",
+        url: "https://briansproule.com/writing/dusk.png",
         width: 1200,
         height: 630,
         alt: "Creative Writing Portfolio - Stories and Essays",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Writing | Brian Sproule",
     description: "Creative writing portfolio featuring short stories, essays, and literary works.",
-    images: ["/writing/dusk.png"],
+    images: ["https://briansproule.com/writing/dusk.png"],
   },
   alternates: {
     canonical: "https://briansproule.com/writing",
