@@ -348,7 +348,7 @@ export default function Worldbuilding() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* J.R.R. Tolkien */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -454,6 +454,146 @@ export default function Worldbuilding() {
             <p className="text-[var(--foreground)] leading-relaxed">
               <strong>Legacy:</strong> Star Wars demonstrated how worldbuilding could create cultural 
               phenomena and inspire generations of creators across multiple media.
+            </p>
+          </motion.div>
+
+          {/* J.K. Rowling */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.0 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">R</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">J.K. Rowling</h3>
+                <p className="text-sm text-[var(--accent)]">The Modern Fantasy Pioneer</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Rowling's Wizarding World created a magical society hidden within our own reality. She built 
+              an intricate system of magic, education, government, and culture that felt both fantastical 
+              and believably bureaucratic.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> Harry Potter showed how worldbuilding could create a sense of wonder 
+              while addressing real-world themes of prejudice, power, and coming of age.
+            </p>
+          </motion.div>
+
+          {/* Ursula K. Le Guin */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.2 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">L</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Ursula K. Le Guin</h3>
+                <p className="text-sm text-[var(--accent)]">The Anthropological Worldbuilder</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Le Guin's Earthsea and Hainish universes explored cultural anthropology through fiction. She 
+              created societies that challenged gender norms, explored alternative social structures, and 
+              examined how environment shapes culture.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> Her work demonstrated how worldbuilding could be a tool for social 
+              commentary and philosophical exploration of human nature.
+            </p>
+          </motion.div>
+
+          {/* Octavia Butler */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.4 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">B</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Octavia Butler</h3>
+                <p className="text-sm text-[var(--accent)]">The Afrofuturist Visionary</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Butler's Parable and Patternist series created worlds that explored power dynamics, 
+              biological evolution, and social change. Her short stories like "Bloodchild" and "Speech Sounds" 
+              created intimate yet expansive worlds that examined human relationships and survival in alien environments. 
+              Afrofuturism, which she pioneered, combines African diaspora culture with science fiction to imagine 
+              alternative futures and realities.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> Butler pioneered Afrofuturism and showed how worldbuilding could 
+              address issues of race, gender, and power while imagining radically different futures.
+            </p>
+          </motion.div>
+
+          {/* Todd Howard & Bethesda */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.6 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">B</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Todd Howard & Bethesda</h3>
+                <p className="text-sm text-[var(--accent)]">The Interactive Worldbuilders</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Howard and Bethesda revolutionized worldbuilding through interactive media. Their Elder Scrolls, 
+              Fallout, and Starfield series created vast, explorable worlds where every location tells a story, every 
+              object has history, and players become part of the world's ongoing narrative. Their environmental 
+              storytelling approach—where every detail contributes to lore—has influenced countless developers.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> They proved that worldbuilding could be participatory, allowing 
+              players to discover and shape stories within meticulously crafted universes.
+            </p>
+          </motion.div>
+
+          {/* Ubisoft */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 3.8 }}
+            className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">U</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Ubisoft</h3>
+                <p className="text-sm text-[var(--accent)]">The Historical Worldbuilders</p>
+              </div>
+            </div>
+            <p className="text-[var(--foreground)] leading-relaxed mb-4">
+              Ubisoft's Assassin's Creed series has redefined historical worldbuilding in gaming. Each 
+              installment painstakingly recreates historical periods with architectural accuracy, cultural 
+              authenticity, and immersive detail that makes players feel they're truly walking through 
+              Renaissance Florence, Ancient Egypt, or Viking-era England.
+            </p>
+            <p className="text-[var(--foreground)] leading-relaxed">
+              <strong>Legacy:</strong> They've shown how worldbuilding can serve as both entertainment 
+              and education, bringing history to life through interactive experiences that respect 
+              historical accuracy while maintaining engaging gameplay.
             </p>
           </motion.div>
         </div>
