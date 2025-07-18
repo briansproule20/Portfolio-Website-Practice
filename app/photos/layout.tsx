@@ -1,35 +1,50 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Photos | Brian Sproule",
-  description: "Photography portfolio showcasing travel, nature, and life moments. Explore a collection of personal photographs capturing memories and experiences.",
-  keywords: ["photography", "photos", "travel", "nature", "portfolio", "memories"],
+  title: "Brian Sproule | Writer, Publisher, Designer",
+  description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+  keywords: ["digital publishing", "web development", "narrative theory", "creative technology", "portfolio", "writer", "designer"],
   authors: [{ name: "Brian Sproule" }],
+  creator: "Brian Sproule",
+  publisher: "Brian Sproule",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: "Photos | Brian Sproule",
-    description: "Photography portfolio showcasing travel, nature, and life moments. Explore a collection of personal photographs capturing memories and experiences.",
-    url: "https://briansproule.com/photos",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.briansproule.com",
     siteName: "Brian Sproule Portfolio",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://www.briansproule.com/photos/boatday.jpeg",
+        url: "https://www.briansproule.com/fish.png",
         width: 1200,
         height: 630,
-        alt: "Photography Portfolio - Travel and Life Moments",
-        type: "image/jpeg",
+        alt: "Brian Sproule - Digital Publisher & Developer",
+        type: "image/png",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photos | Brian Sproule",
-    description: "Photography portfolio showcasing travel, nature, and life moments.",
-    images: ["https://briansproule.com/photos/boatday.jpeg"],
+    site: "@briansproule",
+    creator: "@briansproule",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+    images: ["https://www.briansproule.com/fish.png"],
   },
   alternates: {
-    canonical: "https://briansproule.com/photos",
+    canonical: "https://www.briansproule.com",
   },
 };
 

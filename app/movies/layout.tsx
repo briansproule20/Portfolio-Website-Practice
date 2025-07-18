@@ -1,35 +1,50 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Movies | Brian Sproule",
-  description: "Film collection and movie recommendations. Explore my favorite films, movie reviews, and cinematic experiences across different genres and eras.",
-  keywords: ["movies", "films", "cinema", "movie reviews", "favorite films", "film collection"],
+  title: "Brian Sproule | Writer, Publisher, Designer",
+  description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+  keywords: ["digital publishing", "web development", "narrative theory", "creative technology", "portfolio", "writer", "designer"],
   authors: [{ name: "Brian Sproule" }],
+  creator: "Brian Sproule",
+  publisher: "Brian Sproule",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: "Movies | Brian Sproule",
-    description: "Film collection and movie recommendations. Explore my favorite films, movie reviews, and cinematic experiences across different genres and eras.",
-    url: "https://briansproule.com/movies",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.briansproule.com",
     siteName: "Brian Sproule Portfolio",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://www.briansproule.com/images/zombies-blackops.jpg",
+        url: "https://www.briansproule.com/fish.png",
         width: 1200,
         height: 630,
-        alt: "Film Collection - Movie Recommendations",
-        type: "image/jpeg",
+        alt: "Brian Sproule - Digital Publisher & Developer",
+        type: "image/png",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Movies | Brian Sproule",
-    description: "Film collection and movie recommendations. Explore my favorite films and cinematic experiences.",
-    images: ["https://briansproule.com/images/zombies-blackops.jpg"],
+    site: "@briansproule",
+    creator: "@briansproule",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+    images: ["https://www.briansproule.com/fish.png"],
   },
   alternates: {
-    canonical: "https://briansproule.com/movies",
+    canonical: "https://www.briansproule.com",
   },
 };
 
