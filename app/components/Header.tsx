@@ -61,6 +61,9 @@ export default function Header() {
               <Link href="/tunes" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Tunes
               </Link>
+              <Link href="/worlds" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                Worlds
+              </Link>
               <Link href="/writing" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Writing
               </Link>
@@ -123,6 +126,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Tunes
+            </Link>
+            <Link
+              href="/worlds"
+              className="text-foreground hover:text-accent transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Worlds
             </Link>
             <Link
               href="/writing"
