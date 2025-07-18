@@ -540,6 +540,14 @@ export default function Worldbuilding() {
               <div className="w-5 h-5 bg-red-600 rounded shadow-sm"></div>
               <span className="text-sm font-medium text-[var(--foreground)]">Nefarious</span>
             </div>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-gray-400 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Environmental</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-5 bg-gray-600 rounded shadow-sm"></div>
+              <span className="text-sm font-medium text-[var(--foreground)]">Cosmic</span>
+            </div>
           </div>
 
           {/* Main Grid - Organized by Category Like Periodic Table */}
@@ -578,6 +586,7 @@ export default function Worldbuilding() {
             <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Hierarchies</div>
             <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Heraldry</div>
             <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Schools</div>
+            <div className="bg-orange-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Medicine</div>
             <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Fossils</div>
             <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Histories</div>
             <div className="bg-cyan-300 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Artifacts</div>
@@ -611,7 +620,6 @@ export default function Worldbuilding() {
             <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Alien Life</div>
             <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">AI</div>
             <div className="bg-purple-500 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Mutations</div>
-            <div className="bg-indigo-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Medicine</div>
             <div className="bg-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Deserts</div>
 
             {/* Row 6 - Environmental Elements (Gray) */}
@@ -643,35 +651,14 @@ export default function Worldbuilding() {
             <div className="bg-red-600 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-white shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Disease</div>
           </div>
 
-          {/* Special Sections */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Narrative Components Box */}
-            <div className="p-6 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl border border-gray-600">
-              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-2xl">📖</span>
-                Narrative Components
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Plot</div>
-                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Characters</div>
-                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Conflict</div>
-                <div className="bg-gray-600 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-500 transition-colors cursor-pointer">Conceit</div>
-              </div>
-            </div>
-
-            {/* Core Elements */}
-            <div className="p-6 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl border border-gray-500">
-              <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-2xl">🗺️</span>
-                Core Elements
-              </h4>
-              <div className="grid grid-cols-1 gap-3">
-                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Maps</div>
-                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Timelines</div>
-                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Peoples</div>
-                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Lineages</div>
-                <div className="bg-gray-500 p-4 rounded-lg text-center text-white text-base font-semibold hover:bg-gray-400 transition-colors cursor-pointer">Creatures</div>
-              </div>
+          {/* Core Elements - Bottom Row */}
+          <div className="mt-8">
+            <div className="grid grid-cols-5 gap-2">
+              <div className="bg-white border-2 border-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Maps</div>
+              <div className="bg-white border-2 border-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Timelines</div>
+              <div className="bg-white border-2 border-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Peoples</div>
+              <div className="bg-white border-2 border-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Lineages</div>
+              <div className="bg-white border-2 border-gray-400 p-3 rounded-lg text-center text-xs md:text-sm font-semibold text-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer leading-tight min-h-[3rem] flex items-center justify-center">Creatures</div>
             </div>
           </div>
 
@@ -682,7 +669,7 @@ export default function Worldbuilding() {
               developed in detail to create rich, immersive fictional worlds. The color coding helps 
               organize elements by category, making it easier to ensure comprehensive world development.
               <br /><br />
-              <span className="font-semibold text-[var(--accent)]">Hover over elements to see them highlighted!</span>
+              <span className="font-semibold text-[var(--accent)]">Inspired by the periodic table of Worldbuilding on Reddit!</span>
             </p>
           </div>
         </motion.div>
