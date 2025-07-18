@@ -2419,40 +2419,563 @@ export default function NarrativeTheory() {
             {/* Advanced Narrative Theory */}
             <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
               <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">Advanced Narrative Theory</h3>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Narratological Frameworks</h4>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Gérard Genette's Categories</div>
-                      <div className="text-sm text-[var(--accent)]">Order, Duration, Frequency, Mood, Voice</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Mikhail Bakhtin's Dialogism</div>
-                      <div className="text-sm text-[var(--accent)]">Polyphony, Heteroglossia, Chronotope</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Wayne Booth's Rhetoric</div>
-                      <div className="text-sm text-[var(--accent)]">Implied Author, Unreliable Narrator</div>
-                    </div>
+              
+              {/* Gérard Genette Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Gérard Genette's Narratological Categories</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Gérard Genette</strong> (1930-2018) was a French literary theorist who revolutionized narrative theory with his systematic analysis of narrative discourse. In his seminal work <em>Narrative Discourse</em> (1972), Genette developed a comprehensive framework for analyzing how stories are told, introducing five key categories that continue to influence narratological studies today.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Order (Ordre)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The relationship between the chronological order of events and their presentation in the narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Analepsis:</strong> Flashback - presenting events that occurred before the current point</li>
+                      <li>• <strong>Prolepsis:</strong> Flashforward - presenting events that will occur later</li>
+                      <li>• <strong>Ellipsis:</strong> Omission of events from the narrative</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Duration (Durée)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The relationship between the time events take to occur and the space devoted to them in the narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Scene:</strong> Equal time - narrative time equals story time</li>
+                      <li>• <strong>Summary:</strong> Narrative time shorter than story time</li>
+                      <li>• <strong>Pause:</strong> Narrative time longer than story time (description)</li>
+                      <li>• <strong>Ellipsis:</strong> No narrative time for story events</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Frequency (Fréquence)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The relationship between how many times an event occurs in the story and how many times it is narrated</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Singulative:</strong> Event occurs once, narrated once</li>
+                      <li>• <strong>Repetitive:</strong> Event occurs once, narrated multiple times</li>
+                      <li>• <strong>Iterative:</strong> Event occurs multiple times, narrated once</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Mood (Mode)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The degree of mediation between the narrator and the story</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Distance:</strong> How close the narrator is to the events</li>
+                      <li>• <strong>Focalization:</strong> The perspective through which events are perceived</li>
+                      <li>• <strong>Internal/External:</strong> Whether the focalizer is a character or not</li>
+                    </ul>
                   </div>
                 </div>
+              </div>
 
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Postmodern Narratology</h4>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Metafiction</div>
-                      <div className="text-sm text-[var(--accent)]">Self-reflexive narrative techniques</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Intertextuality</div>
-                      <div className="text-sm text-[var(--accent)]">Textual relationships and references</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Fragmentation</div>
-                      <div className="text-sm text-[var(--accent)]">Disrupted linear narrative</div>
-                    </div>
+              {/* Mikhail Bakhtin Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Mikhail Bakhtin's Dialogism</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Mikhail Bakhtin</strong> (1895-1975) was a Russian philosopher and literary theorist whose work on dialogism, polyphony, and the novel fundamentally changed how we understand narrative discourse. His concepts of heteroglossia and the chronotope provide crucial tools for analyzing the complex interplay of voices and temporal-spatial relationships in narrative texts.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Polyphony</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Multiple independent voices in a text, each with equal authority</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Dostoevsky's Novels:</strong> Each character has their own "truth"</li>
+                      <li>• <strong>Democratic Discourse:</strong> No single authoritative voice</li>
+                      <li>• <strong>Contradictory Perspectives:</strong> Multiple viewpoints coexist</li>
+                      <li>• <strong>Unfinalizability:</strong> No final resolution of competing voices</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Heteroglossia</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The coexistence of different languages, dialects, and speech types</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Social Languages:</strong> Different class, profession, age groups</li>
+                      <li>• <strong>Generic Languages:</strong> Different literary forms and styles</li>
+                      <li>• <strong>Centripetal vs Centrifugal:</strong> Unifying vs. diversifying forces</li>
+                      <li>• <strong>Dialogic Tension:</strong> Conflict between different speech types</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Chronotope</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The intrinsic connectedness of temporal and spatial relationships</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Road Chronotope:</strong> Journey as narrative structure</li>
+                      <li>• <strong>Castle Chronotope:</strong> Enclosed space with specific time</li>
+                      <li>• <strong>Threshold Chronotope:</strong> Moment of crisis and decision</li>
+                      <li>• <strong>Salon Chronotope:</strong> Social space for intellectual discourse</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Carnivalesque</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The temporary suspension of hierarchical order and social norms</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Grotesque Realism:</strong> Celebration of the body and material life</li>
+                      <li>• <strong>Social Inversion:</strong> Temporary reversal of power structures</li>
+                      <li>• <strong>Laughter:</strong> Subversive force against authority</li>
+                      <li>• <strong>Regeneration:</strong> Renewal through chaos and disorder</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Wayne Booth Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Wayne Booth's Rhetoric of Fiction</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Wayne C. Booth</strong> (1921-2005) was an American literary critic who revolutionized our understanding of narrative rhetoric. His work on the implied author, unreliable narrator, and the ethical dimensions of narrative technique established crucial concepts for analyzing how narratives persuade and affect readers.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Implied Author</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The author's "second self" as reconstructed from the text</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Textual Construction:</strong> Reader's inference from the work</li>
+                      <li>• <strong>Ethical Stance:</strong> Moral position revealed through narrative</li>
+                      <li>• <strong>Narrative Choices:</strong> Selection and arrangement of material</li>
+                      <li>• <strong>Authorial Distance:</strong> Separation from narrator and characters</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Unreliable Narrator</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">A narrator whose credibility is compromised</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Moral Unreliability:</strong> Narrator's values are suspect</li>
+                      <li>• <strong>Intellectual Unreliability:</strong> Narrator's understanding is limited</li>
+                      <li>• <strong>Factual Unreliability:</strong> Narrator's account is inaccurate</li>
+                      <li>• <strong>Emotional Unreliability:</strong> Narrator's emotional state affects perception</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Distance</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The degree of separation between narrator and events</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Temporal Distance:</strong> Time between events and narration</li>
+                      <li>• <strong>Physical Distance:</strong> Spatial relationship to events</li>
+                      <li>• <strong>Intellectual Distance:</strong> Understanding of events</li>
+                      <li>• <strong>Emotional Distance:</strong> Emotional involvement in events</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Ethics</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The moral implications of narrative technique</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Authorial Responsibility:</strong> Ethical consequences of narrative choices</li>
+                      <li>• <strong>Reader Response:</strong> How narrative affects reader's moral understanding</li>
+                      <li>• <strong>Narrative Coherence:</strong> Ethical consistency in storytelling</li>
+                      <li>• <strong>Rhetorical Effect:</strong> How narrative persuades ethically</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Roland Barthes Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Roland Barthes' Structural Analysis</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Roland Barthes</strong> (1915-1980) was a French literary theorist, philosopher, and semiotician whose work revolutionized our understanding of narrative structure and meaning. His contributions to narratology include the distinction between "readerly" and "writerly" texts, the concept of the "death of the author," and structural analysis of narrative codes.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Codes</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The five codes that structure narrative meaning</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Hermeneutic Code:</strong> Questions and answers that create suspense</li>
+                      <li>• <strong>Proairetic Code:</strong> Actions and their consequences</li>
+                      <li>• <strong>Semantic Code:</strong> Connotative meanings and themes</li>
+                      <li>• <strong>Symbolic Code:</strong> Binary oppositions and symbolic structures</li>
+                      <li>• <strong>Cultural Code:</strong> Shared cultural knowledge and references</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Readerly vs Writerly Texts</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Two types of textual engagement</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Readerly (Lisible):</strong> Traditional, closed texts that confirm expectations</li>
+                      <li>• <strong>Writerly (Scriptible):</strong> Open texts that require active reader participation</li>
+                      <li>• <strong>Pleasure vs Jouissance:</strong> Different types of reading pleasure</li>
+                      <li>• <strong>Textual Production:</strong> Reader as co-producer of meaning</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Death of the Author</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The separation of text from authorial intention</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Authorial Absence:</strong> Author's intentions are irrelevant to meaning</li>
+                      <li>• <strong>Reader's Role:</strong> Reader creates meaning through interpretation</li>
+                      <li>• <strong>Textual Autonomy:</strong> Text exists independently of its creator</li>
+                      <li>• <strong>Intertextuality:</strong> Texts refer to other texts, not authors</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Structural Analysis</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Breaking down narrative into structural units</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Lexias:</strong> Smallest units of reading</li>
+                      <li>• <strong>Functions:</strong> Narrative units with specific purposes</li>
+                      <li>• <strong>Indices:</strong> Units that indicate character or atmosphere</li>
+                      <li>• <strong>Catalyzers:</strong> Units that fill narrative space</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Algirdas Julien Greimas Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Algirdas Julien Greimas' Semiotic Square</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Algirdas Julien Greimas</strong> (1917-1992) was a Lithuanian-French semiotician who developed the semiotic square and actantial model, providing powerful tools for analyzing narrative structure and meaning. His work extends structuralist analysis into deeper semantic and logical relationships.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Semiotic Square</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Logical structure of semantic oppositions</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Contradiction:</strong> Direct opposition (A vs non-A)</li>
+                      <li>• <strong>Contrariety:</strong> Contrary terms (A vs B)</li>
+                      <li>• <strong>Implication:</strong> Logical relationships between terms</li>
+                      <li>• <strong>Presupposition:</strong> Assumed relationships</li>
+                      <li>• <strong>Dynamic Trajectories:</strong> Movement between positions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Actantial Model</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Six fundamental roles in narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Subject:</strong> Protagonist seeking the object</li>
+                      <li>• <strong>Object:</strong> What the subject desires</li>
+                      <li>• <strong>Sender:</strong> Initiates the quest</li>
+                      <li>• <strong>Receiver:</strong> Benefits from the quest</li>
+                      <li>• <strong>Helper:</strong> Aids the subject</li>
+                      <li>• <strong>Opponent:</strong> Hinders the subject</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Programs</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Sequences of actions in narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Manipulation:</strong> Sender influences subject</li>
+                      <li>• <strong>Competence:</strong> Subject acquires abilities</li>
+                      <li>• <strong>Performance:</strong> Subject accomplishes action</li>
+                      <li>• <strong>Sanction:</strong> Success or failure is evaluated</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Semantic Analysis</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Deep structure of meaning</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Isotopies:</strong> Semantic consistency in text</li>
+                      <li>• <strong>Classemes:</strong> Semantic categories</li>
+                      <li>• <strong>Semes:</strong> Minimal units of meaning</li>
+                      <li>• <strong>Semantic Fields:</strong> Related meanings</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tzvetan Todorov Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Tzvetan Todorov's Narrative Grammar</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Tzvetan Todorov</strong> (1939-2017) was a Bulgarian-French literary theorist who developed a grammatical approach to narrative structure. His work on narrative transformation and the fantastic genre provides crucial tools for understanding how narratives change and develop over time.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Grammar</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Linguistic structure of narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Propositions:</strong> Basic narrative units</li>
+                      <li>• <strong>Sequences:</strong> Groups of related propositions</li>
+                      <li>• <strong>Transformations:</strong> Changes in narrative state</li>
+                      <li>• <strong>Equilibrium:</strong> Stable narrative states</li>
+                      <li>• <strong>Disequilibrium:</strong> Unstable narrative states</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">The Fantastic</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Genre defined by reader hesitation</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Hesitation:</strong> Reader's uncertainty about supernatural</li>
+                      <li>• <strong>Uncanny:</strong> Supernatural explained rationally</li>
+                      <li>• <strong>Marvelous:</strong> Supernatural accepted as real</li>
+                      <li>• <strong>Poetic:</strong> Symbolic interpretation</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Transformation</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How narratives change over time</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Modification:</strong> Change in character attributes</li>
+                      <li>• <strong>Transformation:</strong> Change in character identity</li>
+                      <li>• <strong>Deterioration:</strong> Negative character change</li>
+                      <li>• <strong>Improvement:</strong> Positive character change</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Typology</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Classification of narrative types</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Mythological:</strong> Supernatural explanations</li>
+                      <li>• <strong>Gnoseological:</strong> Knowledge-seeking narratives</li>
+                      <li>• <strong>Ideological:</strong> Value-based narratives</li>
+                      <li>• <strong>Novelistic:</strong> Realistic narratives</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Four Perspectives Framework */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Four Perspectives on Narrative Theory</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  This framework presents four distinct approaches to narrative analysis, each with its own theoretical foundations and methodological tools. The perspectives are applied to specific case studies to demonstrate their analytical power and reveal different aspects of narrative meaning.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Rhetorical Perspective (Phelan & Rabinowitz)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Case Study: <em>Huckleberry Finn</em></p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Authorial Audience:</strong> Ideal reader constructed by the text</li>
+                      <li>• <strong>Narrative Progression:</strong> How stories move forward</li>
+                      <li>• <strong>Narrative Judgments:</strong> Ethical and aesthetic evaluations</li>
+                      <li>• <strong>Rhetorical Purpose:</strong> Author's communicative goals</li>
+                      <li>• <strong>Reader Response:</strong> How actual readers respond</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Feminist Perspective (Warhol)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Case Study: <em>Persuasion</em></p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Gendered Narration:</strong> How gender affects storytelling</li>
+                      <li>• <strong>Female Agency:</strong> Women's narrative power</li>
+                      <li>• <strong>Domestic Space:</strong> Private sphere as narrative setting</li>
+                      <li>• <strong>Marriage Plot:</strong> Romance as narrative structure</li>
+                      <li>• <strong>Social Constraints:</strong> Gender roles in narrative</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Mind-Oriented Perspective (Herman)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Case Study: <em>On Chesil Beach</em></p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Storyworld Construction:</strong> Mental models of narrative worlds</li>
+                      <li>• <strong>Character Consciousness:</strong> Internal mental states</li>
+                      <li>• <strong>Cognitive Processing:</strong> How readers understand stories</li>
+                      <li>• <strong>Mental Simulation:</strong> Empathetic engagement</li>
+                      <li>• <strong>Memory Integration:</strong> How stories are remembered</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Unnatural Perspective (Richardson)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Case Study: <em>Midnight's Children</em></p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Impossible Narration:</strong> Narrators who cannot exist</li>
+                      <li>• <strong>Anti-mimetic Elements:</strong> Non-realistic narrative features</li>
+                      <li>• <strong>Experimental Forms:</strong> Innovative narrative techniques</li>
+                      <li>• <strong>Postmodern Play:</strong> Self-conscious narrative games</li>
+                      <li>• <strong>Reader Disorientation:</strong> Challenging reader expectations</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Core Concepts Across Perspectives */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Core Concepts Across Perspectives</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Each perspective addresses the same fundamental concepts but with different theoretical frameworks and analytical tools, revealing the multifaceted nature of narrative meaning.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Authors, Narrators, Narration</h5>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Rhetorical:</strong> Author's communicative purpose and audience</li>
+                      <li>• <strong>Feminist:</strong> Gendered voice and authority</li>
+                      <li>• <strong>Mind-Oriented:</strong> Mental representation of narrators</li>
+                      <li>• <strong>Unnatural:</strong> Impossible or anti-mimetic narrators</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Plot, Time, and Progression</h5>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Rhetorical:</strong> Narrative movement and reader engagement</li>
+                      <li>• <strong>Feminist:</strong> Gendered temporal structures</li>
+                      <li>• <strong>Mind-Oriented:</strong> Cognitive processing of time</li>
+                      <li>• <strong>Unnatural:</strong> Impossible temporal arrangements</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Space, Setting, and Perspective</h5>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Rhetorical:</strong> Spatial organization and reader positioning</li>
+                      <li>• <strong>Feminist:</strong> Gendered spaces and domestic settings</li>
+                      <li>• <strong>Mind-Oriented:</strong> Mental mapping of storyworlds</li>
+                      <li>• <strong>Unnatural:</strong> Impossible or contradictory spaces</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Character and Reception</h5>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Rhetorical:</strong> Character construction and reader judgment</li>
+                      <li>• <strong>Feminist:</strong> Gender performance and social roles</li>
+                      <li>• <strong>Mind-Oriented:</strong> Character consciousness and empathy</li>
+                      <li>• <strong>Unnatural:</strong> Impossible or contradictory characters</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fabula and Syuzhet */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Fabula and Syuzhet</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Fabula</strong> and <strong>Syuzhet</strong> are fundamental concepts in Russian Formalist narratology, introduced by Viktor Shklovsky and developed by other Formalist critics. These terms distinguish between the raw story material and its artistic presentation, providing crucial tools for analyzing narrative structure and artistic technique.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Fabula (Story)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The raw chronological sequence of events</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Chronological Order:</strong> Events as they "actually" happened</li>
+                      <li>• <strong>Raw Material:</strong> Unprocessed story content</li>
+                      <li>• <strong>Abstract Level:</strong> Logical sequence of actions</li>
+                      <li>• <strong>Reconstructible:</strong> Can be pieced together from narrative</li>
+                      <li>• <strong>Universal:</strong> Same fabula can be told in many ways</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Syuzhet (Plot)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The artistic arrangement and presentation of events</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Artistic Order:</strong> Events as they are presented</li>
+                      <li>• <strong>Narrative Technique:</strong> How the story is told</li>
+                      <li>• <strong>Concrete Level:</strong> Actual textual presentation</li>
+                      <li>• <strong>Defamiliarization:</strong> Making familiar strange</li>
+                      <li>• <strong>Unique:</strong> Each telling creates different syuzhet</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Relationship Between Fabula and Syuzhet</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How story and plot interact</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Transformation:</strong> Fabula becomes syuzhet through artistic choices</li>
+                      <li>• <strong>Deviation:</strong> Syuzhet may depart from chronological order</li>
+                      <li>• <strong>Selection:</strong> Not all fabula events appear in syuzhet</li>
+                      <li>• <strong>Emphasis:</strong> Some events receive more attention than others</li>
+                      <li>• <strong>Perspective:</strong> Point of view affects what is shown</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Narrative Techniques</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Methods of transforming fabula into syuzhet</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Flashback:</strong> Presenting past events out of order</li>
+                      <li>• <strong>Flashforward:</strong> Showing future events prematurely</li>
+                      <li>• <strong>Ellipsis:</strong> Omitting events from presentation</li>
+                      <li>• <strong>Summary:</strong> Condensing time periods</li>
+                      <li>• <strong>Scene:</strong> Detailed presentation of moments</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mimesis and Diegesis */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Mimesis and Diegesis</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  <strong>Mimesis</strong> and <strong>Diegesis</strong> are ancient Greek concepts that distinguish between showing and telling in narrative. These terms, originating in Plato's <em>Republic</em> and developed by Aristotle, remain fundamental to understanding different modes of narrative presentation and their effects on readers.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Mimesis (Showing)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Direct presentation of events and dialogue</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Direct Speech:</strong> Characters speak for themselves</li>
+                      <li>• <strong>Scene:</strong> Events shown as they happen</li>
+                      <li>• <strong>Immediacy:</strong> Reader experiences events directly</li>
+                      <li>• <strong>Dramatic Effect:</strong> Creates sense of presence</li>
+                      <li>• <strong>Dialogue:</strong> Characters' words presented directly</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Diegesis (Telling)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Narrator's summary and description of events</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Narrator's Voice:</strong> Events filtered through narrator</li>
+                      <li>• <strong>Summary:</strong> Condensed presentation of events</li>
+                      <li>• <strong>Mediation:</strong> Reader receives narrator's version</li>
+                      <li>• <strong>Distance:</strong> Creates narrative distance</li>
+                      <li>• <strong>Indirect Speech:</strong> Characters' words reported</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Mimetic Techniques</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Methods of showing in narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Dialogue:</strong> Direct character speech</li>
+                      <li>• <strong>Action Scenes:</strong> Events shown in detail</li>
+                      <li>• <strong>Stream of Consciousness:</strong> Direct access to character thoughts</li>
+                      <li>• <strong>Free Indirect Discourse:</strong> Character's thoughts in narrator's voice</li>
+                      <li>• <strong>Dramatic Monologue:</strong> Character speaking at length</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Diegetic Techniques</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Methods of telling in narrative</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Narrative Summary:</strong> Condensed presentation of events</li>
+                      <li>• <strong>Description:</strong> Narrator's account of setting/character</li>
+                      <li>• <strong>Exposition:</strong> Background information provided</li>
+                      <li>• <strong>Commentary:</strong> Narrator's interpretation/opinion</li>
+                      <li>• <strong>Reported Speech:</strong> Characters' words summarized</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Postmodern Narratology */}
+              <div className="p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Postmodern Narratology</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Postmodern narratology challenges traditional assumptions about narrative coherence, authorial authority, and textual boundaries. It explores how contemporary narratives reflect and respond to the fragmented, mediated nature of postmodern experience.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Metafiction</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Fiction that self-consciously draws attention to its fictional nature</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Self-Reflexivity:</strong> Text commenting on its own construction</li>
+                      <li>• <strong>Authorial Intrusion:</strong> Author appearing within the narrative</li>
+                      <li>• <strong>Narrative Framing:</strong> Stories within stories</li>
+                      <li>• <strong>Reader Address:</strong> Direct communication with audience</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Intertextuality</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The complex web of relationships between texts</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Quotation:</strong> Direct borrowing from other texts</li>
+                      <li>• <strong>Allusion:</strong> Indirect reference to other works</li>
+                      <li>• <strong>Parody:</strong> Imitation with critical distance</li>
+                      <li>• <strong>Pastiche:</strong> Imitation without critical intent</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Fragmentation</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The disruption of linear, coherent narrative structure</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Non-linear Structure:</strong> Disrupted chronological order</li>
+                      <li>• <strong>Multiple Perspectives:</strong> Competing narrative viewpoints</li>
+                      <li>• <strong>Textual Gaps:</strong> Missing or incomplete information</li>
+                      <li>• <strong>Collage Technique:</strong> Assembling fragments into new wholes</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Hyperreality</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The blurring of boundaries between reality and simulation</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Simulation:</strong> Copies without originals</li>
+                      <li>• <strong>Media Saturation:</strong> Reality mediated through technology</li>
+                      <li>• <strong>Authenticity Crisis:</strong> Difficulty distinguishing real from fake</li>
+                      <li>• <strong>Virtual Reality:</strong> Computer-generated environments</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -2461,34 +2984,226 @@ export default function NarrativeTheory() {
             {/* Cognitive Narratology */}
             <div className="bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)]">
               <h3 className="text-2xl font-bold mb-6 text-[var(--foreground)]">Cognitive Narratology</h3>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Mental Models</h4>
-                  <div className="space-y-3">
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Storyworld Construction</div>
-                      <div className="text-sm text-[var(--accent)]">Reader's mental representation</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Character Theory of Mind</div>
-                      <div className="text-sm text-[var(--accent)]">Understanding character psychology</div>
-                    </div>
-                    <div className="p-3 bg-[var(--background)] rounded border border-[var(--accent)]">
-                      <div className="font-semibold text-[var(--foreground)]">Narrative Transportation</div>
-                      <div className="text-sm text-[var(--accent)]">Immersion in fictional worlds</div>
-                    </div>
+              
+              {/* Introduction */}
+              <div className="mb-6 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <p className="text-sm text-[var(--foreground)] leading-relaxed">
+                  <strong>Cognitive Narratology</strong> applies insights from cognitive science, psychology, and neuroscience to understand how readers process and understand narratives. This interdisciplinary approach examines the mental processes involved in reading, including how we construct storyworlds, understand characters, and experience narrative immersion. Key figures include David Herman, Monika Fludernik, and Alan Palmer, who have developed frameworks for analyzing the cognitive dimensions of narrative comprehension.
+                </p>
+              </div>
+
+              {/* Mental Models Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Mental Models & Storyworld Construction</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Readers construct mental models of fictional worlds based on textual cues, background knowledge, and inferential processes. These models include spatial, temporal, and character representations that allow readers to navigate and understand narrative worlds.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Storyworld Construction</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers build mental representations of fictional worlds</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Spatial Models:</strong> Mental maps of story locations and settings</li>
+                      <li>• <strong>Temporal Models:</strong> Understanding of story chronology and duration</li>
+                      <li>• <strong>Causal Models:</strong> Mental representations of cause-and-effect relationships</li>
+                      <li>• <strong>Character Models:</strong> Mental representations of characters and their traits</li>
+                      <li>• <strong>World Rules:</strong> Understanding of the fictional world's laws and constraints</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Schema Activation</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How background knowledge structures narrative comprehension</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Genre Schemas:</strong> Expectations based on literary conventions</li>
+                      <li>• <strong>Cultural Schemas:</strong> Shared cultural knowledge and assumptions</li>
+                      <li>• <strong>Personal Schemas:</strong> Individual reader's background knowledge</li>
+                      <li>• <strong>Script Schemas:</strong> Knowledge of typical event sequences</li>
+                      <li>• <strong>Frame Schemas:</strong> Understanding of social situations and contexts</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Inference Generation</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers fill gaps and draw conclusions from textual cues</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Bridging Inferences:</strong> Connecting different parts of the text</li>
+                      <li>• <strong>Elaborative Inferences:</strong> Adding details not explicitly stated</li>
+                      <li>• <strong>Causal Inferences:</strong> Understanding why events occur</li>
+                      <li>• <strong>Character Inferences:</strong> Understanding character motivations and traits</li>
+                      <li>• <strong>Predictive Inferences:</strong> Anticipating future events</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Gap Filling</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers handle missing or ambiguous information</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Textual Gaps:</strong> Information deliberately omitted by the author</li>
+                      <li>• <strong>Ambiguity Resolution:</strong> Choosing between multiple interpretations</li>
+                      <li>• <strong>Default Assumptions:</strong> Using background knowledge to fill gaps</li>
+                      <li>• <strong>Contextual Clues:</strong> Using surrounding information to infer meaning</li>
+                      <li>• <strong>Reader Variability:</strong> Different readers may fill gaps differently</li>
+                    </ul>
                   </div>
                 </div>
+              </div>
 
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-[var(--accent)]">Processing Strategies</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-[var(--foreground)]">• Schema Activation</div>
-                    <div className="text-[var(--foreground)]">• Inference Generation</div>
-                    <div className="text-[var(--foreground)]">• Gap Filling</div>
-                    <div className="text-[var(--foreground)]">• Perspective Taking</div>
-                    <div className="text-[var(--foreground)]">• Emotional Simulation</div>
-                    <div className="text-[var(--foreground)]">• Memory Integration</div>
+              {/* Character Theory of Mind Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Character Theory of Mind</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Readers apply their understanding of human psychology to fictional characters, attributing mental states, intentions, and emotions. This process involves both automatic and conscious cognitive processes that allow readers to "read minds" and understand character psychology.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Mental State Attribution</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers understand character thoughts and feelings</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Belief Attribution:</strong> Understanding what characters know and believe</li>
+                      <li>• <strong>Desire Attribution:</strong> Understanding character goals and motivations</li>
+                      <li>• <strong>Emotion Attribution:</strong> Understanding character emotional states</li>
+                      <li>• <strong>Intention Attribution:</strong> Understanding character plans and purposes</li>
+                      <li>• <strong>Perspective Taking:</strong> Seeing the world from character viewpoints</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Character Coherence</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers maintain consistent character models</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Trait Integration:</strong> Combining character traits into coherent personalities</li>
+                      <li>• <strong>Behavior Consistency:</strong> Expecting characters to act in character</li>
+                      <li>• <strong>Development Tracking:</strong> Following character changes over time</li>
+                      <li>• <strong>Motivation Understanding:</strong> Grasping why characters act as they do</li>
+                      <li>• <strong>Relationship Mapping:</strong> Understanding character interactions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Empathy & Identification</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers emotionally connect with characters</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Emotional Simulation:</strong> Experiencing character emotions vicariously</li>
+                      <li>• <strong>Perspective Taking:</strong> Adopting character viewpoints</li>
+                      <li>• <strong>Moral Alignment:</strong> Sharing character values and goals</li>
+                      <li>• <strong>Physical Simulation:</strong> Mirroring character actions and sensations</li>
+                      <li>• <strong>Narrative Transportation:</strong> Becoming absorbed in character experiences</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Character Complexity</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers handle complex character representations</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Multi-dimensional Characters:</strong> Characters with conflicting traits</li>
+                      <li>• <strong>Character Development:</strong> Characters who change over time</li>
+                      <li>• <strong>Unreliable Characters:</strong> Characters whose perspectives are limited</li>
+                      <li>• <strong>Character Relationships:</strong> Complex interactions between characters</li>
+                      <li>• <strong>Character Functions:</strong> Understanding character roles in the story</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Narrative Transportation Section */}
+              <div className="mb-8 p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Narrative Transportation & Immersion</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Narrative transportation refers to the phenomenon where readers become so absorbed in a story that they lose awareness of their immediate surroundings and feel transported into the fictional world. This immersive experience involves multiple cognitive processes working together.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Transportation Mechanisms</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How readers become immersed in fictional worlds</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Attention Capture:</strong> Story demands full cognitive focus</li>
+                      <li>• <strong>Mental Imagery:</strong> Vivid visualization of story events</li>
+                      <li>• <strong>Emotional Engagement:</strong> Strong emotional responses to story</li>
+                      <li>• <strong>Narrative Coherence:</strong> Story makes sense and flows naturally</li>
+                      <li>• <strong>Character Identification:</strong> Strong connection with characters</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Immersion Factors</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Elements that enhance narrative immersion</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Vivid Descriptions:</strong> Rich sensory details and imagery</li>
+                      <li>• <strong>Engaging Plot:</strong> Compelling story events and conflicts</li>
+                      <li>• <strong>Relatable Characters:</strong> Characters readers can identify with</li>
+                      <li>• <strong>Emotional Resonance:</strong> Story touches on universal human experiences</li>
+                      <li>• <strong>Narrative Flow:</strong> Smooth, uninterrupted reading experience</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Transportation Effects</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Consequences of narrative transportation</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Belief Change:</strong> Temporary adoption of story beliefs</li>
+                      <li>• <strong>Attitude Change:</strong> Shifts in reader attitudes and opinions</li>
+                      <li>• <strong>Behavioral Effects:</strong> Changes in real-world behavior</li>
+                      <li>• <strong>Emotional Impact:</strong> Lasting emotional responses</li>
+                      <li>• <strong>Memory Enhancement:</strong> Better recall of transported content</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Breaking Immersion</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Factors that disrupt narrative transportation</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Narrative Inconsistencies:</strong> Contradictions in the story world</li>
+                      <li>• <strong>Poor Writing:</strong> Awkward prose or dialogue</li>
+                      <li>• <strong>Character Inconsistencies:</strong> Characters acting out of character</li>
+                      <li>• <strong>External Distractions:</strong> Real-world interruptions</li>
+                      <li>• <strong>Reader Disengagement:</strong> Lack of interest or connection</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Memory & Processing Section */}
+              <div className="p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                <h4 className="text-xl font-bold mb-3 text-[var(--accent)]">Memory & Information Processing</h4>
+                <p className="text-sm text-[var(--foreground)] leading-relaxed mb-4">
+                  Reading narratives involves complex memory processes, including working memory for immediate comprehension, episodic memory for story events, and semantic memory for background knowledge. Understanding these processes helps explain how readers construct and maintain coherent narrative representations.
+                </p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Working Memory</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Immediate processing of narrative information</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Text Processing:</strong> Immediate comprehension of sentences</li>
+                      <li>• <strong>Coherence Building:</strong> Connecting current text with previous</li>
+                      <li>• <strong>Inference Generation:</strong> Drawing conclusions from text</li>
+                      <li>• <strong>Character Tracking:</strong> Maintaining character information</li>
+                      <li>• <strong>Plot Integration:</strong> Connecting story events</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Episodic Memory</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Long-term storage of story events and experiences</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Event Memory:</strong> Remembering story events and sequences</li>
+                      <li>• <strong>Character Memory:</strong> Storing character information and traits</li>
+                      <li>• <strong>Spatial Memory:</strong> Remembering story locations and settings</li>
+                      <li>• <strong>Temporal Memory:</strong> Understanding story chronology</li>
+                      <li>• <strong>Emotional Memory:</strong> Remembering emotional responses to story</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Semantic Memory</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">Background knowledge used in narrative comprehension</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>World Knowledge:</strong> General knowledge about the world</li>
+                      <li>• <strong>Cultural Knowledge:</strong> Shared cultural assumptions and values</li>
+                      <li>• <strong>Literary Knowledge:</strong> Understanding of narrative conventions</li>
+                      <li>• <strong>Language Knowledge:</strong> Understanding of words and grammar</li>
+                      <li>• <strong>Schema Knowledge:</strong> Knowledge of typical situations and events</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Memory Integration</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">How different types of memory work together</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Cross-referencing:</strong> Connecting new information with existing knowledge</li>
+                      <li>• <strong>Schema Updating:</strong> Modifying existing knowledge structures</li>
+                      <li>• <strong>Memory Consolidation:</strong> Strengthening memory traces over time</li>
+                      <li>• <strong>Retrieval Cues:</strong> Using context to access stored information</li>
+                      <li>• <strong>Memory Reconstruction:</strong> Rebuilding memories from fragments</li>
+                    </ul>
                   </div>
                 </div>
               </div>
