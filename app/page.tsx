@@ -1,10 +1,53 @@
-import Image from "next/image";
-import SwimmingFish from './components/SwimmingFish';
-import ParallaxRing from './components/ParallaxRing';
-import ChatWidget from './components/ChatWidget';
-import HelloThereQuote from './components/HelloThereQuote';
+import type { Metadata } from 'next';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import ThemeToggle from './components/ThemeToggle';
+import SwimmingFish from './components/SwimmingFish';
+import TerminalWelcome from './components/TerminalWelcome';
+import HelloThereQuote from './components/HelloThereQuote';
+import ParallaxRing from './components/ParallaxRing';
+import SketchbookDrawer from './components/SketchbookDrawer';
+import ChatWidget from './components/ChatWidget';
+import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
+import Image from "next/image";
 import { getFeaturedPhotos, type Photo } from '../utils/photos';
+
+export const metadata: Metadata = {
+  title: "Brian Sproule | Writer, Publisher, Designer",
+  description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+  keywords: ["digital publishing", "web development", "narrative theory", "creative technology", "portfolio"],
+  authors: [{ name: "Brian Sproule" }],
+  creator: "Brian Sproule",
+  publisher: "Brian Sproule",
+  robots: "index, follow",
+  openGraph: {
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+    url: "https://briansproule.com",
+    siteName: "Brian Sproule Portfolio",
+    images: [
+      {
+        url: "/elderscroll.png",
+        width: 1200,
+        height: 630,
+        alt: "Brian Sproule - Digital Publisher & Developer",
+        type: "image/png",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+    creator: "@briansproule",
+    images: ["/elderscroll.png"],
+  },
+  alternates: {
+    canonical: "https://briansproule.com",
+  },
+};
 
 async function getRecentBooks() {
   try {

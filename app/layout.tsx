@@ -13,30 +13,63 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Brian Sproule | Writer, Publisher, Designer",
-  description: "Portfolio showcasing digital publishing projects and web development work",
+  metadataBase: new URL('https://briansproule.com'),
+  title: {
+    default: "Brian Sproule | Writer, Publisher, Designer",
+    template: "%s | Brian Sproule"
+  },
+  description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
+  keywords: ["digital publishing", "web development", "narrative theory", "creative technology", "portfolio", "writer", "designer"],
+  authors: [{ name: "Brian Sproule" }],
+  creator: "Brian Sproule",
+  publisher: "Brian Sproule",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: '/fish-favicon.png',
     apple: '/fish-favicon.png',
+    shortcut: '/fish-favicon.png',
   },
+  manifest: '/site.webmanifest',
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://briansproule.com",
+    siteName: "Brian Sproule Portfolio",
     title: "Brian Sproule | Writer, Publisher, Designer",
-    description: "Portfolio showcasing digital publishing projects and web development work",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
         url: "/elderscroll.png",
         width: 1200,
         height: 630,
-        alt: "Brian Sproule Portfolio",
+        alt: "Brian Sproule - Digital Publisher & Developer",
+        type: "image/png",
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brian Sproule | Publisher & Developer",
-    description: "Portfolio showcasing digital publishing projects and web development work",
+    site: "@briansproule",
+    creator: "@briansproule",
+    title: "Brian Sproule | Writer, Publisher, Designer",
+    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: ["/elderscroll.png"],
+  },
+  alternates: {
+    canonical: "https://briansproule.com",
+  },
+  verification: {
+    google: "your-google-verification-code",
   },
 };
 
