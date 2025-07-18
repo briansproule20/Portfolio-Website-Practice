@@ -11,7 +11,7 @@ export default function Worldbuilding() {
   }, []);
 
   const planets = [
-    { id: 1, name: "Meridian", size: 0.8, distance: 80, color: "#8B4513", orbitSpeed: 35 },
+    { id: 1, name: "Meridian", size: 0.8, distance: 90, color: "#8B4513", orbitSpeed: 35 },
     { id: 2, name: "Aurora", size: 1.2, distance: 130, color: "#4169E1", orbitSpeed: 39 },
     { id: 3, name: "Terra Nova", size: 1.0, distance: 180, color: "#228B22", orbitSpeed: 32 },
     { id: 4, name: "Crimson", size: 0.9, distance: 230, color: "#DC143C", orbitSpeed: 45 },
@@ -118,7 +118,7 @@ export default function Worldbuilding() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
-          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {planets.map((planet) => (
             <div
@@ -137,6 +137,107 @@ export default function Worldbuilding() {
               </p>
             </div>
           ))}
+        </motion.div>
+
+        {/* Worldbuilding Explanation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8 }}
+          className="mt-16 max-w-6xl mx-auto"
+        >
+          <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">What is Worldbuilding?</h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">The Art of Creation</h3>
+                <p className="text-[var(--foreground)] leading-relaxed mb-4">
+                  Worldbuilding is the process of constructing an imaginary world or universe, complete with its own geography, 
+                  history, cultures, languages, and systems. It's the foundation upon which compelling stories are built, 
+                  whether in literature, film, games, or other creative mediums.
+                </p>
+                <p className="text-[var(--foreground)] leading-relaxed">
+                  From the vast galaxies of science fiction to the intricate realms of fantasy, worldbuilding transforms 
+                  simple narratives into immersive experiences that transport audiences to entirely new realities.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">Beyond the Surface</h3>
+                <p className="text-[var(--foreground)] leading-relaxed mb-4">
+                  Great worldbuilding goes beyond mere aesthetics. It involves creating coherent ecosystems, 
+                  believable societies, and logical systems that make the world feel lived-in and authentic. 
+                  Every detail, from the climate to the economy, contributes to the overall believability.
+                </p>
+                <p className="text-[var(--foreground)] leading-relaxed">
+                  The most compelling worlds are those where every element serves a purpose, where the environment 
+                  shapes the culture, and where the history influences the present in meaningful ways.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">Key Elements</h3>
+                <ul className="space-y-2 text-[var(--foreground)]">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] font-bold">•</span>
+                    <span><strong>Geography & Environment:</strong> Landscapes, climate, natural resources, and how they shape civilization</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] font-bold">•</span>
+                    <span><strong>History & Lore:</strong> Past events, legends, and how they influence current society</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] font-bold">•</span>
+                    <span><strong>Culture & Society:</strong> Social structures, customs, religions, and daily life</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] font-bold">•</span>
+                    <span><strong>Technology & Magic:</strong> Systems that define what's possible in your world</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">The Creative Process</h3>
+                <p className="text-[var(--foreground)] leading-relaxed mb-4">
+                  Worldbuilding is both an art and a science. It begins with a core concept—a "what if" question 
+                  that sparks the imagination. From there, creators develop the world through research, 
+                  experimentation, and iterative refinement.
+                </p>
+                <p className="text-[var(--foreground)] leading-relaxed">
+                  The process often involves extensive research into real-world systems, cultures, and sciences 
+                  to create believable foundations for fictional elements.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">Applications & Impact</h3>
+                <p className="text-[var(--foreground)] leading-relaxed mb-4">
+                  Worldbuilding appears in countless forms: the detailed maps of Middle-earth, the complex 
+                  political systems of Westeros, the technological wonders of Star Trek, and the magical 
+                  systems of Harry Potter. Each demonstrates how thorough worldbuilding creates immersive, 
+                  believable experiences.
+                </p>
+                <p className="text-[var(--foreground)] leading-relaxed">
+                  Beyond entertainment, worldbuilding skills are valuable in game design, urban planning, 
+                  education, and any field that requires creating coherent, complex systems.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-[var(--accent)]">The Challenge</h3>
+                <p className="text-[var(--foreground)] leading-relaxed">
+                  The greatest challenge in worldbuilding is maintaining consistency while allowing for 
+                  wonder and surprise. A world must feel both familiar enough to be understood and 
+                  different enough to be fascinating. It's a delicate balance between creativity and logic, 
+                  imagination and believability.
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </section>
 
