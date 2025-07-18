@@ -25,6 +25,7 @@ type Book = {
   year?: string;
   rating?: string;
   nationality?: string;
+  description?: string;
 };
 
 type ReadsClientProps = {
@@ -316,8 +317,8 @@ export default function ReadsClient({ books }: ReadsClientProps) {
     // Add more as needed
   };
 
-  // 2. Aggregate books by country numeric code
-  const countryBookStats: Record<string, { name: string; count: number; titles: string[] }> = {};
+  // 2. Aggregate books by country numeric code with special handling for Native American books
+  const countryBookStats: Record<string, { name: string; count: number; titles: string[]; nativeAmericanBooks?: { title: string; tribe?: string }[] }> = {};
   
   // Debug: Log what we're processing
   console.log('📚 Processing books for nationality mapping:');
@@ -351,6 +352,82 @@ export default function ReadsClient({ books }: ReadsClientProps) {
     }
     countryBookStats[numericCode].count++;
     countryBookStats[numericCode].titles.push(book.title);
+    
+    // Special handling for Native American books
+    if (nat === 'Native American') {
+      if (!countryBookStats[numericCode].nativeAmericanBooks) {
+        countryBookStats[numericCode].nativeAmericanBooks = [];
+      }
+      
+      // Try to extract tribe information from the description or title
+      let tribe = 'Unknown Tribe';
+      const description = book.description || '';
+      const title = book.title || '';
+      
+      // Look for common tribe mentions in description or title
+      const tribePatterns = [
+        /Iroquois/i, /Cherokee/i, /Navajo/i, /Sioux/i, /Apache/i, /Choctaw/i, /Chickasaw/i, 
+        /Creek/i, /Seminole/i, /Blackfoot/i, /Crow/i, /Cheyenne/i, /Arapaho/i, /Comanche/i,
+        /Kiowa/i, /Pawnee/i, /Osage/i, /Ponca/i, /Omaha/i, /Winnebago/i, /Menominee/i,
+        /Potawatomi/i, /Ojibwe/i, /Ojibwa/i, /Chippewa/i, /Ottawa/i, /Shawnee/i, /Miami/i,
+        /Illinois/i, /Kickapoo/i, /Sauk/i, /Fox/i, /Iowa/i, /Missouri/i, /Otoe/i, /Kansa/i,
+        /Osage/i, /Quapaw/i, /Caddo/i, /Wichita/i, /Tonkawa/i, /Karankawa/i, /Coahuiltecan/i,
+        /Jumano/i, /Pueblo/i, /Hopi/i, /Zuni/i, /Acoma/i, /Laguna/i, /Taos/i, /San Ildefonso/i,
+        /Santa Clara/i, /San Juan/i, /Tesuque/i, /Nambe/i, /Pojoaque/i, /Picuris/i, /Jemez/i,
+        /Cochiti/i, /Santo Domingo/i, /San Felipe/i, /Santa Ana/i, /Sandia/i, /Isleta/i,
+        /Yuma/i, /Mohave/i, /Havasupai/i, /Hualapai/i, /Yavapai/i, /Pima/i, /Papago/i,
+        /Tohono O'odham/i, /Maricopa/i, /Cocopah/i, /Quechan/i, /Kumeyaay/i, /Luiseno/i,
+        /Cahuilla/i, /Serrano/i, /Gabrielino/i, /Chumash/i, /Yokuts/i, /Miwok/i, /Maidu/i,
+        /Wintun/i, /Yurok/i, /Karuk/i, /Hupa/i, /Yurok/i, /Tolowa/i, /Coos/i, /Siuslaw/i,
+        /Alsea/i, /Tillamook/i, /Chinook/i, /Clatsop/i, /Kathlamet/i, /Wishram/i, /Wasco/i,
+        /Warm Springs/i, /Umatilla/i, /Cayuse/i, /Walla Walla/i, /Nez Perce/i, /Coeur d'Alene/i,
+        /Spokane/i, /Kalispel/i, /Kootenai/i, /Flathead/i, /Salish/i, /Kutenai/i, /Shoshone/i,
+        /Bannock/i, /Ute/i, /Paiute/i, /Goshute/i, /Shoshone/i, /Washoe/i, /Mono/i, /Kawaiisu/i,
+        /Tubatulabal/i, /Yokuts/i, /Miwok/i, /Maidu/i, /Wintun/i, /Patwin/i, /Nisenan/i,
+        /Konkow/i, /Maidu/i, /Wailaki/i, /Lassik/i, /Sinkyone/i, /Mattole/i, /Wiyot/i,
+        /Yurok/i, /Karuk/i, /Hupa/i, /Chilula/i, /Whilkut/i, /Nongatl/i, /Sinkyone/i,
+        /Lassik/i, /Wailaki/i, /Konkow/i, /Maidu/i, /Nisenan/i, /Miwok/i, /Yokuts/i,
+        /Tubatulabal/i, /Kawaiisu/i, /Mono/i, /Paiute/i, /Shoshone/i, /Ute/i, /Goshute/i,
+        /Bannock/i, /Washoe/i, /Nez Perce/i, /Cayuse/i, /Umatilla/i, /Walla Walla/i,
+        /Warm Springs/i, /Wasco/i, /Wishram/i, /Kathlamet/i, /Clatsop/i, /Chinook/i,
+        /Tillamook/i, /Alsea/i, /Siuslaw/i, /Coos/i, /Tolowa/i, /Yurok/i, /Hupa/i, /Karuk/i,
+        /Wintun/i, /Maidu/i, /Miwok/i, /Yokuts/i, /Serrano/i, /Cahuilla/i, /Luiseno/i,
+        /Kumeyaay/i, /Quechan/i, /Cocopah/i, /Maricopa/i, /Tohono O'odham/i, /Papago/i,
+        /Pima/i, /Yavapai/i, /Hualapai/i, /Havasupai/i, /Mohave/i, /Yuma/i, /Isleta/i,
+        /Sandia/i, /Santa Ana/i, /San Felipe/i, /Santo Domingo/i, /Cochiti/i, /Jemez/i,
+        /Picuris/i, /Pojoaque/i, /Nambe/i, /Tesuque/i, /San Juan/i, /Santa Clara/i,
+        /San Ildefonso/i, /Taos/i, /Laguna/i, /Acoma/i, /Zuni/i, /Hopi/i, /Pueblo/i,
+        /Jumano/i, /Coahuiltecan/i, /Karankawa/i, /Tonkawa/i, /Wichita/i, /Caddo/i,
+        /Quapaw/i, /Osage/i, /Kansa/i, /Otoe/i, /Missouri/i, /Iowa/i, /Fox/i, /Sauk/i,
+        /Kickapoo/i, /Illinois/i, /Miami/i, /Shawnee/i, /Ottawa/i, /Chippewa/i, /Ojibwa/i,
+        /Ojibwe/i, /Potawatomi/i, /Menominee/i, /Winnebago/i, /Omaha/i, /Ponca/i, /Osage/i,
+        /Arapaho/i, /Cheyenne/i, /Crow/i, /Blackfoot/i, /Seminole/i, /Creek/i, /Chickasaw/i,
+        /Choctaw/i, /Apache/i, /Sioux/i, /Navajo/i, /Cherokee/i
+      ];
+      
+      for (const pattern of tribePatterns) {
+        if (pattern.test(description) || pattern.test(title)) {
+          tribe = pattern.source.replace(/[\/i]/g, ''); // Remove regex syntax
+          break;
+        }
+      }
+      
+      // Special cases based on book content
+      if (title.includes('Walking the Rez Road') || description.includes('reservation')) {
+        tribe = 'Ojibwe/Anishinaabe'; // Based on the book's content
+      }
+      if (title.includes('Death of Jim Loney') || description.includes('mixed race native')) {
+        tribe = 'Blackfeet/Gros Ventre'; // Based on the book's setting
+      }
+      if (title.includes('World on the Turtle') || description.includes('Iroquois')) {
+        tribe = 'Iroquois Confederacy';
+      }
+      
+      countryBookStats[numericCode].nativeAmericanBooks!.push({
+        title: book.title,
+        tribe: tribe
+      });
+    }
   });
   
   console.log('🗺️ Final country book stats:', countryBookStats);
@@ -650,13 +727,33 @@ export default function ReadsClient({ books }: ReadsClientProps) {
               </p>
             </div>
             <div className="p-6 overflow-y-auto max-h-[60vh]">
+              {/* All Books Section */}
               <ul className="space-y-3">
-                {countryBookStats[selectedCountry].titles.map((title, idx) => (
-                  <li key={idx} className="text-[var(--foreground)] text-lg break-words">
-                    {title}
-                  </li>
-                ))}
+                {countryBookStats[selectedCountry].titles
+                  .filter(title => !countryBookStats[selectedCountry].nativeAmericanBooks?.some(naBook => naBook.title === title))
+                  .map((title, idx) => (
+                    <li key={idx} className="text-[var(--foreground)] text-lg break-words">
+                      {title}
+                    </li>
+                  ))}
               </ul>
+              
+              {/* Native American Books Section (at bottom) */}
+              {countryBookStats[selectedCountry].nativeAmericanBooks && countryBookStats[selectedCountry].nativeAmericanBooks!.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-[var(--accent)]">
+                  <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4 border-b border-[var(--accent)] pb-2">
+                    Native American Literature
+                  </h3>
+                  <ul className="space-y-4">
+                    {countryBookStats[selectedCountry].nativeAmericanBooks!.map((book, idx) => (
+                      <li key={idx} className="text-[var(--foreground)]">
+                        <div className="text-lg break-words font-medium">{book.title}</div>
+                        <div className="text-sm text-[var(--accent)] italic mt-1">Tribe: {book.tribe}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
