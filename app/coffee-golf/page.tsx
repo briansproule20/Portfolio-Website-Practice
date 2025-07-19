@@ -103,7 +103,7 @@ const CoffeeGolfDashboard = () => {
   // Radar chart data for player comparison (INVERTED FOR GOLF)
   const radarData = useMemo(() => {
     return players.map(player => {
-      const playerData = playerStats.find((p: any) => p.name === player);
+      const playerData = playerStats.find((p: any) => p.name === player) as any;
       if (!playerData) return null;
       
       const consistency = Math.max(0, 100 - (playerData.worst - playerData.best) * 3);
@@ -206,11 +206,11 @@ const CoffeeGolfDashboard = () => {
   const renderOverview = () => {
     const validAverages = playerStats.map((p: any) => p.average).filter(avg => !isNaN(avg));
     const bestAverage = validAverages.length > 0 ? Math.min(...validAverages) : 0;
-    const bestPlayer = playerStats.find((p: any) => p.average === bestAverage)?.name || 'No data';
+    const bestPlayer = (playerStats.find((p: any) => p.average === bestAverage) as any)?.name || 'No data';
     
     const validWins = playerStats.map((p: any) => p.wins).filter(wins => !isNaN(wins));
     const mostWins = validWins.length > 0 ? Math.max(...validWins) : 0;
-    const mostWinsPlayer = playerStats.find((p: any) => p.wins === mostWins)?.name || 'No data';
+    const mostWinsPlayer = (playerStats.find((p: any) => p.wins === mostWins) as any)?.name || 'No data';
     
     // Calculate total rounds (sum of all games played by all players)
     const totalRounds = playerStats.reduce((sum, player: any) => sum + player.gamesPlayed, 0);
