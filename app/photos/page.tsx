@@ -26,7 +26,6 @@ const categories = [
   { id: 'family', label: 'Family' },
   { id: 'friends', label: 'Friends' },
   { id: 'food', label: 'Food' },
-  { id: 'memoriam', label: 'In Loving Memory' },
   { id: 'nature', label: 'Nature' },
   { id: 'pets', label: 'Pets' },
 ];

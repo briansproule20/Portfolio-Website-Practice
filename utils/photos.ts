@@ -49,7 +49,7 @@ const photos: Photo[] = [
   {
     id: 5,
     title: "Grandma Rosie",
-    category: "Memoriam",
+    category: "Family",
     description: "Always getting down and playing with us kids. Love and miss you, Grandma Rosie.",
     image: "/photos/rosie.JPG",
     width: 3024,
@@ -247,7 +247,7 @@ const photos: Photo[] = [
   {
     id: 27,
     title: "Uncle Louis",
-    category: "Memoriam", // or whatever category fits
+    category: "Family", // or whatever category fits
     description: "Uncle Lou and Mum hanging on the coach at the Old Beach House.",
     image: "/photos/louis.jpeg",
     width: 3024, // Replace with actual width
