@@ -15,6 +15,18 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('blue-whale', 'Blue Whale', 'animal', '/elderscroll.png', 'Largest animal ever'),
   createNewEntity('orca', 'Orca', 'animal', '/elderscroll.png', 'Ocean apex predator'),
   createNewEntity('timber-wolf', 'Timber Wolf', 'animal', '/elderscroll.png', 'Pack hunter of the north'),
+  createNewEntity('grizzly-bear', 'Grizzly Bear', 'animal', '/elderscroll.png', 'Mountain terror'),
+  createNewEntity('silverback-gorilla', 'Silverback Gorilla', 'animal', '/elderscroll.png', 'Jungle strongman'),
+  createNewEntity('polar-bear', 'Polar Bear', 'animal', '/elderscroll.png', 'Arctic apex predator'),
+  createNewEntity('great-white-shark', 'Great White Shark', 'animal', '/elderscroll.png', 'Ocean nightmare'),
+  createNewEntity('honey-badger', 'Honey Badger', 'animal', '/elderscroll.png', 'Fearless fury'),
+  createNewEntity('mantis-shrimp', 'Mantis Shrimp', 'animal', '/elderscroll.png', 'Rainbow puncher'),
+  createNewEntity('octopus', 'Giant Pacific Octopus', 'animal', '/elderscroll.png', 'Eight-armed genius'),
+  createNewEntity('komodo-dragon', 'Komodo Dragon', 'animal', '/elderscroll.png', 'Living dragon'),
+  createNewEntity('peregrine-falcon', 'Peregrine Falcon', 'animal', '/elderscroll.png', 'Speed demon of the sky'),
+  createNewEntity('hippo', 'Hippopotamus', 'animal', '/elderscroll.png', 'River tank'),
+  createNewEntity('rhino', 'White Rhinoceros', 'animal', '/elderscroll.png', 'Horned bulldozer'),
+  createNewEntity('snow-leopard', 'Snow Leopard', 'animal', '/elderscroll.png', 'Mountain ghost'),
   
   // Dinosaurs
   createNewEntity('t-rex', 'T-Rex', 'dinosaur', '/elderscroll.png', 'Tyrant lizard king'),
@@ -41,6 +53,9 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('gandalf', 'Gandalf the Grey', 'character', '/elderscroll.png', 'Wizard of Middle-earth'),
   createNewEntity('ebony-maw', 'Ebony Maw', 'character', '/elderscroll.png', 'Childof Thanos'),
   createNewEntity('jedi-youngling', 'Jedi Youngling', 'character', '/images/elo/jedi-youngling.jpg', 'Theres too many of them, what are we going to do?'),
+  createNewEntity('shrek', 'Shrek', 'character', '/elderscroll.png', 'Ogre with layers'),
+  createNewEntity('darth-vader', 'Darth Vader', 'character', '/elderscroll.png', 'Dark Lord of the Sith'),
+  createNewEntity('steve-minecraft', 'Steve (Minecraft)', 'character', '/elderscroll.png', 'Block punching legend'),
 ];
 
 export function getEntitiesByCategory(category: 'animal' | 'dinosaur' | 'character'): EloEntity[] {
