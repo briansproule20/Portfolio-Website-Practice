@@ -371,12 +371,12 @@ export default function EloPage() {
                       const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
                       return (
                         <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-[var(--accent)]/10">
                             <Image
                               src={entity.imageUrl}
                               alt={entity.name}
                               fill
-                              className="object-cover"
+                              className="object-contain p-1"
                             />
                           </div>
                           <div className="flex-1">
@@ -411,12 +411,12 @@ export default function EloPage() {
                       const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
                       return (
                         <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-[var(--accent)]/10">
                             <Image
                               src={entity.imageUrl}
                               alt={entity.name}
                               fill
-                              className="object-cover"
+                              className="object-contain p-1"
                             />
                           </div>
                           <div className="flex-1">
@@ -451,12 +451,12 @@ export default function EloPage() {
                       const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
                       return (
                         <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                          <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-[var(--accent)]/10">
                             <Image
                               src={entity.imageUrl}
                               alt={entity.name}
                               fill
-                              className="object-cover"
+                              className="object-contain p-1"
                             />
                           </div>
                           <div className="flex-1">

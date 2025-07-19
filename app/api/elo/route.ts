@@ -24,14 +24,15 @@ export async function GET() {
       await saveEloRankings(rankings);
       console.log(`🎯 Initialized rankings with ${rankings.entities.length} entities`);
     } else {
-      // Check for new entities from data file and sync them
-      console.log('🎯 Checking for new entities...');
+      // Always sync entities from data file (add new ones, remove deleted ones)
+      console.log('🎯 Syncing entities from data file...');
       const updatedRankings = syncNewEntities(rankings, ELO_ENTITIES);
       
-      if (updatedRankings.entities.length > rankings.entities.length) {
+      // Always save if there were any changes (additions or removals)
+      if (updatedRankings.entities.length !== rankings.entities.length) {
         rankings = updatedRankings;
         await saveEloRankings(rankings);
-        console.log(`🎯 Added ${updatedRankings.entities.length - rankings.entities.length} new entities`);
+        console.log(`🎯 Entity sync complete: ${rankings.entities.length} total entities`);
       }
     }
 

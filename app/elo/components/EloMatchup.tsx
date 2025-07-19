@@ -27,12 +27,12 @@ export default function EloMatchup({ entity1, entity2, dimension, onResult, voti
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
         {/* Entity 1 */}
         <div className={`bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105 ${voting ? 'pointer-events-none opacity-75' : ''}`}>
-          <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden">
+          <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden bg-[var(--accent)]/10">
             <Image
               src={entity1.imageUrl}
               alt={entity1.name}
               fill
-              className="object-cover"
+              className="object-contain p-2"
             />
           </div>
           
@@ -60,12 +60,12 @@ export default function EloMatchup({ entity1, entity2, dimension, onResult, voti
 
         {/* Entity 2 */}
         <div className={`bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105 ${voting ? 'pointer-events-none opacity-75' : ''}`}>
-          <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden">
+          <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden bg-[var(--accent)]/10">
             <Image
               src={entity2.imageUrl}
               alt={entity2.name}
               fill
-              className="object-cover"
+              className="object-contain p-2"
             />
           </div>
           
