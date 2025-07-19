@@ -19,6 +19,9 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('brachiosaurus', 'Brachiosaurus', 'dinosaur', '/elderscroll.png', 'Long-necked giant'),
   createNewEntity('stegosaurus', 'Stegosaurus', 'dinosaur', '/elderscroll.png', 'Plated herbivore'),
   createNewEntity('pterodactyl', 'Pterodactyl', 'dinosaur', '/elderscroll.png', 'Flying reptile'),
+  createNewEntity('ornithomimus', 'Ornithomimus', 'dinosaur', '/elderscroll.png', 'Speed, Sly Egg Thief'),
+  createNewEntity('diplodocus', 'Diplodocus', 'dinosaur', '/elderscroll.png', 'Long-tailed giant'),
+  createNewEntity('ankylosaurus', 'Ankylosaurus', 'dinosaur', '/elderscroll.png', 'Armored tank'),
   
   // Characters
   createNewEntity('superman', 'Superman', 'character', '/elderscroll.png', 'Man of Steel'),
