@@ -1,23 +1,60 @@
 This directory contains ELO ranking system images.
 
 Place your entity images here with the following naming convention:
-- lion.jpg
-- elephant.jpg
-- tiger.jpg
-- puppy.jpg
-- dolphin.jpg
-- eagle.jpg
+
+ANIMALS (24 entities):
+- australian-shepherd.jpg
+- bottlenose-dolphin.jpg
+- bald-eagle.jpg
+- emperor-penguin.jpg
+- giraffe.jpg
+- humpback-whale.jpg
+- blue-whale.jpg
+- orca.jpg
+- timber-wolf.jpg
+- grizzly-bear.jpg
+- silverback-gorilla.jpg
+- polar-bear.jpg
+- great-white-shark.jpg
+- honey-badger.jpg
+- mantis-shrimp.jpg
+- octopus.jpg
+- komodo-dragon.jpg
+- peregrine-falcon.jpg
+- hippo.jpg
+- rhino.jpg
+- snow-leopard.jpg
+
+DINOSAURS (13 entities):
 - t-rex.jpg
 - velociraptor.jpg
 - triceratops.jpg
 - brachiosaurus.jpg
 - stegosaurus.jpg
 - pterodactyl.jpg
+- ornithomimus.jpg
+- diplodocus.jpg
+- ankylosaurus.jpg
+- brontosaurus.jpg
+- spinosaurus.jpg
+- pachycephalosaurus.jpg
+
+CHARACTERS (13 entities):
 - superman.jpg
 - batman.jpg
 - spiderman.jpg
-- wonder-woman.jpg
 - iron-man.jpg
-- captain-america.jpg
+- rock-lee.jpg (EXISTS)
+- luke-skywalker.jpg
+- han-solo.jpg
+- gandalf.jpg
+- ebony-maw.jpg
+- jedi-youngling.jpg (EXISTS)
+- shrek.jpg
+- darth-vader.jpg
+- steve-minecraft.jpg
 
-For now, you can use placeholder images or update the imageUrl paths in data/elo-entities.ts to point to existing images. 
+TOTAL: 50 entities (48 need images, 2 already exist)
+
+Currently using /elderscroll.png as placeholder for most entities.
+Update the imageUrl paths in data/elo-entities.ts to point to these images when created. 

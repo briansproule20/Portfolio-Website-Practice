@@ -3,9 +3,9 @@ import { createNewEntity } from '@/lib/elo-utils';
 
 export const ELO_ENTITIES: EloEntity[] = [
   // Animals
-  createNewEntity('lion', 'Lion', 'animal', '/elderscroll.png', 'King of the jungle'),
-  createNewEntity('african-elephant', 'African Elephant', 'animal', '/elderscroll.png', 'Gentle giant'),
-  createNewEntity('bengal-tiger', 'Bengal Tiger', 'animal', '/elderscroll.png', 'Striped hunter'),
+  createNewEntity('lion', 'Lion', 'animal', '/images/elo/lion.jpg', 'King of the jungle'),
+  createNewEntity('african-elephant', 'African Elephant', 'animal', '/images/elo/african-elephant.jpg', 'Gentle giant'),
+  createNewEntity('bengal-tiger', 'Bengal Tiger', 'animal', '/images/elo/bengal-tiger.jpg', 'Striped hunter'),
   createNewEntity('australian-shepherd', 'Australian Shepherd', 'animal', '/elderscroll.png', 'Intelligent herding dog'),
   createNewEntity('bottlenose-dolphin', 'Bottlenose Dolphin', 'animal', '/elderscroll.png', 'Intelligent swimmer'),
   createNewEntity('bald-eagle', 'Bald Eagle', 'animal', '/elderscroll.png', 'Majestic bird of prey'),
