@@ -49,6 +49,9 @@ export default function Header() {
               <Link href="/designs" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Design
               </Link>
+              <Link href="/elo" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
+                ELO
+              </Link>
               <Link href="/narrative" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
                 Narrative
               </Link>
@@ -98,6 +101,13 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Design
+            </Link>
+            <Link
+              href="/elo"
+              className="text-foreground hover:text-accent transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              ELO
             </Link>
             <Link
               href="/narrative"
