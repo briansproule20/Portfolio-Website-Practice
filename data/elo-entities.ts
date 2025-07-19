@@ -4,13 +4,14 @@ import { createNewEntity } from '@/lib/elo-utils';
 export const ELO_ENTITIES: EloEntity[] = [
   // Animals
   createNewEntity('lion', 'Lion', 'animal', '/elderscroll.png', 'King of the jungle'),
-  createNewEntity('elephant', 'Elephant', 'animal', '/elderscroll.png', 'Gentle giant'),
-  createNewEntity('tiger', 'Tiger', 'animal', '/elderscroll.png', 'Striped hunter'),
-  createNewEntity('puppy', 'Puppy', 'animal', '/elderscroll.png', 'Adorable companion'),
-  createNewEntity('dolphin', 'Dolphin', 'animal', '/elderscroll.png', 'Intelligent swimmer'),
-  createNewEntity('eagle', 'Eagle', 'animal', '/elderscroll.png', 'Majestic bird of prey'),
+  createNewEntity('african-elephant', 'African Elephant', 'animal', '/elderscroll.png', 'Gentle giant'),
+  createNewEntity('bengal-tiger', 'Bengal Tiger', 'animal', '/elderscroll.png', 'Striped hunter'),
+  createNewEntity('australian-shepherd', 'Australian Shepherd', 'animal', '/elderscroll.png', 'Intelligent herding dog'),
+  createNewEntity('bottlenose-dolphin', 'Bottlenose Dolphin', 'animal', '/elderscroll.png', 'Intelligent swimmer'),
+  createNewEntity('bald-eagle', 'Bald Eagle', 'animal', '/elderscroll.png', 'Majestic bird of prey'),
   createNewEntity('emperor-penguin', 'Emperor Penguin', 'animal', '/elderscroll.png', 'Antarctic royalty'),
   createNewEntity('giraffe', 'Giraffe', 'animal', '/elderscroll.png', 'Tallest land animal'),
+  createNewEntity('humpback-whale', 'Humpback Whale', 'animal', '/elderscroll.png', 'Ocean singer'),
   
   // Dinosaurs
   createNewEntity('t-rex', 'T-Rex', 'dinosaur', '/elderscroll.png', 'Tyrant lizard king'),

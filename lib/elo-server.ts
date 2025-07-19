@@ -374,7 +374,7 @@ export async function logEloVote(voteRecord: EloVoteRecord): Promise<void> {
   }
 }
 
-// Sync entities from data file (add new ones, remove deleted ones)
+// Sync entities from data file (add new ones, remove deleted ones, update existing ones)
 export function syncNewEntities(rankings: EloRankings, newEntities: EloEntity[]): EloRankings {
   const existingIds = new Set(rankings.entities.map(e => e.id));
   const newEntityIds = new Set(newEntities.map(e => e.id));
@@ -385,7 +385,18 @@ export function syncNewEntities(rankings: EloRankings, newEntities: EloEntity[])
   // Find entities to remove (in rankings but not in data file)
   const entitiesToRemove = rankings.entities.filter(entity => !newEntityIds.has(entity.id));
   
-  if (newEntitiesToAdd.length === 0 && entitiesToRemove.length === 0) {
+  // Find entities to update (exist in both but with different data)
+  const entitiesToUpdate = newEntities.filter(newEntity => {
+    const existingEntity = rankings.entities.find(e => e.id === newEntity.id);
+    if (!existingEntity) return false;
+    
+    // Check if name, description, or imageUrl changed
+    return existingEntity.name !== newEntity.name || 
+           existingEntity.description !== newEntity.description ||
+           existingEntity.imageUrl !== newEntity.imageUrl;
+  });
+  
+  if (newEntitiesToAdd.length === 0 && entitiesToRemove.length === 0 && entitiesToUpdate.length === 0) {
     return rankings;
   }
   
@@ -418,8 +429,22 @@ export function syncNewEntities(rankings: EloRankings, newEntities: EloEntity[])
     }
   }));
   
-  // Remove deleted entities and add new ones
-  const updatedEntities = rankings.entities
+  // Update existing entities with new data while preserving ELO scores
+  const updatedExistingEntities = rankings.entities.map(existingEntity => {
+    const newEntityData = newEntities.find(e => e.id === existingEntity.id);
+    if (newEntityData) {
+      return {
+        ...existingEntity,
+        name: newEntityData.name,
+        description: newEntityData.description,
+        imageUrl: newEntityData.imageUrl
+      };
+    }
+    return existingEntity;
+  });
+  
+  // Remove deleted entities, update existing ones, and add new ones
+  const updatedEntities = updatedExistingEntities
     .filter(entity => newEntityIds.has(entity.id)) // Keep only entities that still exist in data file
     .concat(initializedNewEntities); // Add new entities
   
@@ -429,6 +454,10 @@ export function syncNewEntities(rankings: EloRankings, newEntities: EloEntity[])
   
   if (entitiesToRemove.length > 0) {
     console.log(`🗑️ Removed ${entitiesToRemove.length} entities: ${entitiesToRemove.map(e => e.name).join(', ')}`);
+  }
+  
+  if (entitiesToUpdate.length > 0) {
+    console.log(`🔄 Updated ${entitiesToUpdate.length} entities: ${entitiesToUpdate.map(e => e.name).join(', ')}`);
   }
   
   return {
