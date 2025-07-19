@@ -42,12 +42,37 @@ export default function EloPage() {
   });
   const [superscoreLeaderboard, setSuperscoreLeaderboard] = useState<any[]>([]);
   const [showAllItemsModal, setShowAllItemsModal] = useState(false);
+  const [totalVotes, setTotalVotes] = useState(0);
+  const [sessionVotes, setSessionVotes] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [voting, setVoting] = useState(false);
+  const [error, setError] = useState('');
 
-  // Initialize with entities from data file
+  // Load rankings from API
   useEffect(() => {
-    setEntities(ELO_ENTITIES);
-    updateLeaderboards(ELO_ENTITIES);
+    loadRankings();
   }, []);
+
+  const loadRankings = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/elo');
+      const data = await response.json();
+      
+      if (data.success) {
+        setEntities(data.data.entities);
+        setTotalVotes(data.data.totalVotes);
+        updateLeaderboards(data.data.entities);
+        generateNewPair(data.data.entities);
+      } else {
+        setError(data.error || 'Failed to load rankings');
+      }
+    } catch (err) {
+      setError('Failed to connect to ELO service');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateLeaderboards = (currentEntities: EloEntity[]) => {
     const newLeaderboards = {
@@ -61,36 +86,89 @@ export default function EloPage() {
     setSuperscoreLeaderboard(generateSuperscoreLeaderboard(currentEntities));
   };
 
-  const handleMatchResult = (winner: 'entity1' | 'entity2') => {
-    if (!currentPair) return;
+  const generateNewPair = (entityList: EloEntity[]) => {
+    if (entityList.length < 2) return;
+    
+    const shuffled = [...entityList].sort(() => Math.random() - 0.5);
+    setCurrentPair([shuffled[0], shuffled[1]]);
+  };
 
-    const [entity1, entity2] = currentPair;
-    const result = processMatch(entity1, entity2, currentDimension, winner);
+  const handleMatchResult = async (winner: 'entity1' | 'entity2') => {
+    if (!currentPair || voting) return;
     
-    const updatedEntities = entities.map(entity => {
-      if (entity.id === result.entity1.id) return result.entity1;
-      if (entity.id === result.entity2.id) return result.entity2;
-      return entity;
-    });
-    
-    setEntities(updatedEntities);
-    updateLeaderboards(updatedEntities);
-    
-    // Get new random pair
-    const newPair = getRandomPair(updatedEntities);
-    setCurrentPair(newPair);
+    setVoting(true);
+    try {
+      const [entity1, entity2] = currentPair;
+      const winnerId = winner === 'entity1' ? entity1.id : entity2.id;
+      
+      const response = await fetch('/api/elo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          entity1Id: entity1.id,
+          entity2Id: entity2.id,
+          dimension: currentDimension,
+          winner: winnerId
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setEntities(data.rankings.entities);
+        setTotalVotes(data.rankings.totalVotes);
+        updateLeaderboards(data.rankings.entities);
+        setSessionVotes(prev => prev + 1);
+        generateNewPair(data.rankings.entities);
+      } else {
+        setError(data.error || 'Failed to submit vote');
+      }
+    } catch (err) {
+      setError('Failed to submit vote');
+    } finally {
+      setVoting(false);
+    }
   };
 
   const getNewMatchup = () => {
-    const newPair = getRandomPair(entities);
-    setCurrentPair(newPair);
+    generateNewPair(entities);
   };
 
   useEffect(() => {
     if (entities.length >= 2) {
-      getNewMatchup();
+      generateNewPair(entities);
     }
   }, [entities]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--highlight)] mx-auto mb-4"></div>
+          <p className="text-[var(--accent)]">Loading ELO rankings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8">
+          <h2 className="text-2xl font-bold text-[var(--foreground)] mb-4">Oops!</h2>
+          <p className="text-[var(--accent)] mb-6">{error}</p>
+          <button
+            onClick={loadRankings}
+            className="px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-lg font-semibold hover:bg-[var(--accent)] transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--background)] relative">
@@ -129,6 +207,16 @@ export default function EloPage() {
             <span className="block sm:inline">Four dimensions of comparison</span>
             <span className="hidden sm:inline"> | </span>
             <span className="block sm:inline">Real-time rankings</span>
+          </motion.div>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-2 sm:mt-4 text-xs sm:text-sm text-[var(--accent)]"
+          >
+            <span className="block sm:inline">Total Votes: {totalVotes}</span>
+            <span className="hidden sm:inline"> | </span>
+            <span className="block sm:inline">Your Session: {sessionVotes}</span>
           </motion.div>
         </div>
       </motion.section>
@@ -184,6 +272,7 @@ export default function EloPage() {
                 entity2={currentPair[1]}
                 dimension={currentDimension}
                 onResult={handleMatchResult}
+                voting={voting}
               />
             </div>
           )}

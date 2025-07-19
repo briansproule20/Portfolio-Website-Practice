@@ -9,9 +9,10 @@ interface EloMatchupProps {
   entity2: EloEntity;
   dimension: EloDimension;
   onResult: (winner: 'entity1' | 'entity2') => void;
+  voting?: boolean;
 }
 
-export default function EloMatchup({ entity1, entity2, dimension, onResult }: EloMatchupProps) {
+export default function EloMatchup({ entity1, entity2, dimension, onResult, voting = false }: EloMatchupProps) {
   const stats1 = getEntityStats(entity1, dimension);
   const stats2 = getEntityStats(entity2, dimension);
 
@@ -25,7 +26,7 @@ export default function EloMatchup({ entity1, entity2, dimension, onResult }: El
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
         {/* Entity 1 */}
-        <div className="bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105">
+        <div className={`bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105 ${voting ? 'pointer-events-none opacity-75' : ''}`}>
           <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden">
             <Image
               src={entity1.imageUrl}
@@ -58,7 +59,7 @@ export default function EloMatchup({ entity1, entity2, dimension, onResult }: El
         </div>
 
         {/* Entity 2 */}
-        <div className="bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105">
+        <div className={`bg-[var(--background)] border-2 border-[var(--accent)] rounded-lg p-4 sm:p-6 cursor-pointer hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105 ${voting ? 'pointer-events-none opacity-75' : ''}`}>
           <div className="relative w-full aspect-square mb-3 sm:mb-4 rounded-lg overflow-hidden">
             <Image
               src={entity2.imageUrl}

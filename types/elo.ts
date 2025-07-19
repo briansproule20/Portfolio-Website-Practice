@@ -63,7 +63,7 @@ export interface SuperscoreEntry {
 
 export const ELO_DIMENSIONS = {
   fight: {
-    name: 'Who Would Win in a Fight',
+    name: 'Fight',
     description: 'Combat prowess and fighting ability',
     icon: '⚔️'
   },
@@ -73,13 +73,13 @@ export const ELO_DIMENSIONS = {
     icon: '🏆'
   },
   cute: {
-    name: 'Which is Cuter',
+    name: 'Cute',
     description: 'Adorableness and cuteness factor',
     icon: '🥰'
   },
   ally: {
-    name: 'Who Would You Choose as an Ally',
+    name: 'Ally',
     description: 'Reliability and partnership value',
-    icon: '��'
+    icon: '🤝🏼'
   }
 } as const; 
