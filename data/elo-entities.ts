@@ -12,6 +12,7 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('emperor-penguin', 'Emperor Penguin', 'animal', '/elderscroll.png', 'Antarctic royalty'),
   createNewEntity('giraffe', 'Giraffe', 'animal', '/elderscroll.png', 'Tallest land animal'),
   createNewEntity('humpback-whale', 'Humpback Whale', 'animal', '/elderscroll.png', 'Ocean singer'),
+  createNewEntity('blue-whale', 'Blue Whale', 'animal', '/elderscroll.png', 'Largest animal ever'),
   
   // Dinosaurs
   createNewEntity('t-rex', 'T-Rex', 'dinosaur', '/elderscroll.png', 'Tyrant lizard king'),
@@ -20,9 +21,12 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('brachiosaurus', 'Brachiosaurus', 'dinosaur', '/elderscroll.png', 'Long-necked giant'),
   createNewEntity('stegosaurus', 'Stegosaurus', 'dinosaur', '/elderscroll.png', 'Plated herbivore'),
   createNewEntity('pterodactyl', 'Pterodactyl', 'dinosaur', '/elderscroll.png', 'Flying reptile'),
-  createNewEntity('ornithomimus', 'Ornithomimus', 'dinosaur', '/elderscroll.png', 'Speed, Sly Egg Thief'),
+  createNewEntity('ornithomimus', 'Ornithomimus', 'dinosaur', '/elderscroll.png', 'Speedy, Sly Egg Thief'),
   createNewEntity('diplodocus', 'Diplodocus', 'dinosaur', '/elderscroll.png', 'Long-tailed giant'),
   createNewEntity('ankylosaurus', 'Ankylosaurus', 'dinosaur', '/elderscroll.png', 'Armored tank'),
+  createNewEntity('brontosaurus', 'Brontosaurus', 'dinosaur', '/elderscroll.png', 'Thunder lizard'),
+  createNewEntity('spinosaurus', 'Spinosaurus', 'dinosaur', '/elderscroll.png', 'River monster'),
+  createNewEntity('pachycephalosaurus', 'Pachycephalosaurus', 'dinosaur', '/elderscroll.png', 'Dome-headed rammer'),
   
   // Characters
   createNewEntity('superman', 'Superman', 'character', '/elderscroll.png', 'Man of Steel'),

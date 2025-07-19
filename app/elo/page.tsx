@@ -332,22 +332,25 @@ export default function EloPage() {
 
       {/* All Items Modal */}
       {showAllItemsModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div 
+          className="fixed inset-0 bg-white/10 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowAllItemsModal(false)}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="bg-[var(--card)] border-2 border-[var(--accent)] rounded-lg p-6 max-w-6xl w-full max-h-[80vh] overflow-y-auto"
+            className="bg-[var(--card)] border-2 border-[var(--accent)] rounded-lg p-6 max-w-6xl w-full max-h-[80vh] overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-[var(--foreground)]">All ELO Items</h2>
               <button
                 onClick={() => setShowAllItemsModal(false)}
-                className="text-[var(--accent)] hover:text-[var(--foreground)] p-2"
+                className="text-[var(--accent)] hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-3 rounded-lg transition-all duration-200 text-2xl font-bold"
+                title="Close modal"
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+                ×
               </button>
             </div>
 
