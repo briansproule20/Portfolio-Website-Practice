@@ -13,6 +13,8 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('giraffe', 'Giraffe', 'animal', '/elderscroll.png', 'Tallest land animal'),
   createNewEntity('humpback-whale', 'Humpback Whale', 'animal', '/elderscroll.png', 'Ocean singer'),
   createNewEntity('blue-whale', 'Blue Whale', 'animal', '/elderscroll.png', 'Largest animal ever'),
+  createNewEntity('orca', 'Orca', 'animal', '/elderscroll.png', 'Ocean apex predator'),
+  createNewEntity('timber-wolf', 'Timber Wolf', 'animal', '/elderscroll.png', 'Pack hunter of the north'),
   
   // Dinosaurs
   createNewEntity('t-rex', 'T-Rex', 'dinosaur', '/elderscroll.png', 'Tyrant lizard king'),
@@ -37,6 +39,7 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('luke-skywalker', 'Luke Skywalker', 'character', '/elderscroll.png', 'Jedi Knight'),
   createNewEntity('han-solo', 'Han Solo', 'character', '/elderscroll.png', 'Scoundrel with a heart of gold'),
   createNewEntity('gandalf', 'Gandalf the Grey', 'character', '/elderscroll.png', 'Wizard of Middle-earth'),
+  createNewEntity('ebony-maw', 'Ebony Maw', 'character', '/elderscroll.png', 'Childof Thanos'),
 ];
 
 export function getEntitiesByCategory(category: 'animal' | 'dinosaur' | 'character'): EloEntity[] {
