@@ -283,25 +283,9 @@ const photos: Photo[] = [
 ];
 
 export function getFeaturedPhotos(): Photo[] {
-  // Separate horizontal and vertical photos
-  const horizontalPhotos = photos.filter(photo => photo.width > photo.height);
-  const verticalPhotos = photos.filter(photo => photo.width <= photo.height);
-  
-  // Randomly decide whether to use horizontal or vertical photos
-  const useHorizontal = Math.random() > 0.5 && horizontalPhotos.length >= 2 && verticalPhotos.length >= 2;
-  
-  if (useHorizontal) {
-    // Get 2 random horizontal photos and 2 vertical photos
-    const shuffledHorizontal = [...horizontalPhotos].sort(() => Math.random() - 0.5).slice(0, 2);
-    const shuffledVertical = [...verticalPhotos].sort(() => Math.random() - 0.5).slice(0, 2);
-    // Return in specific order: horizontal, vertical, vertical, horizontal
-    // This places horizontal photos in opposite corners
-    return [shuffledHorizontal[0], shuffledVertical[0], shuffledVertical[1], shuffledHorizontal[1]];
-  } else {
-    // Get 3 random vertical photos
-    const shuffledVertical = [...verticalPhotos].sort(() => Math.random() - 0.5);
-    return shuffledVertical.slice(0, 3);
-  }
+  // Get 4 random photos for consistent layout
+  const shuffledPhotos = [...photos].sort(() => Math.random() - 0.5);
+  return shuffledPhotos.slice(0, 4);
 }
 
 export default photos; 
