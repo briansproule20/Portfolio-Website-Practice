@@ -6,6 +6,7 @@ import {
   updateEloRankings,
   logEloVote,
   getEloVoteHistory,
+  syncNewEntities,
   ELO_ENTITIES
 } from '@/lib/elo-server';
 
@@ -22,6 +23,16 @@ export async function GET() {
       rankings = initializeEloRankings(ELO_ENTITIES);
       await saveEloRankings(rankings);
       console.log(`🎯 Initialized rankings with ${rankings.entities.length} entities`);
+    } else {
+      // Check for new entities from data file and sync them
+      console.log('🎯 Checking for new entities...');
+      const updatedRankings = syncNewEntities(rankings, ELO_ENTITIES);
+      
+      if (updatedRankings.entities.length > rankings.entities.length) {
+        rankings = updatedRankings;
+        await saveEloRankings(rankings);
+        console.log(`🎯 Added ${updatedRankings.entities.length - rankings.entities.length} new entities`);
+      }
     }
 
     return NextResponse.json({

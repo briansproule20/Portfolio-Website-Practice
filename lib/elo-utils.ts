@@ -110,9 +110,9 @@ export function generateSuperscoreLeaderboard(entities: EloEntity[]): Superscore
       const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
       const totalMatches = totalWins + totalLosses;
       
-      // Calculate superscore: weighted average of all dimensions
+      // Calculate superscore: simple average of all dimensions
       const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
-      const superscore = Math.round(averageScore + (totalWins * 10) - (totalLosses * 5));
+      const superscore = Math.round(averageScore);
       
       return {
         entity,

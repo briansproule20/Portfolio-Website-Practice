@@ -8,8 +8,8 @@ import { processMatch } from '@/lib/elo-utils';
 export { ELO_ENTITIES };
 
 // Vercel KV import with fallback
-let kv: any = null;
-let redis: any = null;
+export let kv: any = null;
+export let redis: any = null;
 
 try {
   kv = require('@vercel/kv').kv;
@@ -85,17 +85,17 @@ export interface EloVoteRecord {
   entity2RatingAfter: number;
 }
 
-const RANKINGS_FILE = path.join(process.cwd(), 'data', 'elo-rankings.json');
-const VOTES_FILE = path.join(process.cwd(), 'data', 'elo-votes.json');
-const KV_KEY = 'elo-rankings';
-const KV_VOTES_KEY = 'elo-votes';
+export const RANKINGS_FILE = path.join(process.cwd(), 'data', 'elo-rankings.json');
+export const VOTES_FILE = path.join(process.cwd(), 'data', 'elo-votes.json');
+export const KV_RANKINGS_KEY = 'elo-rankings';
+export const KV_VOTES_KEY = 'elo-votes';
 
 // In-memory fallback for development/testing
-let memoryRankings: EloRankings | null = null;
-let memoryVotes: EloVoteRecord[] = [];
+export let memoryRankings: EloRankings | null = null;
+export let memoryVotes: EloVoteRecord[] = [];
 
 // Ensure data directory exists
-function ensureDataDirectory() {
+export function ensureDataDirectory() {
   try {
     const dataDir = path.join(process.cwd(), 'data');
     if (!fs.existsSync(dataDir)) {
@@ -109,7 +109,7 @@ function ensureDataDirectory() {
 }
 
 // Check if we can write files (not possible on Vercel/Netlify)
-function canWriteFiles(): boolean {
+export function canWriteFiles(): boolean {
   try {
     const testFile = path.join(process.cwd(), 'test-write.tmp');
     fs.writeFileSync(testFile, 'test');
@@ -126,7 +126,7 @@ export async function loadEloRankings(): Promise<EloRankings | null> {
     // Try Redis Cloud first
     if (redis && redis.isOpen) {
       try {
-        const redisData = await redis.get(KV_KEY);
+        const redisData = await redis.get(KV_RANKINGS_KEY);
         if (redisData) {
           console.log('Loading ELO rankings from Redis Cloud');
           return JSON.parse(redisData);
@@ -139,7 +139,7 @@ export async function loadEloRankings(): Promise<EloRankings | null> {
     // Try Vercel KV second
     if (kv) {
       try {
-        const kvData = await kv.get(KV_KEY);
+        const kvData = await kv.get(KV_RANKINGS_KEY);
         if (kvData) {
           console.log('Loading ELO rankings from Vercel KV');
           return kvData as EloRankings;
@@ -186,7 +186,7 @@ export async function saveEloRankings(rankings: EloRankings): Promise<boolean> {
     // Try to save to Redis Cloud first
     if (redis && redis.isOpen) {
       try {
-        await redis.set(KV_KEY, JSON.stringify(rankings));
+        await redis.set(KV_RANKINGS_KEY, JSON.stringify(rankings));
         console.log('✅ Saved ELO rankings to Redis Cloud');
         success = true;
       } catch (error) {
@@ -197,7 +197,7 @@ export async function saveEloRankings(rankings: EloRankings): Promise<boolean> {
     // Try to save to Vercel KV if Redis failed
     if (!success && kv) {
       try {
-        await kv.set(KV_KEY, rankings);
+        await kv.set(KV_RANKINGS_KEY, rankings);
         console.log('✅ Saved ELO rankings to Vercel KV');
         success = true;
       } catch (error) {
@@ -276,7 +276,8 @@ export function updateEloRankings(
   }
 
   // Process the match
-  const result = processMatch(entity1, entity2, dimension, winner as 'entity1' | 'entity2');
+  const winnerType = winner === entity1Id ? 'entity1' : 'entity2';
+  const result = processMatch(entity1, entity2, dimension, winnerType);
   
   // Create vote record
   const voteRecord: EloVoteRecord = {
@@ -371,6 +372,51 @@ export async function logEloVote(voteRecord: EloVoteRecord): Promise<void> {
   } catch (error) {
     console.error('❌ Error saving ELO vote:', error);
   }
+}
+
+// Sync new entities from data file
+export function syncNewEntities(rankings: EloRankings, newEntities: EloEntity[]): EloRankings {
+  const existingIds = new Set(rankings.entities.map(e => e.id));
+  const newEntitiesToAdd = newEntities.filter(entity => !existingIds.has(entity.id));
+  
+  if (newEntitiesToAdd.length === 0) {
+    return rankings;
+  }
+  
+  // Initialize new entities with default ELO scores
+  const initializedNewEntities = newEntitiesToAdd.map(entity => ({
+    ...entity,
+    eloScores: {
+      fight: 1200,
+      better: 1200,
+      cute: 1200,
+      ally: 1200
+    },
+    totalMatches: {
+      fight: 0,
+      better: 0,
+      cute: 0,
+      ally: 0
+    },
+    wins: {
+      fight: 0,
+      better: 0,
+      cute: 0,
+      ally: 0
+    },
+    losses: {
+      fight: 0,
+      better: 0,
+      cute: 0,
+      ally: 0
+    }
+  }));
+  
+  return {
+    ...rankings,
+    entities: [...rankings.entities, ...initializedNewEntities],
+    lastUpdated: new Date().toISOString()
+  };
 }
 
 // Get vote history

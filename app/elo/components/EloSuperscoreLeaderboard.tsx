@@ -18,7 +18,7 @@ export default function EloSuperscoreLeaderboard({ entries }: EloSuperscoreLeade
 
   return (
     <div className="space-y-3 sm:space-y-4">
-      {entries.map((entry) => (
+      {entries.slice(0, 10).map((entry) => (
         <div key={entry.entity.id} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
           <div className="text-lg sm:text-2xl font-bold text-yellow-500 min-w-[2rem] sm:min-w-[3rem] text-center">
             #{entry.rank}
@@ -42,8 +42,6 @@ export default function EloSuperscoreLeaderboard({ entries }: EloSuperscoreLeade
           
           <div className="text-right text-xs sm:text-sm text-[var(--accent)] flex-shrink-0">
             <div className="font-bold text-yellow-500">Superscore: {entry.superscore}</div>
-            <div className="hidden sm:block">Avg: {entry.averageScore}</div>
-            <div className="sm:hidden">Avg: {entry.averageScore}</div>
             <div className="hidden sm:block">{entry.totalWins}W-{entry.totalLosses}L ({entry.overallWinRate.toFixed(1)}%)</div>
             <div className="sm:hidden">{entry.totalWins}W-{entry.totalLosses}L</div>
           </div>

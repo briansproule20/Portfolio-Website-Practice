@@ -358,24 +358,37 @@ export default function EloPage() {
                   🦁 Animals
                 </h3>
                 <div className="space-y-3">
-                  {entities.filter(entity => entity.category === 'animal').map((entity) => (
-                    <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={entity.imageUrl}
-                          alt={entity.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
-                        {entity.description && (
-                          <p className="text-sm text-[var(--accent)] opacity-75">{entity.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                  {entities
+                    .filter(entity => entity.category === 'animal')
+                    .sort((a, b) => {
+                      const aSuperscore = (a.eloScores.fight + a.eloScores.better + a.eloScores.cute + a.eloScores.ally) / 4;
+                      const bSuperscore = (b.eloScores.fight + b.eloScores.better + b.eloScores.cute + b.eloScores.ally) / 4;
+                      return bSuperscore - aSuperscore;
+                    })
+                    .map((entity) => {
+                      const superscore = Math.round((entity.eloScores.fight + entity.eloScores.better + entity.eloScores.cute + entity.eloScores.ally) / 4);
+                      const totalWins = entity.wins.fight + entity.wins.better + entity.wins.cute + entity.wins.ally;
+                      const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
+                      return (
+                        <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <Image
+                              src={entity.imageUrl}
+                              alt={entity.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
+                            <div className="text-sm text-[var(--accent)]">
+                              <span className="font-bold text-yellow-500">Superscore: {superscore}</span>
+                              <span className="ml-2">{totalWins}W-{totalLosses}L</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
 
@@ -385,24 +398,37 @@ export default function EloPage() {
                   🦖 Dinosaurs
                 </h3>
                 <div className="space-y-3">
-                  {entities.filter(entity => entity.category === 'dinosaur').map((entity) => (
-                    <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={entity.imageUrl}
-                          alt={entity.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
-                        {entity.description && (
-                          <p className="text-sm text-[var(--accent)] opacity-75">{entity.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                  {entities
+                    .filter(entity => entity.category === 'dinosaur')
+                    .sort((a, b) => {
+                      const aSuperscore = (a.eloScores.fight + a.eloScores.better + a.eloScores.cute + a.eloScores.ally) / 4;
+                      const bSuperscore = (b.eloScores.fight + b.eloScores.better + b.eloScores.cute + b.eloScores.ally) / 4;
+                      return bSuperscore - aSuperscore;
+                    })
+                    .map((entity) => {
+                      const superscore = Math.round((entity.eloScores.fight + entity.eloScores.better + entity.eloScores.cute + entity.eloScores.ally) / 4);
+                      const totalWins = entity.wins.fight + entity.wins.better + entity.wins.cute + entity.wins.ally;
+                      const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
+                      return (
+                        <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <Image
+                              src={entity.imageUrl}
+                              alt={entity.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
+                            <div className="text-sm text-[var(--accent)]">
+                              <span className="font-bold text-yellow-500">Superscore: {superscore}</span>
+                              <span className="ml-2">{totalWins}W-{totalLosses}L</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
 
@@ -412,30 +438,45 @@ export default function EloPage() {
                   🦸 Characters
                 </h3>
                 <div className="space-y-3">
-                  {entities.filter(entity => entity.category === 'character').map((entity) => (
-                    <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                        <Image
-                          src={entity.imageUrl}
-                          alt={entity.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
-                        {entity.description && (
-                          <p className="text-sm text-[var(--accent)] opacity-75">{entity.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                  {entities
+                    .filter(entity => entity.category === 'character')
+                    .sort((a, b) => {
+                      const aSuperscore = (a.eloScores.fight + a.eloScores.better + a.eloScores.cute + a.eloScores.ally) / 4;
+                      const bSuperscore = (b.eloScores.fight + b.eloScores.better + b.eloScores.cute + b.eloScores.ally) / 4;
+                      return bSuperscore - aSuperscore;
+                    })
+                    .map((entity) => {
+                      const superscore = Math.round((entity.eloScores.fight + entity.eloScores.better + entity.eloScores.cute + entity.eloScores.ally) / 4);
+                      const totalWins = entity.wins.fight + entity.wins.better + entity.wins.cute + entity.wins.ally;
+                      const totalLosses = entity.losses.fight + entity.losses.better + entity.losses.cute + entity.losses.ally;
+                      return (
+                        <div key={entity.id} className="flex items-center gap-3 p-3 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
+                          <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                            <Image
+                              src={entity.imageUrl}
+                              alt={entity.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-[var(--foreground)]">{entity.name}</h4>
+                            <div className="text-sm text-[var(--accent)]">
+                              <span className="font-bold text-yellow-500">Superscore: {superscore}</span>
+                              <span className="ml-2">{totalWins}W-{totalLosses}L</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
           </motion.div>
         </div>
       )}
+
+
     </div>
   );
 } 

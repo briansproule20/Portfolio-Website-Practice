@@ -49,7 +49,7 @@ export default function EloLeaderboard({ entries, dimension, compact = false }: 
 
   return (
     <div className="space-y-3 sm:space-y-4">
-      {entries.map((entry) => (
+      {entries.slice(0, 10).map((entry) => (
         <div key={entry.entity.id} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-[var(--background)] rounded-lg border border-[var(--accent)]">
           <div className="text-lg sm:text-2xl font-bold text-[var(--highlight)] min-w-[2rem] sm:min-w-[3rem] text-center">
             #{entry.rank}
