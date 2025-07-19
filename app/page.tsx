@@ -66,17 +66,17 @@ async function getRecentBooks() {
         {
           title: "The Midnight Library",
           author: "Matt Haig",
-          description: "A fascinating exploration of life's infinite possibilities and the choices that shape our existence."
+          year: "2020"
         },
         {
           title: "Project Hail Mary",
           author: "Andy Weir",
-          description: "An interstellar adventure that combines scientific accuracy with heartwarming friendship."
+          year: "2021"
         },
         {
           title: "Klara and the Sun",
           author: "Kazuo Ishiguro",
-          description: "A beautiful meditation on artificial intelligence, love, and what it means to be human."
+          year: "2021"
         }
       ]
     };
@@ -159,11 +159,11 @@ export default async function Home() {
       <section className="max-w-5xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">What I've Been Reading</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {books.map((book: { title: string; author: string; description: string }) => (
+          {books.map((book: { title: string; author: string; year?: string }) => (
             <div key={book.title} className="rounded-xl shadow-lg p-6 bg-[var(--card)] border-2 border-[var(--accent)] hover:border-[var(--highlight)] transition-colors">
               <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">{book.title}</h3>
-              <p className="text-[var(--accent)] mb-2">{book.author}</p>
-              <p className="mb-4 text-[var(--foreground)]">{book.description}</p>
+              <p className="text-[var(--accent)] mb-1">{book.author}</p>
+              {book.year && <p className="text-sm text-[var(--accent)] opacity-75">{book.year}</p>}
             </div>
           ))}
         </div>
