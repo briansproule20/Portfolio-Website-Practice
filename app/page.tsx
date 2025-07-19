@@ -109,20 +109,29 @@ export default async function Home() {
             <Link 
               href="/photos" 
               key={photo.id} 
-              className="rounded-xl shadow-lg p-4 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors"
+              className={`rounded-xl shadow-lg p-4 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors ${
+                photo.width > photo.height ? 'lg:col-span-2' : ''
+              }`}
             >
               <div 
                 className="relative w-full mb-4 group"
                 style={{
-                  aspectRatio: '4/3',
+                  aspectRatio: photo.width > photo.height ? '16/9' : '4/3',
                 }}
               >
                 <Image
                   src={photo.image}
                   alt={photo.title}
                   fill
-                  className="object-cover rounded-lg"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                  className={`object-cover rounded-lg ${
+                    photo.title === "Grandma Rosie" ? "object-[35%_center]" : ""
+                  } ${
+                    photo.width > photo.height ? "object-[center_35%]" : ""
+                  }`}
+                  sizes={photo.width > photo.height 
+                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                    : "(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                  }
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
