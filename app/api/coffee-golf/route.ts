@@ -8,9 +8,9 @@ const DAILY_RANGE = 'A1:Z1000'; // Daily scores range (including headers) - expa
 export async function GET(req: NextRequest) {
   try {
     // Check if credentials are available
-    if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY_GOLF) {
+    if (!process.env.GOOGLE_CLIENT_EMAIL_GOLF || !process.env.GOOGLE_PRIVATE_KEY_GOLF) {
       console.error('Missing Google credentials:', {
-        hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
+        hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL_GOLF,
         hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY_GOLF
       });
       return NextResponse.json({ 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     console.log('Attempting to authenticate with Google...');
     const auth = new google.auth.GoogleAuth({
       credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        client_email: process.env.GOOGLE_CLIENT_EMAIL_GOLF,
         private_key: process.env.GOOGLE_PRIVATE_KEY_GOLF?.replace(/\\n/g, '\n'),
       },
       scopes: SCOPES,
@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
       error: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
       credentials: {
-        hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL,
+        hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL_GOLF,
         hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY_GOLF
       }
     });
