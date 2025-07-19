@@ -52,9 +52,10 @@ export const metadata: Metadata = {
 async function getRecentBooks() {
   try {
     // Use absolute URL for server-side fetches
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3002';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
     const fetchUrl = `${baseUrl}/api/reading`;
-    console.log('FETCHING:', fetchUrl);
+    console.log('Homepage attempting to fetch from:', fetchUrl);
+    
     const res = await fetch(fetchUrl, { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to fetch books');
     const data = await res.json();
@@ -101,59 +102,7 @@ export default async function Home() {
         <ParallaxRing />
       </section>
 
-      {/* Featured Photos Section */}
-      <section className="max-w-4xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">Featured Photos</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredPhotos.map((photo: Photo) => (
-            <Link 
-              href="/photos" 
-              key={photo.id} 
-              className={`rounded-xl shadow-lg p-4 bg-[var(--card)] hover:border-[var(--highlight)] transition-colors ${
-                photo.width > photo.height ? 'lg:col-span-2' : ''
-              }`}
-            >
-              <div 
-                className="relative w-full mb-4 group"
-                style={{
-                  aspectRatio: photo.width > photo.height ? '16/9' : '4/3',
-                }}
-              >
-                <Image
-                  src={photo.image}
-                  alt={photo.title}
-                  fill
-                  className={`object-cover rounded-lg ${
-                    photo.title === "Grandma Rosie" ? "object-[35%_center]" : ""
-                  } ${
-                    photo.width > photo.height ? "object-[center_35%]" : ""
-                  }`}
-                  sizes={photo.width > photo.height 
-                    ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                    : "(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                  }
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <p className="text-white/90 text-sm">{photo.description}</p>
-                  </div>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">{photo.title}</h3>
-              <p className="text-[var(--accent)] mb-2">{photo.category}</p>
-            </Link>
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Link 
-            href="/photos" 
-            className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
-          >
-            View Gallery
-          </Link>
-        </div>
-      </section>
+
 
       {/* Reading Section */}
       <section className="max-w-5xl mx-auto px-4 py-12">
@@ -177,45 +126,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="max-w-3xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-6 text-[var(--highlight)]">Contact</h2>
-        <p className="text-lg mb-8 text-[var(--foreground)]">Interested in working together? Reach out below!</p>
-        <form className="flex flex-col gap-6 bg-[var(--card)] p-8 rounded-xl shadow-lg">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="name" className="text-[var(--foreground)] font-medium">Your Name</label>
-            <input 
-              type="text" 
-              id="name"
-              placeholder="Jane Doe" 
-              className="p-4 rounded-lg border-2 border-[var(--accent)] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--accent)] focus:border-[var(--highlight)] focus:outline-none transition-colors"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-[var(--foreground)] font-medium">Your Email</label>
-            <input 
-              type="email" 
-              id="email"
-              placeholder="jane@example.com" 
-              className="p-4 rounded-lg border-2 border-[var(--accent)] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--accent)] focus:border-[var(--highlight)] focus:outline-none transition-colors"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="message" className="text-[var(--foreground)] font-medium">Your Message</label>
-            <textarea 
-              id="message"
-              placeholder="Hello! I'd like to discuss..." 
-              className="p-4 rounded-lg border-2 border-[var(--accent)] bg-[var(--background)] text-[var(--foreground)] placeholder:text-[var(--accent)] focus:border-[var(--highlight)] focus:outline-none transition-colors min-h-[150px] resize-y"
-            />
-          </div>
-          <button 
-            type="submit" 
-            className="self-start px-8 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-lg font-semibold shadow hover:bg-[var(--accent)] transition-colors text-lg"
-          >
-            Send Message
-          </button>
-        </form>
-      </section>
+
 
       {/* Footer */}
       <footer className="w-full py-6 text-center text-[var(--accent)] text-sm mt-auto">

@@ -287,20 +287,21 @@ export function getFeaturedPhotos(): Photo[] {
   const horizontalPhotos = photos.filter(photo => photo.width > photo.height);
   const verticalPhotos = photos.filter(photo => photo.width <= photo.height);
   
-  // Randomly decide whether to use horizontal or vertical photos
-  const useHorizontal = Math.random() > 0.5 && horizontalPhotos.length >= 2 && verticalPhotos.length >= 2;
+  // Always return 4 photos with consistent frame size
+  // Randomly decide between: 2 horizontal + 2 vertical OR 4 vertical
+  const useMixedLayout = Math.random() > 0.5 && horizontalPhotos.length >= 2 && verticalPhotos.length >= 2;
   
-  if (useHorizontal) {
-    // Get 2 random horizontal photos and 2 vertical photos
+  if (useMixedLayout) {
+    // Get 2 random horizontal photos and 2 vertical photos for caddy corner layout
     const shuffledHorizontal = [...horizontalPhotos].sort(() => Math.random() - 0.5).slice(0, 2);
     const shuffledVertical = [...verticalPhotos].sort(() => Math.random() - 0.5).slice(0, 2);
     // Return in specific order: horizontal, vertical, vertical, horizontal
     // This places horizontal photos in opposite corners
     return [shuffledHorizontal[0], shuffledVertical[0], shuffledVertical[1], shuffledHorizontal[1]];
   } else {
-    // Get 4 random vertical photos for consistent sizing
+    // Get 3 random vertical photos for consistent frame size (3 across max)
     const shuffledVertical = [...verticalPhotos].sort(() => Math.random() - 0.5);
-    return shuffledVertical.slice(0, 4);
+    return shuffledVertical.slice(0, 3);
   }
 }
 

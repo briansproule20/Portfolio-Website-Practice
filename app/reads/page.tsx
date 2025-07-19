@@ -13,6 +13,7 @@ type Book = {
 async function getAllBooks() {
   console.log('Starting getAllBooks function...');
   try {
+    // Use absolute URL for server-side fetches
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
     const fetchUrl = `${baseUrl}/api/reading?all=true`;
     console.log('Attempting to fetch from:', fetchUrl);
