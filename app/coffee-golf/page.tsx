@@ -28,6 +28,8 @@ const CoffeeGolfDashboard = () => {
   const [players, setPlayers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [visiblePlayers, setVisiblePlayers] = useState<Set<string>>(new Set());
+  const [isolatedPlayer, setIsolatedPlayer] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +56,13 @@ const CoffeeGolfDashboard = () => {
 
     fetchData();
   }, []);
+
+  // Initialize visible players when players data is loaded
+  useEffect(() => {
+    if (players.length > 0) {
+      setVisiblePlayers(new Set(players));
+    }
+  }, [players]);
 
   // Process data for different charts
   const processedData = useMemo(() => {
@@ -160,9 +169,55 @@ const CoffeeGolfDashboard = () => {
     };
   }, [processedData, players]);
 
+  // Player interaction functions
+  const handlePlayerClick = (player: string) => {
+    if (isolatedPlayer === player) {
+      // If clicking the same player, revert to full view
+      setIsolatedPlayer(null);
+      setVisiblePlayers(new Set(players));
+    } else {
+      // Isolate the clicked player
+      setIsolatedPlayer(player);
+      setVisiblePlayers(new Set([player]));
+    }
+  };
+
+  const resetToFullView = () => {
+    setIsolatedPlayer(null);
+    setVisiblePlayers(new Set(players));
+  };
+
+  const togglePlayerVisibility = (player: string) => {
+    const newVisiblePlayers = new Set(visiblePlayers);
+    if (newVisiblePlayers.has(player)) {
+      newVisiblePlayers.delete(player);
+    } else {
+      newVisiblePlayers.add(player);
+    }
+    setVisiblePlayers(newVisiblePlayers);
+    setIsolatedPlayer(null); // Clear isolation when toggling
+  };
 
 
-  const colors = ['#0F7B0F', '#228B22', '#32CD32', '#9ACD32', '#6B8E23', '#556B2F', '#8FBC8F', '#90EE90'];
+
+  // Vivid color palette matching the main page - easily distinguishable
+  const colors = [
+    '#16A34A', // Green-600 (from Total Rounds card)
+    '#2563EB', // Blue-600 (from Active Players card)
+    '#CA8A04', // Yellow-600 (from Best Average card)
+    '#9333EA', // Purple-600 (from Most Wins card)
+    '#DC2626', // Red-600 (vivid red)
+    '#EA580C', // Orange-600 (vivid orange)
+    '#0891B2', // Cyan-600 (vivid cyan)
+    '#7C3AED', // Violet-600 (vivid violet)
+    '#059669', // Emerald-600 (vivid emerald)
+    '#BE185D', // Pink-600 (vivid pink)
+    '#D97706', // Amber-600 (vivid amber)
+    '#0EA5E9', // Sky-600 (vivid sky)
+    '#8B5CF6', // Purple-500 (lighter purple)
+    '#F59E0B', // Amber-500 (lighter amber)
+    '#10B981'  // Emerald-500 (lighter emerald)
+  ];
   
   const ViewSelector = () => (
     <div className="flex flex-wrap gap-2 mb-6">
@@ -303,8 +358,62 @@ const CoffeeGolfDashboard = () => {
   const renderPerformance = () => (
     <div className="space-y-8">
       <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-bold mb-4 text-gray-800">🏌️ Score Trends (Lower is Better)</h3>
-        <p className="text-gray-600 mb-4">Data points: {processedData.length}, Players: {players.length}</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+          <div>
+            <h3 className="text-xl font-bold text-gray-800">🏌️ Score Trends (Lower is Better)</h3>
+            <p className="text-gray-600">Data points: {processedData.length}, Players: {players.length}</p>
+          </div>
+          {isolatedPlayer && (
+            <button
+              onClick={resetToFullView}
+              className="mt-2 sm:mt-0 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2"
+            >
+              <span>👥</span>
+              Show All Players
+            </button>
+          )}
+        </div>
+        
+        {/* Player Legend with Interactive Controls */}
+        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+          <h4 className="text-sm font-semibold text-gray-700 mb-2">Players (click to isolate, toggle to show/hide):</h4>
+          <div className="flex flex-wrap gap-2">
+            {players.map((player, index) => {
+              const isVisible = visiblePlayers.has(player);
+              const isIsolated = isolatedPlayer === player;
+              const color = colors[index % colors.length];
+              
+              return (
+                <button
+                  key={player}
+                  onClick={() => handlePlayerClick(player)}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    togglePlayerVisibility(player);
+                  }}
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                    isIsolated
+                      ? 'ring-2 ring-blue-500 ring-offset-2'
+                      : isVisible
+                      ? 'opacity-100'
+                      : 'opacity-40'
+                  }`}
+                  style={{
+                    backgroundColor: color,
+                    color: 'white',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                  }}
+                  title={`Click to ${isIsolated ? 'show all players' : 'isolate'} ${player}. Right-click to toggle visibility.`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-white opacity-80"></span>
+                  {player}
+                  {isIsolated && <span className="text-xs">👁️</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {processedData.length > 0 && players.length > 0 ? (
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={[...processedData]}>
@@ -326,19 +435,36 @@ const CoffeeGolfDashboard = () => {
                   boxShadow: '0 10px 25px rgba(0,0,0,0.1)' 
                 }}
               />
-              <Legend />
-              {players.map((player, index) => (
-                <Line
-                  key={player}
-                  type="monotone"
-                  dataKey={player}
-                  stroke={colors[index % colors.length]}
-                  strokeWidth={2}
-                  dot={{ fill: colors[index % colors.length], strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6, stroke: colors[index % colors.length], strokeWidth: 2 }}
-                  connectNulls={false}
-                />
-              ))}
+              {players.map((player, index) => {
+                if (!visiblePlayers.has(player)) return null;
+                
+                const color = colors[index % colors.length];
+                const isIsolated = isolatedPlayer === player;
+                
+                return (
+                  <Line
+                    key={player}
+                    type="monotone"
+                    dataKey={player}
+                    stroke={color}
+                    strokeWidth={isIsolated ? 4 : 2}
+                    dot={{ 
+                      fill: color, 
+                      strokeWidth: 2, 
+                      r: isIsolated ? 6 : 4,
+                      stroke: 'white'
+                    }}
+                    activeDot={{ 
+                      r: isIsolated ? 8 : 6, 
+                      stroke: color, 
+                      strokeWidth: 2,
+                      fill: color
+                    }}
+                    connectNulls={false}
+                    name={player}
+                  />
+                );
+              })}
             </LineChart>
           </ResponsiveContainer>
         ) : (
@@ -386,6 +512,34 @@ const CoffeeGolfDashboard = () => {
       <div className="bg-white rounded-xl shadow-lg p-6">
         <h3 className="text-xl font-bold mb-4 text-gray-800">📊 Player Performance Radar</h3>
         <p className="text-gray-600 mb-6">Higher values are better in all categories</p>
+        
+        {/* Metric Explanations */}
+        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+          <h4 className="text-sm font-semibold text-gray-700 mb-2">Metrics Explained:</h4>
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[0] }}></div>
+              <span className="font-medium">Consistency:</span>
+              <span className="text-gray-600">Score stability (less variance = better)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[1] }}></div>
+              <span className="font-medium">Performance:</span>
+              <span className="text-gray-600">Average score quality (lower = better)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[2] }}></div>
+              <span className="font-medium">Participation:</span>
+              <span className="text-gray-600">Games played percentage</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: colors[3] }}></div>
+              <span className="font-medium">Win Rate:</span>
+              <span className="text-gray-600">Percentage of games won</span>
+            </div>
+          </div>
+        </div>
+        
         <ResponsiveContainer width="100%" height={400}>
           <RadarChart data={[...radarData]}>
             <PolarGrid stroke="#e5e7eb" />
@@ -401,37 +555,45 @@ const CoffeeGolfDashboard = () => {
             <Radar
               name="Consistency"
               dataKey="consistency"
-              stroke="#0F7B0F"
-              fill="#0F7B0F"
+              stroke={colors[0]}
+              fill={colors[0]}
               fillOpacity={0.1}
               strokeWidth={2}
             />
             <Radar
               name="Performance"
               dataKey="performance"
-              stroke="#228B22"
-              fill="#228B22"
+              stroke={colors[1]}
+              fill={colors[1]}
               fillOpacity={0.1}
               strokeWidth={2}
             />
             <Radar
               name="Participation"
               dataKey="participation"
-              stroke="#32CD32"
-              fill="#32CD32"
+              stroke={colors[2]}
+              fill={colors[2]}
               fillOpacity={0.1}
               strokeWidth={2}
             />
             <Radar
               name="Win Rate"
               dataKey="winRate"
-              stroke="#FFD700"
-              fill="#FFD700"
+              stroke={colors[3]}
+              fill={colors[3]}
               fillOpacity={0.1}
               strokeWidth={2}
             />
             <Legend />
-            <Tooltip />
+            <Tooltip 
+              formatter={(value: any, name: any) => [Number(value).toFixed(2), name]}
+              contentStyle={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.95)', 
+                border: 'none', 
+                borderRadius: '8px', 
+                boxShadow: '0 10px 25px rgba(0,0,0,0.1)' 
+              }}
+            />
           </RadarChart>
         </ResponsiveContainer>
       </div>
@@ -439,7 +601,7 @@ const CoffeeGolfDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-xl font-bold mb-4 text-gray-800">🎯 Skill vs Participation</h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={250}>
             <ScatterChart>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis 
@@ -448,6 +610,7 @@ const CoffeeGolfDashboard = () => {
                 name="Games Played"
                 tick={{ fontSize: 12 }}
                 stroke="#666"
+                label={{ value: 'Games Played', position: 'bottom', offset: 10, style: { textAnchor: 'middle', fontSize: 14, fontWeight: 'bold', fill: '#374151' } }}
               />
               <YAxis 
                 type="number" 
@@ -456,6 +619,7 @@ const CoffeeGolfDashboard = () => {
                 tick={{ fontSize: 12 }}
                 stroke="#666"
                 scale="linear"
+                label={{ value: 'Average Score (Lower is Better)', position: 'left', angle: -90, offset: 0, style: { textAnchor: 'middle', fontSize: 14, fontWeight: 'bold', fill: '#374151' } }}
               />
               <Tooltip 
                 cursor={{ strokeDasharray: '3 3' }}
@@ -467,13 +631,29 @@ const CoffeeGolfDashboard = () => {
                 }}
                 formatter={(value, name) => [value, name === 'average' ? 'Avg Score' : 'Games Played']}
               />
-              <Scatter name="Players" data={[...playerStats]} fill="#0F7B0F">
+              <Scatter name="Players" data={[...playerStats]} fill={colors[0]}>
                 {playerStats.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                 ))}
               </Scatter>
             </ScatterChart>
           </ResponsiveContainer>
+          
+          {/* Player Legend for Scatter Chart */}
+          <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">Players:</h4>
+            <div className="flex flex-wrap gap-2">
+              {playerStats.map((player: any, index) => (
+                <div key={player.name} className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: colors[index % colors.length] }}
+                  ></div>
+                  <span className="text-sm text-gray-700">{player.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6">
