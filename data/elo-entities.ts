@@ -40,6 +40,7 @@ export const ELO_ENTITIES: EloEntity[] = [
   createNewEntity('han-solo', 'Han Solo', 'character', '/elderscroll.png', 'Scoundrel with a heart of gold'),
   createNewEntity('gandalf', 'Gandalf the Grey', 'character', '/elderscroll.png', 'Wizard of Middle-earth'),
   createNewEntity('ebony-maw', 'Ebony Maw', 'character', '/elderscroll.png', 'Childof Thanos'),
+  createNewEntity('jedi-youngling', 'Jedi Youngling', 'character', '/images/elo/jedi-youngling.jpg', 'Theres too many of them, what are we going to do?'),
 ];
 
 export function getEntitiesByCategory(category: 'animal' | 'dinosaur' | 'character'): EloEntity[] {
