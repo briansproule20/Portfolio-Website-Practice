@@ -1,0 +1,23 @@
+This directory contains ELO ranking system images.
+
+Place your entity images here with the following naming convention:
+- lion.jpg
+- elephant.jpg
+- tiger.jpg
+- puppy.jpg
+- dolphin.jpg
+- eagle.jpg
+- t-rex.jpg
+- velociraptor.jpg
+- triceratops.jpg
+- brachiosaurus.jpg
+- stegosaurus.jpg
+- pterodactyl.jpg
+- superman.jpg
+- batman.jpg
+- spiderman.jpg
+- wonder-woman.jpg
+- iron-man.jpg
+- captain-america.jpg
+
+For now, you can use placeholder images or update the imageUrl paths in data/elo-entities.ts to point to existing images. 
