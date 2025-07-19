@@ -1,45 +1,28 @@
 import { NextResponse } from 'next/server';
-import { COFFEE_GOLF_CONFIG, getGoogleSheetsData } from '../../../lib/coffee-golf-utils';
 
 export async function GET() {
   try {
-    // Check configuration
-    const config = {
-      spreadsheetId: COFFEE_GOLF_CONFIG.SPREADSHEET_ID,
-      sheetName: COFFEE_GOLF_CONFIG.SHEET_NAME,
-      hasServiceAccountKey: !!COFFEE_GOLF_CONFIG.SERVICE_ACCOUNT_KEY,
-      serviceAccountEmail: COFFEE_GOLF_CONFIG.SERVICE_ACCOUNT_EMAIL
+    // Check environment variables without exposing sensitive data
+    const envCheck = {
+      hasClientEmail: !!process.env.GOOGLE_CLIENT_EMAIL_GOLF,
+      hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY_GOLF,
+      clientEmailLength: process.env.GOOGLE_CLIENT_EMAIL_GOLF?.length || 0,
+      privateKeyLength: process.env.GOOGLE_PRIVATE_KEY_GOLF?.length || 0,
+      clientEmailStart: process.env.GOOGLE_CLIENT_EMAIL_GOLF?.substring(0, 10) || 'not set',
+      privateKeyStart: process.env.GOOGLE_PRIVATE_KEY_GOLF?.substring(0, 20) || 'not set',
+      allEnvKeys: Object.keys(process.env).filter(key => key.includes('GOOGLE')).sort()
     };
 
-    if (!COFFEE_GOLF_CONFIG.SERVICE_ACCOUNT_KEY) {
-      return NextResponse.json({
-        error: 'Google Service Account key not configured',
-        config
-      });
-    }
-
-    // Fetch raw data from Google Sheets using service account
-    const data = await getGoogleSheetsData();
-    
     return NextResponse.json({
-      success: true,
-      config,
-      rawData: data,
-      rowCount: data.values?.length || 0,
-      headers: data.values?.[0] || [],
-      sampleRows: data.values?.slice(1, 3) || [] // First 2 data rows for debugging
+      message: 'Coffee Golf Debug Info',
+      environment: process.env.NODE_ENV,
+      timestamp: new Date().toISOString(),
+      envCheck
     });
-
   } catch (error) {
-    console.error('Debug error:', error);
     return NextResponse.json({
-      error: 'Debug failed',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      config: {
-        spreadsheetId: COFFEE_GOLF_CONFIG.SPREADSHEET_ID,
-        sheetName: COFFEE_GOLF_CONFIG.SHEET_NAME,
-        hasServiceAccountKey: !!COFFEE_GOLF_CONFIG.SERVICE_ACCOUNT_KEY
-      }
+      error: 'Debug endpoint failed',
+      message: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 } 
