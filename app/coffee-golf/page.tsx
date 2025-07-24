@@ -89,10 +89,11 @@ const CoffeeGolfDashboard = () => {
         const best = Math.min(...scores); // Best = lowest in golf
         const worst = Math.max(...scores); // Worst = highest in golf
         const wins = processedData.filter(day => {
-          const dayScores = players.map(p => day[p]).filter(s => s !== null && !isNaN(s));
+          const dayScores = players.map(p => ({ player: p, score: day[p] }))
+            .filter(item => item.score !== null && !isNaN(item.score));
           if (dayScores.length === 0) return false;
-          const minScore = Math.min(...dayScores); // Winner has MINIMUM score
-          return day[player] === minScore;
+          const minScore = Math.min(...dayScores.map(s => s.score)); // Winner has MINIMUM score
+          return dayScores.some(s => s.player === player && s.score === minScore);
         }).length;
         
         statsMap[player] = {
@@ -267,8 +268,10 @@ const CoffeeGolfDashboard = () => {
     const mostWins = validWins.length > 0 ? Math.max(...validWins) : 0;
     const mostWinsPlayer = (playerStats.find((p: any) => p.wins === mostWins) as any)?.name || 'No data';
     
-    // Calculate total rounds (sum of all games played by all players)
+    // Calculate total rounds (sum of all games played by all players across all days)
     const totalRounds = playerStats.reduce((sum, player: any) => sum + player.gamesPlayed, 0);
+    const mostRecentDay = processedData.length > 0 ? processedData[processedData.length - 1] : null;
+    const mostRecentDate = mostRecentDay ? mostRecentDay.date : 'No data';
     
     return (
       <div className="space-y-8">
@@ -276,7 +279,7 @@ const CoffeeGolfDashboard = () => {
           <StatCard
             title="Total Rounds"
             value={totalRounds}
-            subtitle={`${processedData.length} days played (6/25-7/19)`}
+            subtitle={`Most recent: ${mostRecentDate}`}
             icon={Calendar}
             color="from-green-600 to-green-700"
           />
