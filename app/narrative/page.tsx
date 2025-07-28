@@ -2133,7 +2133,7 @@ export default function NarrativeTheory() {
             transition={{ delay: 0.6 }}
             className="text-sm text-[var(--accent)] font-serif italic px-4 mb-6"
           >
-            Dedicated to Professor Brian McHale, Professor Emeritus, The Ohio State University
+            Dedicated to Professor Brian McHale, Professor Emeritus, The Ohio State University; Mrs. Salamacha; Ms. Budacki; Mr. Morgan; Mr. O'Connor; Mr. Rooney; Pittsburgh Central Catholic
           </motion.div>
           <motion.div
             initial={{ y: 20, opacity: 0 }}
