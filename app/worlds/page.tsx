@@ -560,7 +560,7 @@ export default function Worldbuilding() {
 
   const planets = [
     { id: 1, name: "Khelaris", size: 0.8, distance: 90, color: "#FF4500", orbitSpeed: 35 },
-    { id: 2, name: "Aurora", size: 1.2, distance: 130, color: "#4169E1", orbitSpeed: 39 },
+    { id: 2, name: "Oruneth", size: 1.2, distance: 130, color: "#D2691E", orbitSpeed: 39 },
     { id: 3, name: "Terra Nova", size: 1.0, distance: 180, color: "#228B22", orbitSpeed: 32 },
     { id: 4, name: "Crimson", size: 0.9, distance: 230, color: "#DC143C", orbitSpeed: 45 },
     { id: 5, name: "Jupiter's Echo", size: 2.0, distance: 280, color: "#DAA520", orbitSpeed: 50 },
@@ -708,7 +708,30 @@ export default function Worldbuilding() {
                     </p>
                   </>
                 )}
-                {selectedPlanet !== 1 && (
+                {selectedPlanet === 2 && (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Type:</span>
+                      <span className="text-[var(--foreground)]">Barren desert world</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Rotation:</span>
+                      <span className="text-[var(--foreground)]">Tidally locked</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Surface:</span>
+                      <span className="text-[var(--foreground)]">Shattered canyons</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Water:</span>
+                      <span className="text-[var(--foreground)]">Ice pockets in shadow</span>
+                    </div>
+                    <p className="text-[var(--accent)] text-xs mt-3 italic">
+                      Desert world locked in eternal day/night cycle, with deep canyon systems and occasional water-ice deposits hidden in permanent shadow.
+                    </p>
+                  </>
+                )}
+                {selectedPlanet !== 1 && selectedPlanet !== 2 && (
                   <>
                     <div className="flex justify-between">
                       <span className="text-[var(--accent)]">Orbit Speed:</span>
