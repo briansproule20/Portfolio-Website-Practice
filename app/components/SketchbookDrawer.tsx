@@ -236,59 +236,27 @@ const SketchbookDrawer: React.FC<SketchbookDrawerProps> = ({ isOpen, onToggle })
                       }}
                     />
                     
-                                         {/* Sketch Card */}
-                     <div className="relative bg-[var(--background)] rounded-lg p-4 border border-[var(--accent)]/20 hover:border-[var(--highlight)] transition-all duration-300 group-hover:shadow-lg">
-                       {/* Image */}
-                       <div className={`relative w-full mb-3 rounded overflow-hidden bg-[var(--accent)]/10 ${getImageClasses(sketch.aspectRatio, sketch.size)}`}>
-                         <Image
-                           src={sketch.image}
-                           alt={sketch.title}
-                           fill
-                           className="opacity-70 group-hover:opacity-100 transition-opacity duration-300 object-contain"
-                           style={{
-                             transform: `translateY(${scrollY * 0.05 * (index % 2 === 0 ? 1 : -1)}px)`,
-                           }}
-                         />
-                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                       </div>
+                    {/* MINIMAL SKETCH CARD - ONLY IMAGE AND TITLE */}
+                    <div className="relative bg-[var(--background)] rounded-lg p-3 border border-[var(--accent)]/20 hover:border-[var(--highlight)] transition-all duration-300 group-hover:shadow-lg">
+                      {/* Image */}
+                      <div className={`relative w-full mb-2 rounded overflow-hidden bg-[var(--accent)]/10 ${getImageClasses(sketch.aspectRatio, sketch.size)}`}>
+                        <Image
+                          src={sketch.image}
+                          alt={sketch.title}
+                          fill
+                          className="opacity-70 group-hover:opacity-100 transition-opacity duration-300 object-contain"
+                          style={{
+                            transform: `translateY(${scrollY * 0.05 * (index % 2 === 0 ? 1 : -1)}px)`,
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      </div>
 
-                                             {/* Content */}
-                       <div className="space-y-2">
-                         <div className="flex items-start justify-between">
-                           <div className="flex-1">
-                             <h3 className="font-semibold text-[var(--foreground)] text-sm group-hover:text-[var(--highlight)] transition-colors">
-                               {sketch.title}
-                             </h3>
-                             {/* Dimensions indicator */}
-                             <div className="flex items-center gap-2 mt-1">
-                               <span className="text-xs px-1.5 py-0.5 bg-[var(--accent)]/20 text-[var(--accent)] rounded">
-                                 {sketch.aspectRatio || 'square'}
-                               </span>
-                               <span className="text-xs px-1.5 py-0.5 bg-[var(--highlight)]/20 text-[var(--highlight)] rounded">
-                                 {sketch.size || 'medium'}
-                               </span>
-                             </div>
-                           </div>
-                           <span className="text-xs text-[var(--accent)] whitespace-nowrap ml-2">
-                             {sketch.date}
-                           </span>
-                         </div>
-                        
-                        <p className="text-xs text-[var(--accent)] leading-relaxed">
-                          {sketch.description}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 pt-2">
-                          {sketch.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="px-2 py-1 text-xs bg-[var(--highlight)]/20 text-[var(--highlight)] rounded-full"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                      {/* ONLY TITLE - NO DESCRIPTIONS, TAGS, DATES, OR METADATA */}
+                      <div className="text-center">
+                        <h3 className="font-semibold text-[var(--foreground)] text-sm group-hover:text-[var(--highlight)] transition-colors">
+                          {sketch.title}
+                        </h3>
                       </div>
 
                       {/* Hover effect */}
