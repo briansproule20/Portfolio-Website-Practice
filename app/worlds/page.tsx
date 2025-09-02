@@ -603,14 +603,14 @@ export default function Worldbuilding() {
       {/* Solar System Model */}
       <section className="max-w-6xl mx-auto px-4 -mt-0">
         <div className="relative w-full h-[800px] md:h-[900px] flex items-center justify-center overflow-hidden">
-          {/* Central Red Star */}
+          {/* Central Orange Star - Ilarion */}
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="absolute z-[9999] w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-red-500 to-red-700 rounded-full shadow-2xl shadow-red-500/50 cursor-pointer group hover:scale-125 hover:shadow-2xl hover:shadow-red-500/80 transition-all duration-300"
+            className="absolute z-[9999] w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-orange-400 to-amber-600 rounded-full shadow-2xl shadow-orange-400/50 cursor-pointer group hover:scale-125 hover:shadow-2xl hover:shadow-orange-400/80 transition-all duration-300"
             style={{
-              boxShadow: '0 0 50px rgba(239, 68, 68, 0.6), 0 0 100px rgba(239, 68, 68, 0.3)'
+              boxShadow: '0 0 50px rgba(251, 146, 60, 0.6), 0 0 100px rgba(251, 146, 60, 0.3)'
             }}
             onClick={() => handlePlanetClick('sun')}
           />
@@ -624,8 +624,8 @@ export default function Worldbuilding() {
               className="fixed top-20 right-8 z-50 w-80 bg-[var(--card)] rounded-lg p-6 border-2 border-[var(--accent)] shadow-xl"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-red-500 to-red-700" />
-                <h3 className="text-xl font-bold text-[var(--foreground)]">Sol Nova</h3>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-orange-400 to-amber-600" />
+                <h3 className="text-xl font-bold text-[var(--foreground)]">Ilarion</h3>
                 <button
                   onClick={() => setSelectedPlanet(null)}
                   className="ml-auto text-[var(--accent)] hover:text-[var(--foreground)] transition-colors"
@@ -636,20 +636,23 @@ export default function Worldbuilding() {
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-[var(--accent)]">Type:</span>
-                  <span className="text-[var(--foreground)]">Red Dwarf</span>
+                  <span className="text-[var(--foreground)]">K-class orange dwarf</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[var(--accent)]">Age:</span>
-                  <span className="text-[var(--foreground)]">~4.6 billion years</span>
+                  <span className="text-[var(--foreground)]">5.3 billion years</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--accent)]">Temperature:</span>
-                  <span className="text-[var(--foreground)]">3,500°K</span>
+                  <span className="text-[var(--accent)]">Color:</span>
+                  <span className="text-[var(--foreground)]">Golden-amber</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[var(--accent)]">Planets:</span>
-                  <span className="text-[var(--foreground)]">8</span>
+                  <span className="text-[var(--accent)]">Light:</span>
+                  <span className="text-[var(--foreground)]">Warm, fertile</span>
                 </div>
+                <p className="text-[var(--accent)] text-xs mt-3 italic">
+                  Stable spectrum with slightly higher red/orange output — ideal for agriculture
+                </p>
               </div>
             </motion.div>
           )}
