@@ -559,7 +559,7 @@ export default function Worldbuilding() {
   };
 
   const planets = [
-    { id: 1, name: "Meridian", size: 0.8, distance: 90, color: "#8B4513", orbitSpeed: 35 },
+    { id: 1, name: "Khelaris", size: 0.8, distance: 90, color: "#FF4500", orbitSpeed: 35 },
     { id: 2, name: "Aurora", size: 1.2, distance: 130, color: "#4169E1", orbitSpeed: 39 },
     { id: 3, name: "Terra Nova", size: 1.0, distance: 180, color: "#228B22", orbitSpeed: 32 },
     { id: 4, name: "Crimson", size: 0.9, distance: 230, color: "#DC143C", orbitSpeed: 45 },
@@ -689,14 +689,37 @@ export default function Worldbuilding() {
                   <span className="text-[var(--accent)]">Size:</span>
                   <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.size}x Earth</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--accent)]">Orbit Speed:</span>
-                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.orbitSpeed}s</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[var(--accent)]">Color:</span>
-                  <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.color}</span>
-                </div>
+                {selectedPlanet === 1 && (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Type:</span>
+                      <span className="text-[var(--foreground)]">Volcanic inner planet</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Surface:</span>
+                      <span className="text-[var(--foreground)]">Constant lava seas</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Crust:</span>
+                      <span className="text-[var(--foreground)]">Rich in rare alloys</span>
+                    </div>
+                    <p className="text-[var(--accent)] text-xs mt-3 italic">
+                      Small volcanic world with metallic crust containing valuable rare alloys beneath molten seas.
+                    </p>
+                  </>
+                )}
+                {selectedPlanet !== 1 && (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Orbit Speed:</span>
+                      <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.orbitSpeed}s</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[var(--accent)]">Color:</span>
+                      <span className="text-[var(--foreground)]">{planets.find(p => p.id === selectedPlanet)?.color}</span>
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
           )}
