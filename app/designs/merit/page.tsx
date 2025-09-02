@@ -340,52 +340,6 @@ export default function Merit() {
         </motion.div>
 
 
-        {/* Project Details */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12"
-        >
-          <div>
-            <h2 className="text-2xl font-bold text-[var(--foreground)] mb-4">
-              Project Overview
-            </h2>
-            <p className="text-[var(--accent)] leading-relaxed mb-6">
-              Merit Systems represents a commitment to open-source principles and transparent design. 
-              This print design project explores the intersection of technology and accessibility, 
-              creating visual systems that embody the values of open collaboration and shared knowledge.
-            </p>
-            <p className="text-[var(--accent)] leading-relaxed">
-              The design emphasizes clean typography, structured layouts, and a minimalist aesthetic 
-              that reflects the clarity and precision inherent in well-crafted open-source projects.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-bold text-[var(--foreground)] mb-4">
-              Design Philosophy
-            </h2>
-            <ul className="space-y-3 text-[var(--accent)]">
-              <li className="flex items-start">
-                <span className="text-[var(--highlight)] mr-2">•</span>
-                Open-source methodology and transparent processes
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--highlight)] mr-2">•</span>
-                Minimalist design principles for maximum clarity
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--highlight)] mr-2">•</span>
-                Structured typography and grid systems
-              </li>
-              <li className="flex items-start">
-                <span className="text-[var(--highlight)] mr-2">•</span>
-                Accessibility-first design considerations
-              </li>
-            </ul>
-          </div>
-        </motion.div>
 
         {/* README Section */}
         <motion.div
