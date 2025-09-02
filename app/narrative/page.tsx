@@ -2544,6 +2544,16 @@ export default function NarrativeTheory() {
                       <li>• <strong>Internal/External:</strong> Whether the focalizer is a character or not</li>
                     </ul>
                   </div>
+                  <div>
+                    <h5 className="font-semibold text-[var(--foreground)] mb-2">Voice (Voix)</h5>
+                    <p className="text-xs text-[var(--accent)] mb-2">The relationship between the narrator and the narrative situation</p>
+                    <ul className="text-xs text-[var(--foreground)] space-y-1">
+                      <li>• <strong>Heterodiegetic:</strong> Narrator absent from the story they tell</li>
+                      <li>• <strong>Homodiegetic:</strong> Narrator present as character in the story</li>
+                      <li>• <strong>Autodiegetic:</strong> Narrator is the protagonist of their story</li>
+                      <li>• <strong>Level:</strong> Extradiegetic (primary) vs. intradiegetic (embedded) narrative</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
