@@ -159,10 +159,37 @@ export default function Writing() {
                 
                 <div className="mt-auto pt-6">
                   {piece.title === "The Spanish Civil War and its Influence on Twentieth Century Europe" ? (
-                    <a 
-                      href="/pdfs/Spanish-War.pdf" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="/pdfs/Spanish-War.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
+                    >
+                      Read more →
+                    </a>
+                  ) : piece.title === "The Forgotten Mile" ? (
+                    <a
+                      href="/The Forgotten Mile PDF.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
+                    >
+                      Read more →
+                    </a>
+                  ) : piece.title === "Free Will and Actualization in Chiang's Story of Your Life" ? (
+                    <a
+                      href="/Sproule_FreeWillandActualization_LiteraryEssay PDF.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
+                    >
+                      Read more →
+                    </a>
+                  ) : piece.title === "On Our Way Home from the Revolution: Reflections on Ukraine" ? (
+                    <a
+                      href="/UkraineReviewSproule PDF.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[var(--highlight)] hover:text-[var(--accent)] transition-colors"
                     >
                       Read more →
