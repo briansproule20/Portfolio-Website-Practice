@@ -12,34 +12,10 @@ const zines = [
     pdfUrl: "/pdfs/atlantic-ocean.pdf"
   },
   {
-    title: "Speculative Fiction Mini Games and World-Building",
-    category: "Game Design & Narrative",
-    description: "Gwent, Sabaac, Orlog, and how other mini games augment and enrich their respective universes.",
-    pdfUrl: "/pdfs/speculative-fiction-games.pdf"
-  },
-  {
     title: "A Local's Guide to Native Species",
     category: "Nature & Conservation",
     description: "A journey through the foothills of the Appalachian Mountains, featuring the native species of Penn's Woods.",
     pdfUrl: "/pdfs/native-species.pdf"
-  },
-  {
-    title: "Ink and Pen and Paper and Transistors",
-    category: "Technology & Culture",
-    description: "A personal struggle with authenticity and accessibility in writing technologies.",
-    pdfUrl: "/pdfs/ink-and-pen.pdf"
-  },
-  {
-    title: "The Elder Scrolls, Fallout, and Starfield",
-    category: "Game Design & Narrative",
-    description: "An obsession borne of the writings of the deity, Todd Howard. (Please give us more content, Todd, and don't sue me.)",
-    pdfUrl: "/pdfs/bethesda-games.pdf"
-  },
-  {
-    title: "A Review of Oblivion Remastered in Light of the Elder Scrolls VI",
-    category: "Game Design & Narrative",
-    description: "Thoughts, comparisons, and a wishlist for the eternally awaited Elder Scrolls VI.",
-    pdfUrl: "/pdfs/story-of-your-life.pdf"
   },
 ];
 

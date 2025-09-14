@@ -84,7 +84,7 @@ export default function GitHubActivity() {
       {/* GitHub Contribution Graph */}
       <div className="mb-12 flex justify-center">
         <div className="bg-[var(--card)] rounded-xl shadow-lg p-6 border-2 border-[var(--accent)] overflow-hidden max-w-4xl">
-          <h3 className="text-lg font-semibold mb-6 text-[var(--foreground)] text-center">Contribution Activity</h3>
+          <h3 className="text-lg font-semibold mb-6 text-[var(--foreground)] text-center">GitHub Contribution Activity</h3>
           <ContributionGraph
             contributions={data.contributions || {}}
             totalContributions={data.totalContributions || 0}

@@ -151,26 +151,6 @@ export default function Designs() {
         ))}
       </motion.section>
 
-      {/* Contact Section */}
-      <section className="max-w-4xl mx-auto px-4 py-24 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="space-y-6"
-        >
-          <h2 className="text-4xl font-bold text-[var(--foreground)]">
-            Let's Create Something Together
-          </h2>
-          <p className="text-[var(--accent)] text-lg max-w-2xl mx-auto">
-            I'm always open to discussing new projects and creative opportunities.
-          </p>
-          <button className="mt-8 px-8 py-3 bg-[var(--highlight)] text-[var(--background)] rounded-full font-medium hover:opacity-90 transition-opacity">
-            Get in Touch
-          </button>
-        </motion.div>
-      </section>
 
       {/* Sketchbook Drawer */}
       <SketchbookDrawer 
