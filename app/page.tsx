@@ -9,6 +9,7 @@ import ParallaxRing from './components/ParallaxRing';
 import SketchbookDrawer from './components/SketchbookDrawer';
 import ChatWidget from './components/ChatWidget';
 import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
+import GitHubActivity from './components/GitHubActivity';
 import Image from "next/image";
 import { getFeaturedPhotos, type Photo } from '../utils/photos';
 
@@ -102,7 +103,8 @@ export default async function Home() {
         <ParallaxRing />
       </section>
 
-
+      {/* GitHub Activity Section */}
+      <GitHubActivity />
 
       {/* Reading Section */}
       <section className="max-w-5xl mx-auto px-4 py-12">
