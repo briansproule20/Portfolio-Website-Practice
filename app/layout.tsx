@@ -35,10 +35,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/fish.png', sizes: 'any', type: 'image/png' },
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
-    ],
+    icon: '/fish.png',
     apple: '/fish.png',
     shortcut: '/fish.png',
   },
