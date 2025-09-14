@@ -35,9 +35,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/fish-favicon.png',
-    apple: '/fish-favicon.png',
-    shortcut: '/fish-favicon.png',
+    icon: [
+      { url: '/fish.png', sizes: 'any', type: 'image/png' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+    ],
+    apple: '/fish.png',
+    shortcut: '/fish.png',
   },
   manifest: '/site.webmanifest',
   openGraph: {
