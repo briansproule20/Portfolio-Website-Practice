@@ -1,5 +1,34 @@
 import { NextResponse, NextRequest } from 'next/server';
 
+interface ContributionDay {
+  date: string;
+  count: number;
+}
+
+interface ContributionData {
+  [key: string]: number;
+}
+
+interface Repository {
+  name: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+  updated_at: string;
+  html_url: string;
+  private: boolean;
+}
+
+interface FormattedRepository {
+  name: string;
+  description: string | null;
+  language: string | null;
+  stars: number;
+  updated: string;
+  url: string;
+  private: boolean;
+}
+
 export async function GET(req: NextRequest) {
   try {
     const username = 'briansproule20'; // Your GitHub username
@@ -24,10 +53,10 @@ export async function GET(req: NextRequest) {
       throw new Error(`GitHub repos API responded with ${reposResponse.status}`);
     }
 
-    const repos = await reposResponse.json();
+    const repos: Repository[] = await reposResponse.json();
 
     // Fetch contribution data for the graph
-    let contributionData = {};
+    let contributionData: ContributionData = {};
     let totalContributions = 0;
 
     try {
@@ -42,7 +71,7 @@ export async function GET(req: NextRequest) {
 
         if (contributionsJson.contributions) {
           // Transform the data to our format
-          contributionsJson.contributions.forEach((day: any) => {
+          contributionsJson.contributions.forEach((day: ContributionDay) => {
             contributionData[day.date] = day.count;
             totalContributions += day.count;
           });
@@ -57,7 +86,7 @@ export async function GET(req: NextRequest) {
 
 
     // Format repositories data (already sorted by recently updated from API)
-    const formattedRepos = repos.map((repo: any) => ({
+    const formattedRepos: FormattedRepository[] = repos.map((repo: Repository) => ({
       name: repo.name,
       description: repo.description,
       language: repo.language,
