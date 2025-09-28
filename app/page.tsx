@@ -104,9 +104,6 @@ export default async function Home() {
         <ParallaxRing />
       </section>
 
-      {/* GitHub Activity Section */}
-      <GitHubActivity />
-
       {/* Reading Section */}
       <section className="max-w-5xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">What I've Been Reading</h2>
@@ -120,14 +117,17 @@ export default async function Home() {
           ))}
         </div>
         <div className="text-center mt-8">
-          <a 
-            href="/reads" 
+          <a
+            href="/reads"
             className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
           >
             See All
           </a>
         </div>
       </section>
+
+      {/* GitHub Activity Section */}
+      <GitHubActivity />
 
       {/* Live Deployments Section */}
       <section className="max-w-7xl mx-auto px-4 py-12">
