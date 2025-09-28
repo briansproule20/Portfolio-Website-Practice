@@ -253,3 +253,22 @@ body {
 .animate-swim-fast {
   animation: swim-fast 4s linear infinite;
 }
+
+/* Infinite Moving Cards Animation */
+.animate-scroll {
+  animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+

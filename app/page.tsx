@@ -12,6 +12,7 @@ import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
 import GitHubActivity from './components/GitHubActivity';
 import Image from "next/image";
 import { getFeaturedPhotos, type Photo } from '../utils/photos';
+import InfiniteMovingCardsDemo from '../components/infinite-moving-cards-demo';
 
 export const metadata: Metadata = {
   title: "Brian Sproule | Writer, Publisher, Designer",
@@ -128,7 +129,11 @@ export default async function Home() {
         </div>
       </section>
 
-
+      {/* Live Deployments Section */}
+      <section className="max-w-7xl mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">Live Deployments</h2>
+        <InfiniteMovingCardsDemo />
+      </section>
 
       {/* Footer */}
       <footer className="w-full py-6 text-center text-[var(--accent)] text-sm mt-auto">
