@@ -11,9 +11,10 @@ export const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    quote: string;
-    name: string;
     title: string;
+    subtitle: string;
+    description: string;
+    favicon?: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -61,11 +62,11 @@ export const InfiniteMovingCards = ({
   const getSpeed = () => {
     if (containerRef.current) {
       if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s");
-      } else if (speed === "normal") {
         containerRef.current.style.setProperty("--animation-duration", "40s");
-      } else {
+      } else if (speed === "normal") {
         containerRef.current.style.setProperty("--animation-duration", "80s");
+      } else {
+        containerRef.current.style.setProperty("--animation-duration", "160s");
       }
     }
   };
@@ -88,23 +89,32 @@ export const InfiniteMovingCards = ({
         {items.map((item, idx) => (
           <li
             className="relative w-[350px] max-w-full shrink-0 rounded-2xl border-2 border-[var(--accent)] bg-[var(--card)] px-8 py-6 md:w-[450px] shadow-md hover:border-[var(--highlight)] transition-colors"
-            key={item.name}
+            key={idx}
           >
-            <blockquote>
-              <span className="relative z-20 text-sm leading-[1.6] font-normal text-[var(--foreground)]">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span className="text-sm leading-[1.6] font-medium text-[var(--foreground)]">
-                    {item.name}
-                  </span>
-                  <span className="text-sm leading-[1.6] font-normal text-[var(--accent)]">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center mb-4">
+                {item.favicon && (
+                  <div className="mr-3 flex-shrink-0">
+                    <img
+                      src={item.favicon}
+                      alt={`${item.title} favicon`}
+                      className="w-8 h-8 rounded-sm"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <h3 className="text-lg font-semibold text-[var(--foreground)] leading-tight">
                     {item.title}
-                  </span>
-                </span>
+                  </h3>
+                  <p className="text-sm font-medium text-[var(--accent)]">
+                    {item.subtitle}
+                  </p>
+                </div>
               </div>
-            </blockquote>
+              <p className="text-sm leading-[1.6] font-normal text-[var(--foreground)] flex-1">
+                {item.description}
+              </p>
+            </div>
           </li>
         ))}
       </ul>
