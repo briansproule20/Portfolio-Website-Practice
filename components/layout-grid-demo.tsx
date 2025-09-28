@@ -102,28 +102,28 @@ export default function LayoutGridDemo() {
       content: <SkeletonOne photo={selectedPhotos[0]} />,
       className: "md:col-span-2",
       thumbnail: selectedPhotos[0]?.image || "",
-      orientation: selectedPhotos[0]?.width > selectedPhotos[0]?.height ? 'horizontal' : 'vertical',
+      orientation: (selectedPhotos[0]?.width > selectedPhotos[0]?.height ? 'horizontal' : 'vertical') as 'horizontal' | 'vertical',
     },
     {
       id: 2,
       content: <SkeletonTwo photo={selectedPhotos[1]} />,
       className: "col-span-1",
       thumbnail: selectedPhotos[1]?.image || "",
-      orientation: selectedPhotos[1]?.width > selectedPhotos[1]?.height ? 'horizontal' : 'vertical',
+      orientation: (selectedPhotos[1]?.width > selectedPhotos[1]?.height ? 'horizontal' : 'vertical') as 'horizontal' | 'vertical',
     },
     {
       id: 3,
       content: <SkeletonThree photo={selectedPhotos[2]} />,
       className: "col-span-1",
       thumbnail: selectedPhotos[2]?.image || "",
-      orientation: selectedPhotos[2]?.width > selectedPhotos[2]?.height ? 'horizontal' : 'vertical',
+      orientation: (selectedPhotos[2]?.width > selectedPhotos[2]?.height ? 'horizontal' : 'vertical') as 'horizontal' | 'vertical',
     },
     {
       id: 4,
       content: <SkeletonFour photo={selectedPhotos[3]} />,
       className: "md:col-span-2",
       thumbnail: selectedPhotos[3]?.image || "",
-      orientation: selectedPhotos[3]?.width > selectedPhotos[3]?.height ? 'horizontal' : 'vertical',
+      orientation: (selectedPhotos[3]?.width > selectedPhotos[3]?.height ? 'horizontal' : 'vertical') as 'horizontal' | 'vertical',
     },
   ];
 
