@@ -1,22 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import React from "react";
+import Image from "next/image";
 
-export default function InfiniteMovingCardsDemo() {
-  return (
-    <div className="h-[20rem] rounded-md flex flex-col antialiased bg-[var(--background)] items-center justify-center relative overflow-hidden">
-      <InfiniteMovingCards
-        items={testimonials}
-        direction="right"
-        speed="slow"
-        pauseOnHover={true}
-      />
-    </div>
-  );
-}
-
-const testimonials = [
+const apps = [
   {
     title: "Code Explainer",
     subtitle: "Paste code snippets, get plain explanations",
@@ -95,3 +82,75 @@ const testimonials = [
     link: "https://yeschef-carrot.vercel.app",
   },
 ];
+
+export default function Apps() {
+  return (
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      {/* Hero Section */}
+      <section className="pt-20 pb-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-[var(--foreground)]">
+            My Apps
+          </h1>
+          <p className="text-xl text-[var(--accent)] max-w-2xl mx-auto">
+            A collection of AI-powered tools and applications I've built to solve everyday problems and spark creativity.
+          </p>
+        </div>
+      </section>
+
+      {/* Apps Grid */}
+      <section className="max-w-7xl mx-auto px-4 pb-16">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {apps.map((app, index) => {
+            const CardContent = (
+              <div className="h-full flex flex-col">
+                <div className="flex items-center mb-4">
+                  <div className="mr-4 flex-shrink-0">
+                    <Image
+                      src={app.favicon}
+                      alt={`${app.title} favicon`}
+                      width={64}
+                      height={64}
+                      className="rounded-lg"
+                    />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <h3 className="text-xl font-bold text-[var(--foreground)] leading-tight">
+                      {app.title}
+                    </h3>
+                    <p className="text-sm font-medium text-[var(--accent)] leading-tight">
+                      {app.subtitle}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm leading-[1.6] text-[var(--foreground)] flex-1">
+                  {app.description}
+                </p>
+              </div>
+            );
+
+            return (
+              <div
+                key={index}
+                className="rounded-2xl border-2 border-[var(--accent)] bg-[var(--card)] p-6 shadow-md hover:border-[var(--highlight)] transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              >
+                {app.link ? (
+                  <a
+                    href={app.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block h-full cursor-pointer"
+                  >
+                    {CardContent}
+                  </a>
+                ) : (
+                  CardContent
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  );
+}
