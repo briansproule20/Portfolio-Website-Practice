@@ -393,6 +393,36 @@ export default function Movies() {
       director: 'Ridley Scott',
       genre: ['Sci-Fi', 'Horror', 'Thriller'],
       runtime: '117 min'
+    },
+    {
+      title: 'Harry Potter Series',
+      year: 2001,
+      rating: 4.5,
+      review: 'A magical journey that grew up with its audience, delivering both wonder and darkness.',
+      comments: 'The world-building is incredible. The later films get surprisingly dark and mature.',
+      director: 'Chris Columbus, Alfonso Cuarón, Mike Newell, David Yates',
+      genre: ['Fantasy', 'Adventure', 'Drama'],
+      runtime: '1,179 min (All 8 Films)'
+    },
+    {
+      title: 'Kung Fu Panda Trilogy',
+      year: 2008,
+      rating: 4.5,
+      review: 'A surprisingly deep animated trilogy about self-discovery, family, and finding inner peace.',
+      comments: 'Po\'s journey from noodle shop worker to Dragon Warrior is genuinely moving.',
+      director: 'Mark Osborne, Jennifer Yuh Nelson, Alessandro Carloni',
+      genre: ['Animation', 'Comedy', 'Adventure', 'Family'],
+      runtime: '285 min (All 3 Films)'
+    },
+    {
+      title: 'Cars',
+      year: 2006,
+      rating: 4.0,
+      review: 'A charming Pixar film about slowing down and appreciating the journey over the destination.',
+      comments: 'Lightning McQueen\'s character arc is surprisingly touching. The animation is gorgeous.',
+      director: 'John Lasseter',
+      genre: ['Animation', 'Comedy', 'Adventure', 'Family'],
+      runtime: '117 min'
     }
   ];
 
