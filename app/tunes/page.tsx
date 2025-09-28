@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { PersistentTrack, PlaylistRankings, getTrackStats } from '@/types/rankings';
 
 const container = {
@@ -482,6 +483,17 @@ export default function Tunes() {
             </motion.div>
           )}
         </motion.section>
+
+        {/* Press for Meme Button */}
+        <div className="flex justify-center pb-8">
+          <Link
+            href="/wanted"
+            className="group relative px-6 py-2 bg-[var(--card)] border-2 border-[var(--accent)] rounded-full text-base font-medium text-[var(--foreground)] hover:text-[var(--highlight)] transition-all duration-300 hover:scale-105 hover:shadow-lg hover:border-[var(--highlight)]"
+          >
+            <span className="relative z-10">Press for Meme</span>
+            <div className="absolute inset-0 bg-[var(--highlight)] opacity-0 group-hover:opacity-10 rounded-full transition-opacity duration-300"></div>
+          </Link>
+        </div>
       </div>
     </div>
   );
