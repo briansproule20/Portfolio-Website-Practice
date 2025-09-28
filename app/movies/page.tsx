@@ -225,14 +225,14 @@ export default function Movies() {
       runtime: '558 min (Extended)'
     },
     {
-      title: 'The Princess Bride',
-      year: 1987,
+      title: 'Interstellar',
+      year: 2014,
       rating: 5.0,
-      review: 'Timeless classic that perfectly balances adventure, romance, and comedy.',
-      comments: 'As you wish. Need I say more?',
-      director: 'Rob Reiner',
-      genre: ['Fantasy', 'Adventure', 'Comedy', 'Romance'],
-      runtime: '98 min'
+      review: 'A breathtaking sci-fi epic that explores love, time, and humanity\'s place in the universe.',
+      comments: 'Hans Zimmer\'s score is absolutely transcendent. The science is mind-bending.',
+      director: 'Christopher Nolan',
+      genre: ['Sci-Fi', 'Drama', 'Adventure'],
+      runtime: '169 min'
     },
     {
       title: 'The Shawshank Redemption',
@@ -273,6 +273,126 @@ export default function Movies() {
       director: 'Wes Anderson',
       genre: ['Comedy', 'Drama', 'Adventure'],
       runtime: '99 min'
+    },
+    {
+      title: 'The Hobbit Trilogy',
+      year: 2012,
+      rating: 4.0,
+      review: 'An epic journey through Middle-earth that, while not as perfect as LOTR, still delivers adventure and heart.',
+      comments: 'The extended editions are worth it. Martin Freeman is perfect as Bilbo.',
+      director: 'Peter Jackson',
+      genre: ['Fantasy', 'Adventure', 'Drama'],
+      runtime: '474 min (Extended)'
+    },
+    {
+      title: 'Star Wars Prequel Trilogy',
+      year: 1999,
+      rating: 4.0,
+      review: 'Flawed but fascinating exploration of how democracy dies and heroes are born.',
+      comments: 'Revenge of the Sith is genuinely great. The memes are legendary.',
+      director: 'George Lucas',
+      genre: ['Sci-Fi', 'Fantasy', 'Adventure'],
+      runtime: '418 min'
+    },
+    {
+      title: 'Star Wars Original Trilogy',
+      year: 1977,
+      rating: 5.0,
+      review: 'The trilogy that defined a generation and created the modern blockbuster.',
+      comments: 'Empire Strikes Back is perfect. The practical effects still hold up.',
+      director: 'George Lucas',
+      genre: ['Sci-Fi', 'Fantasy', 'Adventure'],
+      runtime: '378 min'
+    },
+    {
+      title: 'Once Upon a Time in Hollywood',
+      year: 2019,
+      rating: 4.5,
+      review: 'Tarantino\'s love letter to 1969 Hollywood with incredible attention to period detail.',
+      comments: 'The ending is cathartic. Leo and Brad have amazing chemistry.',
+      director: 'Quentin Tarantino',
+      genre: ['Drama', 'Comedy', 'Thriller'],
+      runtime: '161 min'
+    },
+    {
+      title: 'Rogue One',
+      year: 2016,
+      rating: 4.5,
+      review: 'A gritty war movie disguised as a Star Wars film. The third act is pure cinema.',
+      comments: 'The Vader hallway scene alone makes it worth watching.',
+      director: 'Gareth Edwards',
+      genre: ['Sci-Fi', 'Action', 'Drama'],
+      runtime: '133 min'
+    },
+    {
+      title: 'The Martian',
+      year: 2015,
+      rating: 4.5,
+      review: 'A brilliant blend of hard science and humor about human resilience and ingenuity.',
+      comments: 'Matt Damon carries the whole movie. The science is surprisingly accurate.',
+      director: 'Ridley Scott',
+      genre: ['Sci-Fi', 'Drama', 'Adventure'],
+      runtime: '144 min'
+    },
+    {
+      title: '2001: A Space Odyssey',
+      year: 1968,
+      rating: 5.0,
+      review: 'A transcendent masterpiece that redefined science fiction cinema and visual storytelling.',
+      comments: 'The monolith sequence is pure cinema. HAL 9000 is still terrifying.',
+      director: 'Stanley Kubrick',
+      genre: ['Sci-Fi', 'Drama', 'Mystery'],
+      runtime: '149 min'
+    },
+    {
+      title: 'Blade Runner',
+      year: 1982,
+      rating: 5.0,
+      review: 'A visually stunning neo-noir that explores what it means to be human in a dystopian future.',
+      comments: 'The Final Cut is the definitive version. Rutger Hauer\'s monologue is perfect.',
+      director: 'Ridley Scott',
+      genre: ['Sci-Fi', 'Thriller', 'Drama'],
+      runtime: '117 min'
+    },
+    {
+      title: 'Arrival',
+      year: 2016,
+      rating: 4.5,
+      review: 'A thoughtful and emotionally resonant sci-fi that explores communication, time, and human connection.',
+      comments: 'Amy Adams gives a phenomenal performance. The linguistics angle is fascinating.',
+      director: 'Denis Villeneuve',
+      genre: ['Sci-Fi', 'Drama', 'Mystery'],
+      runtime: '116 min'
+    },
+    {
+      title: 'Dune',
+      year: 2021,
+      rating: 4.5,
+      review: 'A visually stunning and faithful adaptation that finally does justice to Herbert\'s masterpiece.',
+      comments: 'The world-building is incredible. Hans Zimmer\'s score is otherworldly.',
+      director: 'Denis Villeneuve',
+      genre: ['Sci-Fi', 'Drama', 'Adventure'],
+      runtime: '155 min'
+    },
+    {
+      title: 'Dune: Part Two',
+      year: 2024,
+      rating: 5.0,
+      review: 'A perfect conclusion that delivers on the promise of Part One with epic scope and emotional depth.',
+      comments: 'The sandworm sequences are breathtaking. Timothée Chalamet owns the role of Paul.',
+      director: 'Denis Villeneuve',
+      genre: ['Sci-Fi', 'Drama', 'Adventure'],
+      runtime: '166 min'
+    },
+    {
+      title: 'Alien',
+      year: 1979,
+      rating: 5.0,
+      review: 'A masterclass in atmospheric horror and sci-fi that redefined both genres.',
+      comments: 'Ripley is the ultimate final girl. The practical effects still hold up perfectly.',
+      director: 'Ridley Scott',
+      genre: ['Sci-Fi', 'Horror', 'Thriller'],
+      runtime: '117 min'
     }
   ];
 
@@ -288,14 +408,14 @@ export default function Movies() {
       seasons: 5
     },
     {
-      title: 'The Wire',
-      year: 2002,
+      title: 'Star Wars: The Clone Wars',
+      year: 2008,
       rating: 5.0,
-      review: 'The most realistic and nuanced portrayal of urban life ever put to screen.',
-      comments: 'Each season focuses on a different aspect of Baltimore society.',
-      creator: 'David Simon',
-      genre: ['Drama', 'Crime'],
-      seasons: 5
+      review: 'A masterful animated series that deepens the Star Wars mythology and delivers some of the best storytelling in the franchise.',
+      comments: 'The character development and world-building are incredible. Ahsoka\'s journey is particularly compelling.',
+      creator: 'George Lucas & Dave Filoni',
+      genre: ['Animation', 'Sci-Fi', 'Adventure', 'Action'],
+      seasons: 7
     },
     {
       title: 'Game of Thrones',
@@ -336,6 +456,66 @@ export default function Movies() {
       creator: 'Jon Favreau',
       genre: ['Sci-Fi', 'Adventure', 'Western'],
       seasons: 3
+    },
+    {
+      title: 'Star Wars Rebels',
+      year: 2014,
+      rating: 4.5,
+      review: 'A brilliant animated series that bridges the prequel and original trilogies with compelling characters and stories.',
+      comments: 'Kanan and Ezra\'s relationship is beautifully developed. The finale is absolutely perfect.',
+      creator: 'Simon Kinberg & Dave Filoni',
+      genre: ['Animation', 'Sci-Fi', 'Adventure', 'Action'],
+      seasons: 4
+    },
+    {
+      title: 'Arrested Development',
+      year: 2003,
+      rating: 4.5,
+      review: 'The gold standard for smart, layered comedy with incredible rewatch value.',
+      comments: 'The first three seasons are comedy perfection. Every line is a setup for a later payoff.',
+      creator: 'Mitchell Hurwitz',
+      genre: ['Comedy', 'Mockumentary'],
+      seasons: 5
+    },
+    {
+      title: 'Chernobyl',
+      year: 2019,
+      rating: 5.0,
+      review: 'A harrowing and masterfully crafted miniseries about one of history\'s worst nuclear disasters.',
+      comments: 'The attention to detail and historical accuracy is incredible. Haunting and unforgettable.',
+      creator: 'Craig Mazin',
+      genre: ['Drama', 'History', 'Thriller'],
+      seasons: 1
+    },
+    {
+      title: 'Community',
+      year: 2009,
+      rating: 4.5,
+      review: 'A brilliantly meta comedy that constantly reinvents itself while maintaining heart and humor.',
+      comments: 'Six seasons and a movie! The paintball episodes are legendary.',
+      creator: 'Dan Harmon',
+      genre: ['Comedy', 'Mockumentary'],
+      seasons: 6
+    },
+    {
+      title: 'Brooklyn Nine-Nine',
+      year: 2013,
+      rating: 4.5,
+      review: 'A perfect blend of workplace comedy and police procedural with an incredible ensemble cast.',
+      comments: 'Jake and Holt\'s relationship is comedy gold. Noice!',
+      creator: 'Dan Goor & Michael Schur',
+      genre: ['Comedy', 'Crime', 'Police Procedural'],
+      seasons: 8
+    },
+    {
+      title: 'Andor',
+      year: 2022,
+      rating: 5.0,
+      review: 'A mature, grounded Star Wars series that explores the birth of rebellion with incredible depth and nuance.',
+      comments: 'Finally, Star Wars for adults. The writing and character development are exceptional.',
+      creator: 'Tony Gilroy',
+      genre: ['Sci-Fi', 'Drama', 'Thriller'],
+      seasons: 2
     }
   ];
 
@@ -387,17 +567,6 @@ export default function Movies() {
         {/* Rating */}
         {renderStars(item.rating)}
 
-        {/* Genres */}
-        <div className="flex flex-wrap gap-2">
-          {item.genre.map((g) => (
-            <span
-              key={g}
-              className="px-3 py-1 bg-[var(--highlight)] bg-opacity-20 text-[var(--highlight)] text-sm rounded-full"
-            >
-              {g}
-            </span>
-          ))}
-        </div>
 
         {/* Review */}
         <div>
