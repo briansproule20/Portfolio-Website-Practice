@@ -98,7 +98,7 @@ export const InfiniteMovingCards = ({
                     <img
                       src={item.favicon}
                       alt={`${item.title} favicon`}
-                      className="w-8 h-8 rounded-sm"
+                      className="w-16 h-16 rounded-sm"
                     />
                   </div>
                 )}
