@@ -15,6 +15,7 @@ export const InfiniteMovingCards = ({
     subtitle: string;
     description: string;
     favicon?: string;
+    link?: string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -86,11 +87,8 @@ export const InfiniteMovingCards = ({
           pauseOnHover && "hover:[animation-play-state:paused]",
         )}
       >
-        {items.map((item, idx) => (
-          <li
-            className="relative w-[350px] max-w-full shrink-0 rounded-2xl border-2 border-[var(--accent)] bg-[var(--card)] px-8 py-6 md:w-[450px] shadow-md hover:border-[var(--highlight)] transition-colors"
-            key={idx}
-          >
+        {items.map((item, idx) => {
+          const CardContent = (
             <div className="flex flex-col h-full">
               <div className="flex items-center mb-4">
                 {item.favicon && (
@@ -115,8 +113,28 @@ export const InfiniteMovingCards = ({
                 {item.description}
               </p>
             </div>
-          </li>
-        ))}
+          );
+
+          return (
+            <li
+              className="relative w-[350px] max-w-full shrink-0 rounded-2xl border-2 border-[var(--accent)] bg-[var(--card)] px-8 py-6 md:w-[450px] shadow-md hover:border-[var(--highlight)] transition-colors"
+              key={idx}
+            >
+              {item.link ? (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block h-full cursor-pointer"
+                >
+                  {CardContent}
+                </a>
+              ) : (
+                CardContent
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

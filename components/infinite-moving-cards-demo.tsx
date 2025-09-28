@@ -72,10 +72,11 @@ const testimonials = [
     favicon: "/appfavicons/npc-chat favicon.png",
   },
   {
-    title: "App 10",
-    subtitle: "",
+    title: "Shirt Slop",
+    subtitle: "from idea to shirt before you can say SLOP",
     description: "",
     favicon: "/appfavicons/shirtslop_logo.png",
+    link: "https://www.shirtslop.com/",
   },
   {
     title: "App 11",
