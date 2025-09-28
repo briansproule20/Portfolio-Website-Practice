@@ -11,8 +11,8 @@ import ChatWidget from './components/ChatWidget';
 import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
 import GitHubActivity from './components/GitHubActivity';
 import Image from "next/image";
-import { getFeaturedPhotos, type Photo } from '../utils/photos';
 import InfiniteMovingCardsDemo from '../components/infinite-moving-cards-demo';
+import LayoutGridDemo from '../components/layout-grid-demo';
 
 export const metadata: Metadata = {
   title: "Brian Sproule | Writer, Publisher, Designer",
@@ -88,7 +88,6 @@ async function getRecentBooks() {
 
 export default async function Home() {
   const { books } = await getRecentBooks();
-  const featuredPhotos = getFeaturedPhotos();
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
@@ -139,6 +138,20 @@ export default async function Home() {
             className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
           >
             All Apps
+          </a>
+        </div>
+      </section>
+
+      {/* Featured Photos Section */}
+      <section className="w-full">
+        <h2 className="text-3xl font-bold mb-4 text-[var(--foreground)] text-center pt-12">Featured Photos</h2>
+        <LayoutGridDemo />
+        <div className="text-center mt-8">
+          <a
+            href="/photos"
+            className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
+          >
+            See All Photos
           </a>
         </div>
       </section>
