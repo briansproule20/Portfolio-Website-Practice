@@ -11,8 +11,6 @@ import ChatWidget from './components/ChatWidget';
 import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
 import GitHubActivity from './components/GitHubActivity';
 import Image from "next/image";
-import InfiniteMovingCardsDemo from '../components/infinite-moving-cards-demo';
-import LayoutGridDemo from '../components/layout-grid-demo';
 
 export const metadata: Metadata = {
   title: "Brian Sproule | Writer, Publisher, Designer",
@@ -127,34 +125,6 @@ export default async function Home() {
 
       {/* GitHub Activity Section */}
       <GitHubActivity />
-
-      {/* Live Deployments Section */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8 text-[var(--foreground)] text-center">Live Deployments</h2>
-        <InfiniteMovingCardsDemo />
-        <div className="text-center mt-8">
-          <a
-            href="/apps"
-            className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
-          >
-            All Apps
-          </a>
-        </div>
-      </section>
-
-      {/* Featured Photos Section */}
-      <section className="w-full">
-        <h2 className="text-3xl font-bold mb-4 text-[var(--foreground)] text-center pt-12">Featured Photos</h2>
-        <LayoutGridDemo />
-        <div className="text-center mt-8">
-          <a
-            href="/photos"
-            className="inline-block px-6 py-3 bg-[var(--highlight)] text-[var(--foreground)] rounded-full font-semibold shadow hover:bg-[var(--accent)] transition"
-          >
-            See All Photos
-          </a>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="w-full py-6 text-center text-[var(--accent)] text-sm mt-auto">

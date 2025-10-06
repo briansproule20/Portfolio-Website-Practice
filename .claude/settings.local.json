@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(export:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:iwb-one.vercel.app)"
     ],
     "deny": [],
     "ask": []

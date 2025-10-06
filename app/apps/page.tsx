@@ -54,6 +54,13 @@ const apps = [
     link: "https://hey-barkeep.vercel.app",
   },
   {
+    title: "Interstellar Weather Bureau",
+    subtitle: "AI-powered cosmic weather data",
+    description: "Get weather and astronomical data for celestial bodies across the solar system. Features NASA's Astronomy Picture of the Day and detailed environmental data for planets and moons.",
+    favicon: "/appfavicons/iwb-favicon.png",
+    link: "https://iwb-one.vercel.app/",
+  },
+  {
     title: "History Tutor Chat",
     subtitle: "AI-powered historical education",
     description: "Explore history through interactive conversations. Ask questions about historical events, figures, and periods to deepen your understanding of the past.",
