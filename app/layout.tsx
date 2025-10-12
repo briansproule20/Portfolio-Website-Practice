@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://www.briansproule.com/fish.png",
+        url: "https://www.briansproule.com/fish.png?v=2",
         width: 1200,
         height: 630,
         alt: "Brian Sproule - Digital Publisher & Developer",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     creator: "@briansproule",
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    images: ["https://www.briansproule.com/fish.png"],
+    images: ["https://www.briansproule.com/fish.png?v=2"],
   },
   alternates: {
     canonical: "https://www.briansproule.com",
