@@ -27,21 +27,21 @@ export const metadata: Metadata = {
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://www.briansproule.com/fish.png",
-        width: 1200,
-        height: 630,
+        url: "https://www.briansproule.com/fish-favicon.png",
+        width: 32,
+        height: 32,
         alt: "Brian Sproule - Digital Publisher & Developer",
         type: "image/png",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     site: "@briansproule",
     creator: "@briansproule",
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    images: ["https://www.briansproule.com/fish.png"],
+    images: ["https://www.briansproule.com/fish-favicon.png"],
   },
   alternates: {
     canonical: "https://www.briansproule.com",
