@@ -116,6 +116,13 @@ const apps = [
     favicon: "/Forge-Favicon.png",
     link: "https://the-forge-khaki.vercel.app",
   },
+  {
+    title: "Echo File Renamer",
+    subtitle: "Bulk file renaming made simple",
+    description: "Rename multiple files at once with AI-powered suggestions and pattern matching. Perfect for organizing photos, documents, and project files quickly and efficiently.",
+    favicon: "/file renamer favicon.png",
+    link: "https://echo-file-renamer.vercel.app",
+  },
 ];
 
 export default function Apps() {
