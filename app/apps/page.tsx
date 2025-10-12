@@ -93,7 +93,7 @@ const apps = [
     subtitle: "Discover apps and identify gaps",
     description: "Intelligent insights into the Merit Echo platform. Browse existing Echo Apps and receive AI-powered analysis identifying gaps and opportunities for new applications. Works alongside Echo Ideas for strategic app development.",
     favicon: "/echo-directoryfavicon.png",
-    link: "https://echo-app-directory.vercel.app",
+    link: "https://echo-directory.vercel.app",
   },
   {
     title: "Case Study",
