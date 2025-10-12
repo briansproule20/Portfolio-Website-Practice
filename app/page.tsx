@@ -12,42 +12,6 @@ import AmbientSoundToggleWrapper from './components/AmbientSoundToggleWrapper';
 import GitHubActivity from './components/GitHubActivity';
 import Image from "next/image";
 
-export const metadata: Metadata = {
-  title: "Brian Sproule | Writer, Publisher, Designer",
-  description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-  keywords: ["digital publishing", "web development", "narrative theory", "creative technology", "portfolio"],
-  authors: [{ name: "Brian Sproule" }],
-  creator: "Brian Sproule",
-  publisher: "Brian Sproule",
-  robots: "index, follow",
-  openGraph: {
-    title: "Brian Sproule | Writer, Publisher, Designer",
-    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    url: "https://briansproule.com",
-    siteName: "Brian Sproule Portfolio",
-    images: [
-      {
-        url: "https://www.briansproule.com/fish.png",
-        width: 1200,
-        height: 630,
-        alt: "Brian Sproule - Digital Publisher & Developer",
-        type: "image/png",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Brian Sproule | Writer, Publisher, Designer",
-    description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    creator: "@briansproule",
-    images: ["https://www.briansproule.com/fish.png"],
-  },
-  alternates: {
-    canonical: "https://briansproule.com",
-  },
-};
 
 async function getRecentBooks() {
   try {
