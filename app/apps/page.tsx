@@ -100,7 +100,7 @@ const apps = [
     subtitle: "Law school companion and study aide",
     description: "AI-powered legal study assistant for law students. Analyze legal cases, break down complex precedents, and master case law. Features flashcards, quizzes, and intelligent guidance to help you succeed in law school.",
     favicon: "/casestudy-favicon.png",
-    link: "https://case-study.vercel.app",
+    link: "https://case-study-rho-plum.vercel.app",
   },
   {
     title: "Big Corp Inc",
