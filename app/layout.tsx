@@ -35,7 +35,11 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/IWB-favicon.png',
+    icon: [
+      { url: '/IWB-favicon.png', sizes: 'any' },
+      { url: '/IWB-favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/IWB-favicon.png', sizes: '16x16', type: 'image/png' },
+    ],
     apple: '/IWB-favicon.png',
     shortcut: '/IWB-favicon.png',
   },
