@@ -57,7 +57,7 @@ const apps = [
     title: "Interstellar Weather Bureau",
     subtitle: "AI-powered cosmic weather data",
     description: "Get weather and astronomical data for celestial bodies across the solar system. Features NASA's Astronomy Picture of the Day and detailed environmental data for planets and moons.",
-    favicon: "/appfavicons/iwb-favicon.png",
+    favicon: "/IWB-favicon.png",
     link: "https://iwb-one.vercel.app/",
   },
   {
