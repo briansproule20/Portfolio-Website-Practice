@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/fish.png',
-    apple: '/fish.png',
-    shortcut: '/fish.png',
+    icon: '/IWB-favicon.png',
+    apple: '/IWB-favicon.png',
+    shortcut: '/IWB-favicon.png',
   },
   manifest: '/site.webmanifest',
   openGraph: {

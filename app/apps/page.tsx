@@ -88,6 +88,34 @@ const apps = [
     favicon: "/appfavicons/yes-chef favicon.png",
     link: "https://yeschef-carrot.vercel.app",
   },
+  {
+    title: "Echo App Directory",
+    subtitle: "Discover apps and identify gaps",
+    description: "Intelligent insights into the Merit Echo platform. Browse existing Echo Apps and receive AI-powered analysis identifying gaps and opportunities for new applications. Works alongside Echo Ideas for strategic app development.",
+    favicon: "/echo-directoryfavicon.png",
+    link: "https://echo-app-directory.vercel.app",
+  },
+  {
+    title: "Case Study",
+    subtitle: "Law school companion and study aide",
+    description: "AI-powered legal study assistant for law students. Analyze legal cases, break down complex precedents, and master case law. Features flashcards, quizzes, and intelligent guidance to help you succeed in law school.",
+    favicon: "/casestudy-favicon.png",
+    link: "https://case-study.vercel.app",
+  },
+  {
+    title: "Big Corp Inc",
+    subtitle: "Maximizing shareholder value",
+    description: "Driving unprecedented ROI through strategic growth initiatives and operational excellence. We're laser-focused on delivering sustainable value creation while optimizing stakeholder returns at every touchpoint. Moving Forward, Together, Towards More Forward™",
+    favicon: "/BigCorpInc Favicon.png",
+    link: "https://bigcorpinc.company",
+  },
+  {
+    title: "The Forge",
+    subtitle: "3D print exploration platform",
+    description: "Explore the world of 3D printing with curated models, materials, and techniques. Browse designs, learn about printing technologies, and discover possibilities. Dropshipping services coming soon.",
+    favicon: "/Forge-Favicon.png",
+    link: "https://the-forge-khaki.vercel.app",
+  },
 ];
 
 export default function Apps() {
