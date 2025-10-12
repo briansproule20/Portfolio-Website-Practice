@@ -52,21 +52,21 @@ export const metadata: Metadata = {
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
     images: [
       {
-        url: "https://www.briansproule.com/fish-favicon.png",
-        width: 32,
-        height: 32,
+        url: "https://www.briansproule.com/fish.png",
+        width: 1200,
+        height: 630,
         alt: "Brian Sproule - Digital Publisher & Developer",
         type: "image/png",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     site: "@briansproule",
     creator: "@briansproule",
     title: "Brian Sproule | Writer, Publisher, Designer",
     description: "Digital publisher, web developer, and creative technologist. Explore my portfolio of digital publishing projects, narrative theory research, and interactive web experiences.",
-    images: ["https://www.briansproule.com/fish-favicon.png"],
+    images: ["https://www.briansproule.com/fish.png"],
   },
   alternates: {
     canonical: "https://www.briansproule.com",
