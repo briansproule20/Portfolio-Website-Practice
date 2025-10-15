@@ -123,6 +123,27 @@ const apps = [
     favicon: "/file renamer favicon.png",
     link: "https://echo-file-renamer.vercel.app",
   },
+  {
+    title: "Aphorize",
+    subtitle: "Find quotes that fit the moment",
+    description: "Find quotes that match your mood or let AI craft one just for you. Search through thousands of quotes or generate perfect lines with AI to match your message.",
+    favicon: "/appfavicons/aphorize-favicon.png",
+    link: "https://aphorizequotes.vercel.app",
+  },
+  {
+    title: "Astrologer's Almanac",
+    subtitle: "A guide for budding astrologers",
+    description: "Explore the cosmos and learn the art of astrology. A comprehensive guide for aspiring astrologers to understand celestial influences and astrological interpretation.",
+    favicon: "/appfavicons/astrology favicon.png",
+    link: "https://astrologers-almanac.vercel.app",
+  },
+  {
+    title: "Trivia Wizard",
+    subtitle: "Infinite trivia on any topic",
+    description: "Test your wits and bend the algorithm. AI-powered trivia platform with Daily Quiz, Practice Mode, and customizable quizzes on any topic you can imagine.",
+    favicon: "/appfavicons/triviawizard favicon.png",
+    link: "https://trivia-wizard-omega.vercel.app",
+  },
 ];
 
 export default function Apps() {
