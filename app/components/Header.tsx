@@ -5,186 +5,77 @@ import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 import AmbientSoundToggleWrapper from './AmbientSoundToggleWrapper';
 import { useState } from 'react';
+import { Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from '../../components/ui/sheet';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navLinks = [
+    { href: "/about", label: "About" },
+    { href: "/apps", label: "Apps" },
+    { href: "/designs", label: "Design" },
+    { href: "/coffee-golf", label: "Coffee Golf" },
+    { href: "/elo", label: "ELO" },
+    { href: "/narrative", label: "Narrative" },
+    { href: "/photos", label: "Photos" },
+    { href: "/reads", label: "Reads" },
+    { href: "/tunes", label: "Tunes" },
+    { href: "/worlds", label: "Worlds" },
+    { href: "/writing", label: "Writing" },
+    { href: "/zines", label: "Zines" },
+  ];
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-accent/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-foreground hover:text-accent transition-colors shrink-0">
-            <Image src="/elderscroll.png" alt="Brian Sproule" width={100} height={100} className="rounded-full object-cover" />
-          </Link>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-accent/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="text-foreground hover:text-accent transition-colors shrink-0">
+              <Image src="/elderscroll.png" alt="Brian Sproule" width={100} height={100} className="rounded-full object-cover" />
+            </Link>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-foreground hover:text-accent"
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-6 px-2">
-              <Link href="/about" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                About
-              </Link>
-              <Link href="/apps" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Apps
-              </Link>
-              <Link href="/designs" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Design
-              </Link>
-              <Link href="/coffee-golf" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Coffee Golf
-              </Link>
-              <Link href="/elo" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                ELO
-              </Link>
-              <Link href="/narrative" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Narrative
-              </Link>
-              <Link href="/photos" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Photos
-              </Link>
-              <Link href="/reads" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Reads
-              </Link>
-              <Link href="/tunes" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Tunes
-              </Link>
-              <Link href="/worlds" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Worlds
-              </Link>
-              <Link href="/writing" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Writing
-              </Link>
-              <Link href="/zines" className="text-foreground hover:text-accent transition-colors whitespace-nowrap">
-                Zines
-              </Link>
+            <div className="flex items-center gap-2">
+              {/* Theme and Sound toggles - always visible */}
               <div className="flex items-center gap-2">
                 <AmbientSoundToggleWrapper />
                 <ThemeToggle />
               </div>
-            </div>
-          </nav>
-        </div>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden ${
-            isMenuOpen ? 'block' : 'hidden'
-          } bg-[var(--background)] border-t border-[var(--accent)]/20 py-4`}
-        >
-          <div className="flex flex-col space-y-4 px-4">
-            <Link
-              href="/about"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              href="/apps"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Apps
-            </Link>
-            <Link
-              href="/designs"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Design
-            </Link>
-            <Link
-              href="/coffee-golf"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Coffee Golf
-            </Link>
-            <Link
-              href="/elo"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              ELO
-            </Link>
-            <Link
-              href="/narrative"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Narrative
-            </Link>
-            <Link
-              href="/photos"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Photos
-            </Link>
-            <Link
-              href="/reads"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Reads
-            </Link>
-            <Link
-              href="/tunes"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Tunes
-            </Link>
-            <Link
-              href="/worlds"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Worlds
-            </Link>
-            <Link
-              href="/writing"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Writing
-            </Link>
-            <Link
-              href="/zines"
-              className="text-foreground hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Zines
-            </Link>
-            <div className="pt-2 flex items-center gap-2">
-              <AmbientSoundToggleWrapper />
-              <ThemeToggle />
+              {/* Hamburger menu button - always visible */}
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2 text-foreground hover:text-accent transition-colors rounded-md hover:bg-accent/10"
+                aria-label="Open menu"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
             </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Sheet Menu */}
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+          <SheetClose onClick={() => setIsMenuOpen(false)} />
+          <SheetHeader className="mb-8">
+            <SheetTitle>Navigation</SheetTitle>
+          </SheetHeader>
+          <nav className="flex flex-col space-y-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-foreground hover:text-accent transition-colors text-lg py-2 px-4 rounded-md hover:bg-accent/10"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 } 

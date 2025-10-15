@@ -56,13 +56,17 @@ export default async function Home() {
       <SwimmingFish />
       <ChatWidget />
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col md:flex-row items-center justify-between px-4 py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 mt-4 mb-8">
-        <div className="flex-1">
-          <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-2 object-cover" />
-          <HelloThereQuote />
-          <p className="text-xl max-w-2xl mb-6 text-[var(--foreground)]">My name is Brian, I'm a digitial and traditional publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a cup of tea, a snack, get comfy, and stay a while. Please mind the fish.</p>
+      <section className="flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 py-8 sm:py-12 bg-[var(--card)] rounded-xl shadow-md mx-2 sm:mx-4 mt-4 mb-8 gap-6 md:gap-8">
+        <div className="flex-1 w-full">
+          <div className="flex flex-col items-center md:items-start">
+            <Image src="/elderscroll.png" alt="Profile" width={240} height={240} className="rounded-full mb-4 object-contain w-32 h-32 sm:w-48 sm:h-48 md:w-60 md:h-60" />
+            <HelloThereQuote />
+            <p className="text-base sm:text-lg md:text-xl max-w-2xl mb-6 text-[var(--foreground)] text-center md:text-left">My name is Brian, I'm a digitial and traditional publisher with a love for natural designs and earthy aesthetics. Welcome to my corner of the internet. Grab a cup of tea, a snack, get comfy, and stay a while. Please mind the fish.</p>
+          </div>
         </div>
-        <ParallaxRing />
+        <div className="hidden md:block">
+          <ParallaxRing />
+        </div>
       </section>
 
       {/* Reading Section */}
