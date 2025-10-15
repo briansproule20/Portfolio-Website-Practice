@@ -5,14 +5,15 @@ import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 import AmbientSoundToggleWrapper from './AmbientSoundToggleWrapper';
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown, ChevronUp } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from '../../components/ui/sheet';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
   const navLinks = [
-    { href: "/about", label: "About" },
+    { href: "/about", label: "About", hasDropdown: true },
     { href: "/apps", label: "Apps" },
     { href: "/designs", label: "Design" },
     { href: "/coffee-golf", label: "Coffee Golf" },
@@ -24,6 +25,11 @@ export default function Header() {
     { href: "/worlds", label: "Worlds" },
     { href: "/writing", label: "Writing" },
     { href: "/zines", label: "Zines" },
+  ];
+
+  const aboutSubPages = [
+    { href: "/gamehome", label: "Video Games" },
+    { href: "/movies", label: "Movies & Shows" },
   ];
 
   return (
@@ -57,21 +63,59 @@ export default function Header() {
 
       {/* Sheet Menu */}
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-        <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+        <SheetContent side="right" className="w-[280px] sm:w-[320px] flex flex-col">
           <SheetClose onClick={() => setIsMenuOpen(false)} />
-          <SheetHeader className="mb-8">
+          <SheetHeader className="mb-6">
             <SheetTitle>Navigation</SheetTitle>
           </SheetHeader>
-          <nav className="flex flex-col space-y-4">
+          <nav className="flex flex-col space-y-2 overflow-y-auto flex-1 pr-2">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-foreground hover:text-accent transition-colors text-lg py-2 px-4 rounded-md hover:bg-accent/10"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
+              <div key={link.href}>
+                {link.hasDropdown ? (
+                  <>
+                    <button
+                      onClick={() => setIsAboutOpen(!isAboutOpen)}
+                      className="w-full flex items-center justify-between text-foreground hover:text-accent transition-colors text-lg py-2 px-4 rounded-md hover:bg-accent/10"
+                    >
+                      <span>{link.label}</span>
+                      {isAboutOpen ? (
+                        <ChevronUp className="h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4" />
+                      )}
+                    </button>
+                    {isAboutOpen && (
+                      <div className="ml-4 mt-2 space-y-2 border-l-2 border-accent/20 pl-4">
+                        <Link
+                          href={link.href}
+                          className="block text-foreground hover:text-accent transition-colors py-2 px-4 rounded-md hover:bg-accent/10"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          About Me
+                        </Link>
+                        {aboutSubPages.map((subLink) => (
+                          <Link
+                            key={subLink.href}
+                            href={subLink.href}
+                            className="block text-foreground hover:text-accent transition-colors py-2 px-4 rounded-md hover:bg-accent/10"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {subLink.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="text-foreground hover:text-accent transition-colors text-lg py-2 px-4 rounded-md hover:bg-accent/10 block"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                )}
+              </div>
             ))}
           </nav>
         </SheetContent>

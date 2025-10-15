@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface SheetProps {
   open: boolean
@@ -27,36 +28,82 @@ const Sheet = ({ open, onOpenChange, children }: SheetProps) => {
     }
   }, [open])
 
-  if (!open) return null
-
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
-        onClick={() => onOpenChange(false)}
-      />
-      {children}
-    </>
+    <AnimatePresence mode="wait">
+      {open && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+            onClick={() => onOpenChange(false)}
+          />
+          {children}
+        </>
+      )}
+    </AnimatePresence>
   )
 }
 
 const SheetContent = React.forwardRef<HTMLDivElement, SheetContentProps>(
   ({ side = "right", className = "", children }, ref) => {
     const sideClasses = {
-      right: "right-0 top-0 h-full w-3/4 sm:w-80 border-l",
-      left: "left-0 top-0 h-full w-3/4 sm:w-80 border-r",
+      right: "right-0 top-0 h-full border-l",
+      left: "left-0 top-0 h-full border-r",
       top: "top-0 left-0 right-0 h-3/4 border-b",
       bottom: "bottom-0 left-0 right-0 h-3/4 border-t",
     }
 
+    const getAnimationConfig = () => {
+      switch (side) {
+        case "right":
+          return {
+            initial: { x: "100%" },
+            animate: { x: 0 },
+            exit: { x: "100%" },
+          }
+        case "left":
+          return {
+            initial: { x: "-100%" },
+            animate: { x: 0 },
+            exit: { x: "-100%" },
+          }
+        case "top":
+          return {
+            initial: { y: "-100%" },
+            animate: { y: 0 },
+            exit: { y: "-100%" },
+          }
+        case "bottom":
+          return {
+            initial: { y: "100%" },
+            animate: { y: 0 },
+            exit: { y: "100%" },
+          }
+      }
+    }
+
+    const animationConfig = getAnimationConfig()
+
     return (
-      <div
+      <motion.div
         ref={ref}
-        className={`fixed z-50 bg-[var(--background)] p-6 shadow-lg transition-all duration-300 ease-in-out ${sideClasses[side]} ${className}`}
+        initial={animationConfig.initial}
+        animate={animationConfig.animate}
+        exit={animationConfig.exit}
+        transition={{
+          type: "spring",
+          damping: 30,
+          stiffness: 300,
+          duration: 0.3
+        }}
+        className={`fixed z-50 bg-[var(--background)] p-6 shadow-lg ${sideClasses[side]} ${className}`}
       >
         {children}
-      </div>
+      </motion.div>
     )
   }
 )
